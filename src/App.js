@@ -89,24 +89,26 @@ function DebugMarks() {
 class ToggleMarks extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {isToggleOn: true};
+    this.state = {isToggleOn: materials[activeMat].uniforms[ 'u_debug' ].value};
 
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
-    this.setState(state => ({
-      isToggleOn: !state.isToggleOn
-    }));
+  handleClick()
+  {
+    materials[activeMat].uniforms[ 'u_debug' ].value = !materials[activeMat].uniforms[ 'u_debug' ].value;    
     
-    materials[activeMat].uniforms[ 'u_debug' ].value = !materials[activeMat].uniforms[ 'u_debug' ].value;
+    this.setState(state => ({
+      isToggleOn: materials[activeMat].uniforms[ 'u_debug' ].value
+    }));
   }
 
-  render() {
+  render()
+  {
     return (
       <Button size='large' variant="contained" color="primary" onClick={this.handleClick}>
-        {this.state.isToggleOn ? 'Draw marks' : 'Hide marks'}
+        {materials[activeMat].uniforms[ 'u_debug' ].value ? 'Hide marks' : 'Draw marks'}
       </Button>
     );
   }
