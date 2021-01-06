@@ -93,8 +93,8 @@ var materials =
                 u_hands:         { value: hands      },
                 u_size:          { value: 1.7,  control: "SizeSlider"    },
                 u_darkness:      { value: 10.0, control: "DarknesSlider" },
-                u_debug:         { value: 0,    control: "ToggleMarks"    }
-              },
+                u_debug:         { value: 0,    control: "ToggleMarks"   },
+                info:            {value: "HAND EFFECT 1"}},
 
     vertexShader: document.getElementById( 'vertexShader' ).textContent,
     fragmentShader: document.getElementById( 'fragmentShader_01' ).textContent
@@ -111,7 +111,8 @@ var materials =
                 u_hands:         { value: hands      },
                 u_debug:         { value: 0          },
                 u_size:          { value: 1.7        },
-                u_darkness:      { value: 10.0       }},
+                u_darkness:      { value: 10.0       },
+                info:            {value: "FILTER EFFECT 1"    }},
 
     vertexShader: document.getElementById( 'vertexShader' ).textContent,
     fragmentShader: document.getElementById( 'fragmentShader_02' ).textContent

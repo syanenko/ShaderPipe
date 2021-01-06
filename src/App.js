@@ -192,6 +192,7 @@ var MAX_SLOT = 10;
 
 function Layout() {
   const classes = useStyles();
+  
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
@@ -201,9 +202,8 @@ function Layout() {
         <Grid item id="scene" xs={6}/><Grid item id="effects" xs={6}xs/>
         <Grid item xs={6}/> <Grid item xs={6}><Divider /></Grid>
         
-        <Grid item xs={6}>
-        <Paper className={classes.paper} >Info text Info text Info text Info text Info text Info text</Paper>
-        </Grid> <Grid item id="slot_0"  xs={6}/>
+        <Grid item id="info" xs={6} />
+        <Grid item id="slot_0"  xs={6}/>
         
         <Grid item xs={6}/> <Grid item id="slot_1"  xs={6} />
         <Grid item xs={6}/> <Grid item id="slot_2"  xs={6} />
@@ -269,6 +269,17 @@ class Scene extends React.Component
 }
 
 //
+// Info
+//
+function Info()
+{
+  const classes = useStyles();
+  return ( <Paper className={classes.paper} >
+            {materials[activeMat].uniforms[ 'info' ].value}
+          </Paper> );
+}
+
+//
 // Controls
 //
 function RenderControls()
@@ -293,6 +304,11 @@ function RenderControls()
   }
   
   controlsNum = newControlsNum;
+  
+  ReactDOM.render(
+    <Info />,
+    document.getElementById("info")
+  );
 }
 
 //
@@ -397,7 +413,7 @@ function EffectsList() {
 //
 // Application bar
 //
-export default function ButtonAppBar() {
+function ButtonAppBar() {
   const classes = useStyles();
 
   return (
