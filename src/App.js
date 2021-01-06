@@ -23,6 +23,11 @@ import { ListItemIcon } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
 import { Collapse } from '@material-ui/core';
 import { Divider } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
 
 import { MovieFilter,
          PanTool,
@@ -42,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  title: {
+    flexGrow: 1,
   },
 }));
 
@@ -184,17 +192,18 @@ function Layout() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Grid container spacing={2} justify="flex-start">
-        <Grid item id="Header"   xs={12}>
-        -- Header --
+      <Grid container spacing={2}>
+        <Grid item id="app_bar" xs={12}>
         </Grid>
         
-        <Grid item id="scene"   xs={6}/><Grid item id="effects" xs={6}xs/>
+        <Grid item id="scene" xs={6}/><Grid item id="effects" xs={6}xs/>
         <Grid item xs={6}/> <Grid item xs={6}><Divider /></Grid>
+        
         <Grid item xs={6}>
         <Paper className={classes.paper} >Info text Info text Info text Info text Info text Info text</Paper>
         </Grid> <Grid item id="slot_0"  xs={6}/>
-        <Grid item xs={6}/> <Grid item id="slot_1"  xs={6}/>
+        
+        <Grid item xs={6}/> <Grid item id="slot_1"  xs={6} />
         <Grid item xs={6}/> <Grid item id="slot_2"  xs={6} />
         <Grid item xs={6}/> <Grid item id="slot_3"  xs={6} />
         <Grid item xs={6}/> <Grid item id="slot_4"  xs={6} />
@@ -315,11 +324,6 @@ function EffectsList() {
     <List
       component="nav"
       aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Effects
-        </ListSubheader>
-      }
       className={classes.root}>
 
       <Divider />
@@ -337,14 +341,14 @@ function EffectsList() {
         
           <ListItem button className={classes.nested}  selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)}>
             <ListItemIcon>
-              <MovieFilter />
+              <MovieFilter fontSize="inherit" />
             </ListItemIcon>
             <ListItemText primary="Filter 1" />
           </ListItem>
 
           <ListItem button className={classes.nested}  selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)}>
             <ListItemIcon>
-              <MovieFilter />
+              <MovieFilter fontSize="inherit" />
             </ListItemIcon>
             <ListItemText primary="Filter 2" />
           </ListItem>
@@ -369,14 +373,14 @@ function EffectsList() {
         
           <ListItem button className={classes.nested} selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)}  >
             <ListItemIcon>
-              <PanTool />
+              <PanTool fontSize="inherit" />
             </ListItemIcon>
             <ListItemText primary="Hands 1" />
           </ListItem>
 
           <ListItem button className={classes.nested} selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1) } >
             <ListItemIcon>
-              <PanTool />
+              <PanTool fontSize="inherit" />
             </ListItemIcon>
             <ListItemText primary="Hands 2" />
           </ListItem>
@@ -389,11 +393,36 @@ function EffectsList() {
 }
 
 //
+// Application bar
+//
+export default function ButtonAppBar() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            Shader play
+          </Typography>
+          <Button color="inherit">About</Button>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+}
+
+//
 // Rendering 
 //
 ReactDOM.render(
   <Layout />,
   document.getElementById("root")
+);
+
+ReactDOM.render(
+  <ButtonAppBar />,
+  document.getElementById("app_bar")
 );
 
 ReactDOM.render(
