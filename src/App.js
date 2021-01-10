@@ -36,6 +36,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
@@ -115,36 +116,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     width: '100%'
   },
+  customTooltip: {
+    backgroundColor: 'rgba(63, 81, 181, 1)',
+    fontSize: 14
+  },
+  customArrow: {
+    color: 'rgba(63, 81, 181, 1)'
+  }
 }));
-
-//
-// Debug marks checkbox
-//
-/*
-function DebugMarks() {
-  const classes = useStyles();
-  const [checked, setChecked] = React.useState(true);
-
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-    materials[activeMat].uniforms[ 'u_debug' ].value = event.target.checked;
-  };
-
-  return (
-      <FormGroup row>
-      <FormControlLabel
-        control={<Checkbox 
-                  color="primary"
-                  defaultChecked={false}
-                  onChange={handleChange}
-                  name="checkedA" />}
-        label="Draw marks"
-      />
-      </FormGroup>
-  );
-}
-*/
-
 
 //
 // Toggle debug marks
@@ -586,9 +565,11 @@ export default function PersistentDrawerRight() {
           <Divider />
           <AccordionDetails>
             <List className={classes.list}>
-                 <ListItem divider={true}>
-                   <ListItemIcon><AllOut /></ListItemIcon>
-                   <Slider value={sizeValue}
+                  <ListItem divider={true}>
+                    <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                      <ListItemIcon><AllOut /></ListItemIcon>
+                    </Tooltip>   
+                    <Slider value={sizeValue}
                       onChange={handleSizeChange}
                       defaultValue={2.1}
                       valueLabelDisplay="auto"
@@ -596,9 +577,11 @@ export default function PersistentDrawerRight() {
                       min={0.0}
                       max={3.0}
                     />
-                 </ListItem>
-                 <ListItem divider={true}>
-                   <ListItemIcon><Brightness4 /></ListItemIcon>
+                  </ListItem>
+                  <ListItem divider={true}>
+                    <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                      <ListItemIcon><Brightness4 /></ListItemIcon>
+                    </Tooltip>
                    <Slider value={darknessValue}
                       onChange={handleDarknessChange}
                       defaultValue={2.1}
@@ -607,9 +590,11 @@ export default function PersistentDrawerRight() {
                       min={0.0}
                       max={15.0}
                     />
-                 </ListItem>
-                 <ListItem divider={true}>
-                   <ListItemIcon><Grain /></ListItemIcon>
+                  </ListItem>
+                  <ListItem divider={true}>
+                    <Tooltip title="Marks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                      <ListItemIcon><Grain /></ListItemIcon>
+                    </Tooltip>
                    <Checkbox 
                       color="primary"
                       defaultChecked={false}
@@ -632,8 +617,10 @@ export default function PersistentDrawerRight() {
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
-                 <ListItem divider={true}>
-                   <ListItemIcon><AllOut /></ListItemIcon>
+                <ListItem divider={true}>
+                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><AllOut /></ListItemIcon>
+                  </Tooltip>  
                    <Slider value={sizeValue}
                       onChange={handleSizeChange}
                       defaultValue={2.1}
@@ -642,17 +629,19 @@ export default function PersistentDrawerRight() {
                       min={0.0}
                       max={3.0}
                     />
-                 </ListItem>
-                 <ListItem divider={true}>
-                   <ListItemIcon><Brightness4 /></ListItemIcon>
-                   <Slider value={darknessValue}
+                </ListItem>
+                <ListItem divider={true}>
+                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  </Tooltip>
+                  <Slider value={darknessValue}
                       onChange={handleDarknessChange}
                       defaultValue={2.1}
                       valueLabelDisplay="auto"
                       step={0.1}
                       min={0.0}
                       max={15.0}
-                    />
+                   />
                  </ListItem>
             </List>
           </AccordionDetails>
