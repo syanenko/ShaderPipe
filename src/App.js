@@ -70,6 +70,9 @@ const drawerWidth = 340;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    alignItems: 'center',
+    alignContent: 'center',
+    height: '100%'
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -549,9 +552,8 @@ export default function PersistentDrawerRight() {
       >
         <div className={classes.drawerHeader} />
         <div className={classes.root}>
-          <Grid container spacing={2}>
-            <Grid item id="scene" xs={6}/><Grid item xs={6}/>
-            <Grid item id="info" xs={6} /><Grid item xs={6}/>
+          <Grid container spacing={2} alignItems="center" justify="center" direction="column">
+            <Grid item id="scene"/>
           </Grid>
         </div>
       </main>
