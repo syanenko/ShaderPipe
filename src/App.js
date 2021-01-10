@@ -49,28 +49,8 @@ import { MovieFilter,
          ExpandMore,
          ExpandLess } from '@material-ui/icons';
 
-/*
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-*/
 
-const drawerWidth = 340;
+const drawerWidth = '20%';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -595,102 +575,100 @@ export default function PersistentDrawerRight() {
         <Divider />
         
         <Accordion expanded={expanded === '0'} onChange={handleAccordChange('0')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <ListItemIcon><PanTool/></ListItemIcon>
-          <ListItemText primary="Hand effect 1" />
-        </AccordionSummary>
-        <AccordionDetails>
-          <List className={classes.list}>
-               <Divider />
-               <ListItem>
-               <ListItemIcon><AllOut /></ListItemIcon>
-               <Slider value={sizeValue}
-                  onChange={handleSizeChange}
-                  defaultValue={2.1}
-                  valueLabelDisplay="auto"
-                  step={0.01}
-                  min={0.0}
-                  max={3.0}
-                />
-               </ListItem>
-               <Divider />
-               <ListItem>
-               <ListItemIcon><Brightness4 /></ListItemIcon>
-               <Slider value={darknessValue}
-                  onChange={handleDarknessChange}
-                  defaultValue={2.1}
-                  valueLabelDisplay="auto"
-                  step={0.1}
-                  min={0.0}
-                  max={15.0}
-                />
-               </ListItem>
-               <Divider />
-               <ListItem>
-               <Checkbox 
-                  color="primary"
-                  defaultChecked={false}
-                  onChange={handleDrawMarks}
-                  name="checkedA" />
-               <ListItemText primary="Marks" />
-               </ListItem>
-          </List>
-        </AccordionDetails>
-      </Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <ListItemIcon><PanTool/></ListItemIcon>
+            <ListItemText primary="Hand effect 1" />
+          </AccordionSummary>
+          <AccordionDetails>
+            <List className={classes.list}>
+                 <Divider />
+                 <ListItem>
+                 <ListItemIcon><AllOut /></ListItemIcon>
+                 <Slider value={sizeValue}
+                    onChange={handleSizeChange}
+                    defaultValue={2.1}
+                    valueLabelDisplay="auto"
+                    step={0.01}
+                    min={0.0}
+                    max={3.0}
+                  />
+                 </ListItem>
+                 <Divider />
+                 <ListItem>
+                 <ListItemIcon><Brightness4 /></ListItemIcon>
+                 <Slider value={darknessValue}
+                    onChange={handleDarknessChange}
+                    defaultValue={2.1}
+                    valueLabelDisplay="auto"
+                    step={0.1}
+                    min={0.0}
+                    max={15.0}
+                  />
+                 </ListItem>
+                 <Divider />
+                 <ListItem>
+                 <Checkbox 
+                    color="primary"
+                    defaultChecked={false}
+                    onChange={handleDrawMarks}
+                    name="checkedA" />
+                 <ListItemText primary="Marks" />
+                 </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
 
-      <Accordion expanded={expanded === '1'} onChange={handleAccordChange('1')}>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1bh-content"
-        id="panel1bh-header"
-      >
-        <ListItemIcon><PanTool/></ListItemIcon>
-        <ListItemText primary="Hand effect 2" />
-      </AccordionSummary>
-      <AccordionDetails>
-        <List className={classes.list}>
-             <Divider />
-             <ListItem>
-             <ListItemIcon><AllOut /></ListItemIcon>
-             <Slider value={sizeValue}
-                onChange={handleSizeChange}
-                defaultValue={2.1}
-                valueLabelDisplay="auto"
-                step={0.01}
-                min={0.0}
-                max={3.0}
-              />
-             </ListItem>
-             <Divider />
-             <ListItem>
-             <ListItemIcon><Brightness4 /></ListItemIcon>
-             <Slider value={darknessValue}
-                onChange={handleDarknessChange}
-                defaultValue={2.1}
-                valueLabelDisplay="auto"
-                step={0.1}
-                min={0.0}
-                max={15.0}
-              />
-             </ListItem>
-             <Divider />
-             <ListItem>
-             <Checkbox 
-                color="primary"
-                defaultChecked={false}
-                onChange={handleDrawMarks}
-                name="checkedA" />
-             <ListItemText primary="Marks" />
-             </ListItem>
-        </List>
-      </AccordionDetails>
-    </Accordion>
-
-
+        <Accordion expanded={expanded === '1'} onChange={handleAccordChange('1')}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <ListItemIcon><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Filter 1" />
+          </AccordionSummary>
+          <AccordionDetails>
+            <List className={classes.list}>
+                 <Divider />
+                 <ListItem>
+                 <ListItemIcon><AllOut /></ListItemIcon>
+                 <Slider value={sizeValue}
+                    onChange={handleSizeChange}
+                    defaultValue={2.1}
+                    valueLabelDisplay="auto"
+                    step={0.01}
+                    min={0.0}
+                    max={3.0}
+                  />
+                 </ListItem>
+                 <Divider />
+                 <ListItem>
+                 <ListItemIcon><Brightness4 /></ListItemIcon>
+                 <Slider value={darknessValue}
+                    onChange={handleDarknessChange}
+                    defaultValue={2.1}
+                    valueLabelDisplay="auto"
+                    step={0.1}
+                    min={0.0}
+                    max={15.0}
+                  />
+                 </ListItem>
+                 <Divider />
+                 <ListItem>
+                 <Checkbox 
+                    color="primary"
+                    defaultChecked={false}
+                    onChange={handleDrawMarks}
+                    name="checkedA" />
+                 <ListItemText primary="Marks" />
+                 </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
       </Drawer>
     </div>
   );
