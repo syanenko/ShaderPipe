@@ -322,8 +322,6 @@ export default function PersistentDrawerRight() {
   const [expanded, setAccordExpanded] = React.useState(false);
   const handleAccordChange = (panel) => (event, isExpanded) => {
     setAccordExpanded(isExpanded ? panel : false);
-    
-    console.log(panel);
     activeMat = panel;
     mesh.material = materials[activeMat];
   };
