@@ -37,6 +37,12 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Tooltip from '@material-ui/core/Tooltip';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Link from '@material-ui/core/Link';
 
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
@@ -291,10 +297,6 @@ export default function PersistentDrawerRight() {
     setOpen(false);
   };
 
-  const handleHelp = () => {
-    console.log("handleHelp !"); // TODO: Displey help here
-  };
-
   // Size handle
   const [sizeValue, setSizeValue] = React.useState(2.1);
   const handleSizeChange = (event, newValue) => {
@@ -326,6 +328,15 @@ export default function PersistentDrawerRight() {
     mesh.material = materials[activeMat];
   };
 
+  // Dialog
+  const [openHelp, setOpenHelp] = React.useState(false);
+  const handleOpenHelp = () => {
+    setOpenHelp(true);
+  };
+  const handleCloseHelp = () => {
+    setOpenHelp(false);
+  };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -352,7 +363,7 @@ export default function PersistentDrawerRight() {
           <IconButton
             color="inherit"
             edge="end"
-            onClick={handleHelp}
+            onClick={handleOpenHelp}
             className={clsx(open && classes.hide)}>
             <HelpOutline />
           </IconButton>
@@ -483,6 +494,56 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
       </Drawer>
+      
+      <Dialog
+        open={openHelp}
+        onClose={handleCloseHelp}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+      
+        <DialogTitle id="alert-dialog-title">
+        {"Shader play"}
+        </DialogTitle>
+        <DialogContent>
+          <Typography gutterBottom>
+            This is a simple sandbox for experiments with&nbsp;
+            <Link href="https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)">
+               GLSL
+            </Link>
+             &nbsp;language and Google's&nbsp;
+            <Link href="https://mediapipe.dev/">
+               Mediapipe
+            </Link>
+            , based on&nbsp;
+            <Link href="https://reactjs.org/">
+               React
+            </Link>
+            &nbsp;with&nbsp;
+            <Link href="https://material-ui.com/">
+               Material-UI
+            </Link>
+            &nbsp;and&nbsp;
+            <Link href="https://threejs.org/">
+               Three.js
+            </Link>.
+          </Typography>
+          <Typography gutterBottom>
+            Select image filtering and hands pose effects from menu list, play with controls to adjust them.
+          </Typography>
+          <Typography gutterBottom>
+            Sources at &nbsp;
+            <Link href="https://github.com/syanenko/shaderplay">
+               GitHub repository
+            </Link>.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseHelp} color="primary" autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      
     </div>
   );
 }
@@ -495,7 +556,6 @@ ReactDOM.render(
   <PersistentDrawerRight />,
   document.getElementById("root")
 );
-
 
 ReactDOM.render(
   <Scene />,
