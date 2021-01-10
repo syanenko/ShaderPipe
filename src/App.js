@@ -227,42 +227,6 @@ function DarknesSlider() {
   );
 };
 
-
-//
-// Layout
-//
-var MAX_SLOT = 10;
-
-function Layout() {
-  const classes = useStyles();
-  
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item id="app_bar" xs={12}>
-        </Grid>
-        
-        <Grid item id="scene" xs={6}/><Grid item id="effects" xs={6}xs/>
-        <Grid item xs={6}/> <Grid item xs={6}><Divider /></Grid>
-        
-        <Grid item id="info" xs={6} />
-        <Grid item id="slot_0"  xs={6}/>
-        
-        <Grid item xs={6}/> <Grid item id="slot_1"  xs={6} />
-        <Grid item xs={6}/> <Grid item id="slot_2"  xs={6} />
-        <Grid item xs={6}/> <Grid item id="slot_3"  xs={6} />
-        <Grid item xs={6}/> <Grid item id="slot_4"  xs={6} />
-        <Grid item xs={6}/> <Grid item id="slot_5"  xs={6} />
-        <Grid item xs={6}/> <Grid item id="slot_6"  xs={6} />
-        <Grid item xs={6}/> <Grid item id="slot_7"  xs={6} />
-        <Grid item xs={6}/> <Grid item id="slot_8"  xs={6} />
-        <Grid item xs={6}/> <Grid item id="slot_9"  xs={6} />
-      </Grid>
-    </div>
-  );
-};
-
-
 //
 // Globals
 //
@@ -309,148 +273,6 @@ class Scene extends React.Component
   {
     return ( <div ref={ref =>	(this.mount = ref)} />)
   }
-}
-
-//
-// Info
-//
-function Info()
-{
-  const classes = useStyles();
-  return ( <Paper className={classes.paper} >
-            {materials[activeMat].uniforms[ 'info' ].value}
-          </Paper> );
-}
-
-//
-// Controls
-//
-function RenderControls()
-{
-  let newControlsNum = 0;
-  for (const property in materials[activeMat].uniforms)
-  {
-    const control = materials[activeMat].uniforms[property].control;
-    
-    if( typeof control !== 'undefined')
-    {
-      const slot = document.getElementById("slot_" + (newControlsNum++));
-      ReactDOM.unmountComponentAtNode(slot)
-      ReactDOM.render(React.createElement(eval(control)), slot);
-    }
-  }
-  
-  for (let s=newControlsNum; s<controlsNum; s++)
-  {
-    const slot = document.getElementById("slot_" + s);
-    ReactDOM.unmountComponentAtNode(slot)
-  }
-  
-  controlsNum = newControlsNum;
-  
-  ReactDOM.render(
-    <Info />,
-    document.getElementById("info")
-  );
-}
-
-//
-// Effects list
-//
-function EffectsList() {
-  const classes = useStyles();
-  
-  // Handle filters collapse
-  const [openFilters, setOpenFilters] = React.useState(false);
-  const handleClickCollapseFilters = () => {
-    setOpenFilters(!openFilters);
-  };
-
-  // Handle hands collapse
-  const [openHands, setOpenHands] = React.useState(false);
-  const handleClickCollapseHands = () => {
-    setOpenHands(!openHands);
-  };
-
-  // Handle item click
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-    activeMat = index;
-    mesh.material = materials[activeMat];
-    RenderControls();
-  };
-
-  return (
-    <List
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      className={classes.root}>
-
-      <Divider />
-      <ListItem button onClick={handleClickCollapseFilters}>
-        <ListItemIcon>
-          <MovieFilter />
-        </ListItemIcon>
-        <ListItemText primary="Filters" />
-        {openFilters ? <ExpandLess /> :
-                       <ExpandMore /> }
-      </ListItem>
-      
-      <Collapse in={openFilters} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-        
-          <ListItem button className={classes.nested}  selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)}>
-            <ListItemIcon>
-              <MovieFilter fontSize="inherit" />
-            </ListItemIcon>
-            <ListItemText primary="Filter 1" />
-          </ListItem>
-
-          <ListItem button className={classes.nested}  selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)}>
-            <ListItemIcon>
-              <MovieFilter fontSize="inherit" />
-            </ListItemIcon>
-            <ListItemText primary="Filter 2" />
-          </ListItem>
-        
-        </List>
-      </Collapse>
-
-      <Divider />
-       
-      <ListItem button onClick={handleClickCollapseHands}>
-        <ListItemIcon>
-          <PanTool />
-        </ListItemIcon>
-
-        <ListItemText primary="Hands" />
-        {openHands ? <ExpandLess /> :
-                     <ExpandMore /> }
-      </ListItem>
-      
-      <Collapse in={openHands} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-        
-          <ListItem button className={classes.nested} selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)}  >
-            <ListItemIcon>
-              <PanTool fontSize="inherit" />
-            </ListItemIcon>
-            <ListItemText primary="Hands 1" />
-          </ListItem>
-
-          <ListItem button className={classes.nested} selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1) } >
-            <ListItemIcon>
-              <PanTool fontSize="inherit" />
-            </ListItemIcon>
-            <ListItemText primary="Hands 2" />
-          </ListItem>
-        
-        </List>
-      </Collapse>
-      <Divider />
-    </List>
-  );
 }
 
 //
@@ -669,31 +491,13 @@ export default function PersistentDrawerRight() {
 // TODO: Add filters and hands effects
 //
 
-//
-// Rendering 
-//
-/*
-ReactDOM.render(
-  <Layout />,
-  document.getElementById("root")
-);
-*/
-
 ReactDOM.render(
   <PersistentDrawerRight />,
   document.getElementById("root")
 );
 
-/*
-ReactDOM.render(
-  <EffectsList />,
-  document.getElementById("effects")
-);
-*/
 
 ReactDOM.render(
   <Scene />,
   document.getElementById('scene')
 );
-
-// RenderControls();
