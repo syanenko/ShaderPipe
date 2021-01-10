@@ -48,7 +48,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import { MovieFilter,
-         PhotoFilter,
+         BubbleChart,
          Brightness4,
          PanTool,
          AllOut,
@@ -392,6 +392,8 @@ export default function PersistentDrawerRight() {
         }}
       >
         <div className={classes.drawerHeader}>
+          <ListItemIcon><BubbleChart/></ListItemIcon>
+          <ListItemText primary="Effects" />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
