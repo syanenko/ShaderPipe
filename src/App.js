@@ -528,7 +528,7 @@ export default function PersistentDrawerRight() {
             </Link>.
           </Typography>
           <Typography gutterBottom>
-            Select image filtering and hands pose effects from menu list, play with controls to adjust them.
+            Allow browser to use your camera, select image filtering and hands pose effects from menu list, play with controls to adjust them.
           </Typography>
           <Typography gutterBottom>
             Sources at &nbsp;
