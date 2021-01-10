@@ -526,11 +526,13 @@ export default function PersistentDrawerRight() {
             <Link href="https://threejs.org/">
                Three.js
             </Link>.
+            <br/>
           </Typography>
           <Typography gutterBottom>
-            Allow browser to use your camera, select image filtering and hands pose effects from menu list, play with controls to adjust them.
+            Allow browser to use your camera, select image filtering <MovieFilter color="action"/> and hands pose effects <PanTool color="action"/> from menu, play with controls to adjust them.
           </Typography>
           <Typography gutterBottom>
+            <br/>
             Sources at &nbsp;
             <Link href="https://github.com/syanenko/shaderplay">
                GitHub repository
