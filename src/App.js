@@ -43,10 +43,10 @@ import MailIcon from '@material-ui/icons/Mail';
 import { MovieFilter,
          PhotoFilter,
          Brightness4,
-         ZoomIn,
          PanTool,
          AllOut,
          ExpandMore,
+         Grain,
          ExpandLess } from '@material-ui/icons';
 
 
@@ -581,42 +581,40 @@ export default function PersistentDrawerRight() {
             id="panel1bh-header"
           >
             <ListItemIcon><PanTool/></ListItemIcon>
-            <ListItemText primary="Hand effect 1" />
+            <ListItemText primary="Hands effect 1" />
           </AccordionSummary>
+          <Divider />
           <AccordionDetails>
             <List className={classes.list}>
-                 <Divider />
-                 <ListItem>
-                 <ListItemIcon><AllOut /></ListItemIcon>
-                 <Slider value={sizeValue}
-                    onChange={handleSizeChange}
-                    defaultValue={2.1}
-                    valueLabelDisplay="auto"
-                    step={0.01}
-                    min={0.0}
-                    max={3.0}
-                  />
+                 <ListItem divider={true}>
+                   <ListItemIcon><AllOut /></ListItemIcon>
+                   <Slider value={sizeValue}
+                      onChange={handleSizeChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.01}
+                      min={0.0}
+                      max={3.0}
+                    />
                  </ListItem>
-                 <Divider />
-                 <ListItem>
-                 <ListItemIcon><Brightness4 /></ListItemIcon>
-                 <Slider value={darknessValue}
-                    onChange={handleDarknessChange}
-                    defaultValue={2.1}
-                    valueLabelDisplay="auto"
-                    step={0.1}
-                    min={0.0}
-                    max={15.0}
-                  />
+                 <ListItem divider={true}>
+                   <ListItemIcon><Brightness4 /></ListItemIcon>
+                   <Slider value={darknessValue}
+                      onChange={handleDarknessChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      min={0.0}
+                      max={15.0}
+                    />
                  </ListItem>
-                 <Divider />
-                 <ListItem>
-                 <Checkbox 
-                    color="primary"
-                    defaultChecked={false}
-                    onChange={handleDrawMarks}
-                    name="checkedA" />
-                 <ListItemText primary="Marks" />
+                 <ListItem divider={true}>
+                   <ListItemIcon><Grain /></ListItemIcon>
+                   <Checkbox 
+                      color="primary"
+                      defaultChecked={false}
+                      onChange={handleDrawMarks}
+                      name="checkedA" />
                  </ListItem>
             </List>
           </AccordionDetails>
@@ -631,40 +629,30 @@ export default function PersistentDrawerRight() {
             <ListItemIcon><MovieFilter /></ListItemIcon>
             <ListItemText primary="Filter 1" />
           </AccordionSummary>
+          <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
-                 <Divider />
-                 <ListItem>
-                 <ListItemIcon><AllOut /></ListItemIcon>
-                 <Slider value={sizeValue}
-                    onChange={handleSizeChange}
-                    defaultValue={2.1}
-                    valueLabelDisplay="auto"
-                    step={0.01}
-                    min={0.0}
-                    max={3.0}
-                  />
+                 <ListItem divider={true}>
+                   <ListItemIcon><AllOut /></ListItemIcon>
+                   <Slider value={sizeValue}
+                      onChange={handleSizeChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.01}
+                      min={0.0}
+                      max={3.0}
+                    />
                  </ListItem>
-                 <Divider />
-                 <ListItem>
-                 <ListItemIcon><Brightness4 /></ListItemIcon>
-                 <Slider value={darknessValue}
-                    onChange={handleDarknessChange}
-                    defaultValue={2.1}
-                    valueLabelDisplay="auto"
-                    step={0.1}
-                    min={0.0}
-                    max={15.0}
-                  />
-                 </ListItem>
-                 <Divider />
-                 <ListItem>
-                 <Checkbox 
-                    color="primary"
-                    defaultChecked={false}
-                    onChange={handleDrawMarks}
-                    name="checkedA" />
-                 <ListItemText primary="Marks" />
+                 <ListItem divider={true}>
+                   <ListItemIcon><Brightness4 /></ListItemIcon>
+                   <Slider value={darknessValue}
+                      onChange={handleDarknessChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      min={0.0}
+                      max={15.0}
+                    />
                  </ListItem>
             </List>
           </AccordionDetails>
@@ -675,7 +663,7 @@ export default function PersistentDrawerRight() {
 }
 
 //
-// TODO: Drawer -> List(Hands/Filters) -> Accordeon -> List (Effect name/Icon/Controls)
+// TODO: Add filters and hands effects
 //
 
 //
