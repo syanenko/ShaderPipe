@@ -48,6 +48,7 @@ import { MovieFilter,
          AllOut,
          ExpandMore,
          Grain,
+         HelpOutline,
          ExpandLess } from '@material-ui/icons';
 
 
@@ -468,6 +469,10 @@ export default function PersistentDrawerRight() {
     setOpen(false);
   };
 
+  const handleHelp = () => {
+    console.log("handleHelp !"); // TODO: Displey help here
+  };
+
   // Size handle
   const [sizeValue, setSizeValue] = React.useState(2.1);
   const handleSizeChange = (event, newValue) => {
@@ -512,15 +517,24 @@ export default function PersistentDrawerRight() {
           <Typography variant="h6" noWrap className={classes.title}>
             Shader play
           </Typography>
+          
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="end"
             onClick={handleDrawerOpen}
-            className={clsx(open && classes.hide)}
-          >
+            className={clsx(open && classes.hide)}>
             <MenuIcon />
           </IconButton>
+
+          <IconButton
+            color="inherit"
+            edge="end"
+            onClick={handleHelp}
+            className={clsx(open && classes.hide)}>
+            <HelpOutline />
+          </IconButton>
+          
         </Toolbar>
       </AppBar>
       
