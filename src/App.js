@@ -32,6 +32,10 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
@@ -41,6 +45,7 @@ import { MovieFilter,
          Brightness4,
          ZoomIn,
          PanTool,
+         AllOut,
          ExpandMore,
          ExpandLess } from '@material-ui/icons';
 
@@ -72,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
+    width: '100%',
     height: '100%'
   },
   appBar: {
@@ -124,6 +130,10 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginRight: 0,
+  },
+  list: {
+    alignItems: 'center',
+    width: '100%'
   },
 }));
 
@@ -519,6 +529,16 @@ export default function PersistentDrawerRight() {
     setDrawMarksChecked(event.target.checked);
     materials[activeMat].uniforms[ 'u_debug' ].value = event.target.checked;
   };
+  
+  // Accordion handle
+  const [expanded, setAccordExpanded] = React.useState(false);
+  const handleAccordChange = (panel) => (event, isExpanded) => {
+    setAccordExpanded(isExpanded ? panel : false);
+    
+    console.log(panel);
+    activeMat = panel;
+    mesh.material = materials[activeMat];
+  };
 
   return (
     <div className={classes.root}>
@@ -574,14 +594,68 @@ export default function PersistentDrawerRight() {
         </div>
         <Divider />
         
-        <List>
-             <ListItem>
-             <ListItemIcon><PanTool/></ListItemIcon>
-             <ListItemText primary="Hand effect 1" />
-             </ListItem>
+        <Accordion expanded={expanded === '0'} onChange={handleAccordChange('0')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header"
+        >
+          <ListItemIcon><PanTool/></ListItemIcon>
+          <ListItemText primary="Hand effect 1" />
+        </AccordionSummary>
+        <AccordionDetails>
+          <List className={classes.list}>
+               <Divider />
+               <ListItem>
+               <ListItemIcon><AllOut /></ListItemIcon>
+               <Slider value={sizeValue}
+                  onChange={handleSizeChange}
+                  defaultValue={2.1}
+                  valueLabelDisplay="auto"
+                  step={0.01}
+                  min={0.0}
+                  max={3.0}
+                />
+               </ListItem>
+               <Divider />
+               <ListItem>
+               <ListItemIcon><Brightness4 /></ListItemIcon>
+               <Slider value={darknessValue}
+                  onChange={handleDarknessChange}
+                  defaultValue={2.1}
+                  valueLabelDisplay="auto"
+                  step={0.1}
+                  min={0.0}
+                  max={15.0}
+                />
+               </ListItem>
+               <Divider />
+               <ListItem>
+               <Checkbox 
+                  color="primary"
+                  defaultChecked={false}
+                  onChange={handleDrawMarks}
+                  name="checkedA" />
+               <ListItemText primary="Marks" />
+               </ListItem>
+          </List>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion expanded={expanded === '1'} onChange={handleAccordChange('1')}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1bh-content"
+        id="panel1bh-header"
+      >
+        <ListItemIcon><PanTool/></ListItemIcon>
+        <ListItemText primary="Hand effect 2" />
+      </AccordionSummary>
+      <AccordionDetails>
+        <List className={classes.list}>
              <Divider />
              <ListItem>
-             <ListItemIcon><ZoomIn /></ListItemIcon>
+             <ListItemIcon><AllOut /></ListItemIcon>
              <Slider value={sizeValue}
                 onChange={handleSizeChange}
                 defaultValue={2.1}
@@ -605,19 +679,18 @@ export default function PersistentDrawerRight() {
              </ListItem>
              <Divider />
              <ListItem>
-             
              <Checkbox 
                 color="primary"
                 defaultChecked={false}
                 onChange={handleDrawMarks}
                 name="checkedA" />
-                            
              <ListItemText primary="Marks" />
              </ListItem>
-             
         </List>
-        <Divider />
-        
+      </AccordionDetails>
+    </Accordion>
+
+
       </Drawer>
     </div>
   );
