@@ -37,6 +37,9 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import { MovieFilter,
+         PhotoFilter,
+         Brightness4,
+         ZoomIn,
          PanTool,
          ExpandMore,
          ExpandLess } from '@material-ui/icons';
@@ -483,14 +486,35 @@ function EffectsList() {
 export default function PersistentDrawerRight() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
 
+  // Drawer handles
+  const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  // Size handle
+  const [sizeValue, setSizeValue] = React.useState(2.1);
+  const handleSizeChange = (event, newValue) => {
+    setSizeValue(newValue);
+    materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+  // Darkness handle
+  const [darknessValue, setDarknessValue] = React.useState(2.1);
+  const handleDarknessChange = (event, newValue) => {
+    setDarknessValue(newValue);
+    materials[activeMat].uniforms[ 'u_darkness' ].value = newValue;
+  };
+
+  // Draw marks handle
+  const [drawMarksChecked, setDrawMarksChecked] = React.useState(true);
+  const handleDrawMarks = (event) => {
+    setDrawMarksChecked(event.target.checked);
+    materials[activeMat].uniforms[ 'u_debug' ].value = event.target.checked;
   };
 
   return (
@@ -517,6 +541,7 @@ export default function PersistentDrawerRight() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
@@ -530,6 +555,7 @@ export default function PersistentDrawerRight() {
           </Grid>
         </div>
       </main>
+      
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -545,24 +571,51 @@ export default function PersistentDrawerRight() {
           </IconButton>
         </div>
         <Divider />
+        
         <List>
-          {['', '', '', ''].map((text, index) => (
-            <ListItem button key={text} >
-              <Grid container spacing={2}>
-                <Grid item id={'slot_' + index} xs/>
-              </Grid>
-            </ListItem>
-          ))}
+             <ListItem>
+             <ListItemIcon><PanTool/></ListItemIcon>
+             <ListItemText primary="Hand effect 1" />
+             </ListItem>
+             <Divider />
+             <ListItem>
+             <ListItemIcon><ZoomIn /></ListItemIcon>
+             <Slider value={sizeValue}
+                onChange={handleSizeChange}
+                defaultValue={2.1}
+                valueLabelDisplay="auto"
+                step={0.01}
+                min={0.0}
+                max={3.0}
+              />
+             </ListItem>
+             <Divider />
+             <ListItem>
+             <ListItemIcon><Brightness4 /></ListItemIcon>
+             <Slider value={darknessValue}
+                onChange={handleDarknessChange}
+                defaultValue={2.1}
+                valueLabelDisplay="auto"
+                step={0.1}
+                min={0.0}
+                max={15.0}
+              />
+             </ListItem>
+             <Divider />
+             <ListItem>
+             
+             <Checkbox 
+                color="primary"
+                defaultChecked={false}
+                onChange={handleDrawMarks}
+                name="checkedA" />
+                            
+             <ListItemText primary="Marks" />
+             </ListItem>
+             
         </List>
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        
       </Drawer>
     </div>
   );
@@ -599,4 +652,4 @@ ReactDOM.render(
   document.getElementById('scene')
 );
 
-RenderControls();
+// RenderControls();
