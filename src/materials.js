@@ -132,8 +132,82 @@ var materials =
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentToon' ).textContent
+  } ),
+  
+  // Crosshatch
+  new THREE.ShaderMaterial(
+  {
+    uniforms: { u_time:          { value: 1.0        },
+                u_texture:       { value: texture    },
+                u_resolution:    { value: resolution },
+                u_fingers_right: { value: fingers[0] },
+                u_fingers_left:  { value: fingers[1] },
+                u_hands:         { value: hands      },
+                u_debug:         { value: 0          },
+                u_size:          { value: 1.7        },
+                u_darkness:      { value: 10.0       },
+                info:            {value: "Filter: Crosshatch" }},
+
+    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentCrosshatch' ).textContent
+  } ),
+  
+  // Hexpix
+  new THREE.ShaderMaterial(
+  {
+    uniforms: { u_time:          { value: 1.0        },
+                u_texture:       { value: texture    },
+                u_resolution:    { value: resolution },
+                u_fingers_right: { value: fingers[0] },
+                u_fingers_left:  { value: fingers[1] },
+                u_hands:         { value: hands      },
+                u_debug:         { value: 0          },
+                u_size:          { value: 1.7        },
+                u_darkness:      { value: 10.0       },
+                info:            {value: "Filter: Hexpix" }},
+
+    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentHexpix' ).textContent
+  } ),
+  
+  // Line
+  new THREE.ShaderMaterial(
+  {
+    uniforms: { u_time:          { value: 1.0        },
+                u_texture:       { value: texture    },
+                u_resolution:    { value: resolution },
+                u_fingers_right: { value: fingers[0] },
+                u_fingers_left:  { value: fingers[1] },
+                u_hands:         { value: hands      },
+                u_debug:         { value: 0          },
+                u_size:          { value: 1.7        },
+                u_darkness:      { value: 10.0       },
+                info:            { value: "Filter: Line" }},
+
+    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentLine' ).textContent
+  } ),
+
+  // Sobel
+  new THREE.ShaderMaterial(
+  {
+    uniforms: { u_time:          { value: 1.0        },
+                u_texture:       { value: texture    },
+                u_resolution:    { value: resolution },
+                u_fingers_right: { value: fingers[0] },
+                u_fingers_left:  { value: fingers[1] },
+                u_hands:         { value: hands      },
+                u_debug:         { value: 0          },
+                u_size:          { value: 1.7        },
+                u_darkness:      { value: 10.0       },
+                u_dX:            { value: 0.002       },
+                u_dY:            { value: 0.002       },
+                info:            {value: "Filter: Sobel" }},
+
+    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentSobel' ).textContent
   } )
-    
+  
 ];
 
 export { resolution, materials, fingers };

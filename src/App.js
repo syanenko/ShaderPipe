@@ -237,7 +237,7 @@ function DarknesSlider() {
 // Globals
 //
 var mesh;
-var activeMat = 2, maxMat = 2;
+var activeMat = 6, maxMat = 2;
 var controlsNum = 0;
 
 //
@@ -502,6 +502,174 @@ export default function PersistentDrawerRight() {
           >
             <ListItemIcon><MovieFilter /></ListItemIcon>
             <ListItemText primary="Toon" />
+          </AccordionSummary>
+          <Divider />          
+          <AccordionDetails>
+            <List className={classes.list}>
+                <ListItem divider={true}>
+                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><AllOut /></ListItemIcon>
+                  </Tooltip>  
+                   <Slider value={sizeValue}
+                      onChange={handleSizeChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.01}
+                      min={0.0}
+                      max={3.0}
+                    />
+                </ListItem>
+                <ListItem divider={true}>
+                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  </Tooltip>
+                  <Slider value={darknessValue}
+                      onChange={handleDarknessChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      min={0.0}
+                      max={15.0}
+                   />
+                 </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
+        
+        <Accordion expanded={expanded === '3'} onChange={handleAccordChange('3')}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <ListItemIcon><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Crosshatch" />
+          </AccordionSummary>
+          <Divider />          
+          <AccordionDetails>
+            <List className={classes.list}>
+                <ListItem divider={true}>
+                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><AllOut /></ListItemIcon>
+                  </Tooltip>  
+                   <Slider value={sizeValue}
+                      onChange={handleSizeChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.01}
+                      min={0.0}
+                      max={3.0}
+                    />
+                </ListItem>
+                <ListItem divider={true}>
+                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  </Tooltip>
+                  <Slider value={darknessValue}
+                      onChange={handleDarknessChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      min={0.0}
+                      max={15.0}
+                   />
+                 </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
+        
+        <Accordion expanded={expanded === '4'} onChange={handleAccordChange('4')}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <ListItemIcon><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Hexpix" />
+          </AccordionSummary>
+          <Divider />          
+          <AccordionDetails>
+            <List className={classes.list}>
+                <ListItem divider={true}>
+                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><AllOut /></ListItemIcon>
+                  </Tooltip>  
+                   <Slider value={sizeValue}
+                      onChange={handleSizeChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.01}
+                      min={0.0}
+                      max={3.0}
+                    />
+                </ListItem>
+                <ListItem divider={true}>
+                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  </Tooltip>
+                  <Slider value={darknessValue}
+                      onChange={handleDarknessChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      min={0.0}
+                      max={15.0}
+                   />
+                 </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion expanded={expanded === '5'} onChange={handleAccordChange('5')}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <ListItemIcon><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Line" />
+          </AccordionSummary>
+          <Divider />          
+          <AccordionDetails>
+            <List className={classes.list}>
+                <ListItem divider={true}>
+                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><AllOut /></ListItemIcon>
+                  </Tooltip>  
+                   <Slider value={sizeValue}
+                      onChange={handleSizeChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.01}
+                      min={0.0}
+                      max={3.0}
+                    />
+                </ListItem>
+                <ListItem divider={true}>
+                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  </Tooltip>
+                  <Slider value={darknessValue}
+                      onChange={handleDarknessChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      min={0.0}
+                      max={15.0}
+                   />
+                 </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion expanded={expanded === '6'} onChange={handleAccordChange('6')}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <ListItemIcon><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Sobel" />
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
