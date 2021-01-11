@@ -113,19 +113,19 @@ var materials =
   new THREE.ShaderMaterial(
   {
     uniforms: { u_texture: { value: texture }},
-    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
-    fragmentShader: document.getElementById( 'fragmentToon' ).textContent
+    vertexShader:   document.getElementById( 'vertexDefault' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentToon'  ).textContent
   } ),
 
   // Posterize
   new THREE.ShaderMaterial(
   {
     uniforms: { u_texture: { value: texture }},
-    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
+    vertexShader:   document.getElementById( 'vertexDefault'     ).textContent,
     fragmentShader: document.getElementById( 'fragmentPosterize' ).textContent
   } ),
   
-  // Crosshatch
+    // Crosshatch
   new THREE.ShaderMaterial(
   {
     uniforms: { u_texture: { value: texture }},
@@ -133,6 +133,14 @@ var materials =
     fragmentShader: document.getElementById( 'fragmentCrosshatch' ).textContent
   } ),
   
+  // Gobelin
+  new THREE.ShaderMaterial(
+  {
+    uniforms: { u_texture: { value: texture }},
+    vertexShader:   document.getElementById( 'vertexDefault'   ).textContent,
+    fragmentShader: document.getElementById( 'fragmentGobelin' ).textContent
+  } ),
+
   // Pixelization
   new THREE.ShaderMaterial(
   {
@@ -144,7 +152,7 @@ var materials =
   // Hexpix
   new THREE.ShaderMaterial(
   {
-    uniforms: { u_texture: { value: texture     }},
+    uniforms: { u_texture: { value: texture }},
     vertexShader:   document.getElementById( 'vertexDefault'  ).textContent,
     fragmentShader: document.getElementById( 'fragmentHexpix' ).textContent
   } ),
@@ -152,7 +160,7 @@ var materials =
   // Line
   new THREE.ShaderMaterial(
   {
-    uniforms: { u_texture: { value: texture    }},
+    uniforms: { u_texture: { value: texture }},
     vertexShader:   document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentLine'  ).textContent
   } ),
@@ -160,13 +168,12 @@ var materials =
   // Sobel
   new THREE.ShaderMaterial(
   {
-    uniforms: { u_texture: { value: texture        },
-                u_dX:      { value: 0.002          },
-                u_dY:      { value: 0.002          }},
+    uniforms: { u_texture: { value: texture },
+                u_dX:      { value: 0.002   },
+                u_dY:      { value: 0.002   }},
     vertexShader:   document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentSobel' ).textContent
   } )
-  
 ];
 
 export { resolution, materials, fingers };

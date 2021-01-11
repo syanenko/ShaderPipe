@@ -368,6 +368,35 @@
   }
   </script>
 
+<!--
+   fragmentPosterize
+  /*
+   *
+   *  Peter R. Elespuru
+   *
+   *  common approach to posterization
+   */
+  -->
+  <script id="fragmentPosterize" type="x-shader/x-fragment">
+  
+  uniform sampler2D u_texture;
+  varying vec2 vUv;
+  
+  void main() {
+    
+    float gamma = 0.4;
+    float numColors = 12.0;
+    
+    vec3 c = texture2D(u_texture, vUv.xy).rgb;
+    c = pow(c, vec3(gamma, gamma, gamma));
+    c = c * numColors;
+    c = floor(c);
+    c = c / numColors;
+    c = pow(c, vec3(1.0/gamma));
+    gl_FragColor = vec4(c, 1.0);
+  }
+  </script>
+
   <!--
    fragmentCrosshatch
   /*
@@ -602,31 +631,72 @@
   </script>
 
   <!--
-   fragmentPosterize
+   fragmentGobelin
   /*
    *
    *  Peter R. Elespuru
+   *	modified from this idea:
+   *	http://learningwebgl.com/blog/?p=2858
    *
-   *  common approach to posterization
    */
   -->
-  <script id="fragmentPosterize" type="x-shader/x-fragment">
-  
-  uniform sampler2D u_texture;
+  <script id="fragmentGobelin" type="x-shader/x-fragment">
+
   varying vec2 vUv;
-  
-  void main() {
+  uniform sampler2D u_texture;
+
+  vec4 PostFX(sampler2D tex, vec2 uv) {
     
-    float gamma = 0.6;
-    float numColors = 8.0;
+    float stitching_size = 6.0;
+    int invert = 0;
+    float dim = 600.0;
     
-    vec3 c = texture2D(u_texture, vUv.xy).rgb;
-    c = pow(c, vec3(gamma, gamma, gamma));
-    c = c * numColors;
-    c = floor(c);
-    c = c / numColors;
-    c = pow(c, vec3(1.0/gamma));
-    gl_FragColor = vec4(c, 1.0);
+    vec4 c = vec4(0.0);
+    float size = stitching_size;
+    vec2 cPos = uv * vec2(dim, dim);
+    vec2 tlPos = floor(cPos / vec2(size, size));
+    tlPos *= size;
+    int remX = int(mod(cPos.x, size));
+    int remY = int(mod(cPos.y, size));
+    if (remX == 0 && remY == 0)
+    tlPos = cPos;
+    vec2 blPos = tlPos;
+    blPos.y += (size - 1.0);
+    
+    if ((remX == remY) ||
+    (((int(cPos.x) - int(blPos.x)) == (int(blPos.y) - int(cPos.y)))))
+    {
+      if (invert == 1)
+      c = vec4(0.2, 0.15, 0.05, 1.0);
+      else
+      c = texture2D(tex, tlPos * vec2(1.0/dim, 1.0/dim)) * 1.4;
+    }
+    else
+    {
+      if (invert == 1)
+      c = texture2D(tex, tlPos * vec2(1.0/dim, 1.0/dim)) * 1.4;
+      else
+      c = vec4(0.0, 0.0, 0.0, 1.0);
+    }
+    return c;
+  }
+
+  void main (void)
+  {
+    vec2 uv = vUv.st;
+    gl_FragColor = PostFX(u_texture, vUv);
+    return;
+    
+    if (uv.y > 0.5)
+    {
+      gl_FragColor = PostFX(u_texture, vUv);
+    }
+    else
+    {
+      uv.y += 0.5;
+      vec4 c1 = texture2D(u_texture, vUv);
+      gl_FragColor = c1;
+    }
   }
   </script>
 
