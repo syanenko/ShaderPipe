@@ -78,8 +78,6 @@ function onResults(results)
   }
 }
 
-var activeMat = 2, maxMat = 2;
-
 var materials =
 [
   // Fireball

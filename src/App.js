@@ -237,7 +237,7 @@ function DarknesSlider() {
 // Globals
 //
 var mesh;
-var activeMat = 0, maxMat = 2;
+var activeMat = 2, maxMat = 2;
 var controlsNum = 0;
 
 //
