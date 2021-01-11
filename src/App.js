@@ -859,7 +859,7 @@ export default function PersistentDrawerRight() {
         </DialogTitle>
         <DialogContent>
           <Typography gutterBottom>
-            This is a simple sandbox for experiments with&nbsp;
+            Simple sandbox for experiments with&nbsp;
             <Link href="https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)">
                GLSL
             </Link>
