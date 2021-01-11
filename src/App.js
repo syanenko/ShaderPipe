@@ -58,6 +58,13 @@ import { MovieFilter,
          ExpandLess } from '@material-ui/icons';
 
 
+//
+// Globals
+//
+var mesh;
+var activeMat = 2, maxMat = 2;
+var controlsNum = 0;
+
 const drawerWidth = '20%';
 
 const useStyles = makeStyles((theme) => ({
@@ -234,13 +241,6 @@ function DarknesSlider() {
 };
 
 //
-// Globals
-//
-var mesh;
-var activeMat = 6, maxMat = 2;
-var controlsNum = 0;
-
-//
 // Scene
 //
 class Scene extends React.Component
@@ -264,10 +264,17 @@ class Scene extends React.Component
     {
       requestAnimationFrame( animate );
 
-      materials[activeMat].uniforms[ 'u_time' ].value = performance.now() / 1000;
-      materials[activeMat].uniforms[ 'u_resolution'    ].value = resolution;
-      materials[activeMat].uniforms[ 'u_fingers_right' ].value = fingers[0];
-      materials[activeMat].uniforms[ 'u_fingers_left'  ].value = fingers[1];
+      if(materials[activeMat].uniforms['u_time'])
+        materials[activeMat].uniforms['u_time'].value = performance.now() / 1000;
+        
+      if(materials[activeMat].uniforms['u_resolution'])
+        materials[activeMat].uniforms['u_resolution'].value = resolution;
+        
+      if(materials[activeMat].uniforms['u_fingers_right'])
+        materials[activeMat].uniforms['u_fingers_right'].value = fingers[0];
+      
+      if(materials[activeMat].uniforms['u_fingers_left'])
+        materials[activeMat].uniforms['u_fingers_left'].value = fingers[1];
       
       renderer.render(scene, camera);
     };
@@ -585,7 +592,7 @@ export default function PersistentDrawerRight() {
             id="panel1bh-header"
           >
             <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Hexpix" />
+            <ListItemText primary="Pixelization" />
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
@@ -627,7 +634,7 @@ export default function PersistentDrawerRight() {
             id="panel1bh-header"
           >
             <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Line" />
+            <ListItemText primary="Hex pixelization" />
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
@@ -663,6 +670,48 @@ export default function PersistentDrawerRight() {
         </Accordion>
 
         <Accordion expanded={expanded === '6'} onChange={handleAccordChange('6')}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <ListItemIcon><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Line" />
+          </AccordionSummary>
+          <Divider />          
+          <AccordionDetails>
+            <List className={classes.list}>
+                <ListItem divider={true}>
+                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><AllOut /></ListItemIcon>
+                  </Tooltip>  
+                   <Slider value={sizeValue}
+                      onChange={handleSizeChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.01}
+                      min={0.0}
+                      max={3.0}
+                    />
+                </ListItem>
+                <ListItem divider={true}>
+                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  </Tooltip>
+                  <Slider value={darknessValue}
+                      onChange={handleDarknessChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      min={0.0}
+                      max={15.0}
+                   />
+                 </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion expanded={expanded === '7'} onChange={handleAccordChange('7')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1bh-content"

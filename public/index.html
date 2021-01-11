@@ -134,9 +134,9 @@
   <script id="fragmentWhirlpool" type="x-shader/x-fragment">
     varying vec2 vUv;
    
-    uniform float u_time;
-    uniform vec2  u_resolution;
-    uniform sampler2D u_texture;
+    uniform float     u_time;
+    uniform sampler2D u_texture;    
+    uniform vec2      u_resolution;
 
     void main()
     {
@@ -484,6 +484,36 @@
       gl_FragColor = fcol;
     }
   </script>
+
+  <!--
+   fragmentPix
+   
+  /*
+   *
+   *  Peter R. Elespuru
+   *
+   *  modified from:
+   *  http://www.geeks3d.com/20101029/shader-library-pixelation-post-processing-effect-glsl/
+   */
+  -->
+  <script id="fragmentPix" type="x-shader/x-fragment">
+	 
+  uniform sampler2D u_texture;
+  varying vec2 vUv;
+
+  void main() {
+    
+   float dx = 5.*(1./600.);
+   float dy = 3.*(1./600.);
+   
+   vec2 coord = vec2(dx*floor(vUv.x/dx),
+                     dy*floor(vUv.y/dy));
+   
+   gl_FragColor = texture2D(u_texture, coord);
+
+  }
+  </script>
+
 
 <!--
  fragmentLine
