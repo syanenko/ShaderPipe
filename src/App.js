@@ -407,7 +407,7 @@ export default function PersistentDrawerRight() {
             id="panel1bh-header"
           >
             <ListItemIcon><PanTool/></ListItemIcon>
-            <ListItemText primary="Hands effect 1" />
+            <ListItemText primary="Fireball" />
           </AccordionSummary>
           <Divider />
           <AccordionDetails>
@@ -459,7 +459,7 @@ export default function PersistentDrawerRight() {
             id="panel1bh-header"
           >
             <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Filter 1" />
+            <ListItemText primary="Whirlpool" />
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
@@ -493,6 +493,49 @@ export default function PersistentDrawerRight() {
             </List>
           </AccordionDetails>
         </Accordion>
+        
+        <Accordion expanded={expanded === '2'} onChange={handleAccordChange('2')}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header"
+          >
+            <ListItemIcon><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Toon" />
+          </AccordionSummary>
+          <Divider />          
+          <AccordionDetails>
+            <List className={classes.list}>
+                <ListItem divider={true}>
+                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><AllOut /></ListItemIcon>
+                  </Tooltip>  
+                   <Slider value={sizeValue}
+                      onChange={handleSizeChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.01}
+                      min={0.0}
+                      max={3.0}
+                    />
+                </ListItem>
+                <ListItem divider={true}>
+                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  </Tooltip>
+                  <Slider value={darknessValue}
+                      onChange={handleDarknessChange}
+                      defaultValue={2.1}
+                      valueLabelDisplay="auto"
+                      step={0.1}
+                      min={0.0}
+                      max={15.0}
+                   />
+                 </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
+        
       </Drawer>
       
       <Dialog

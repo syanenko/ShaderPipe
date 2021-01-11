@@ -78,11 +78,11 @@ function onResults(results)
   }
 }
 
-var activeMat = 1, maxMat = 2;
+var activeMat = 2, maxMat = 2;
 
 var materials =
 [
-  // Mat 01
+  // Fireball
   new THREE.ShaderMaterial(
   {
     uniforms: { u_time:          { value: 1.0 },
@@ -94,13 +94,13 @@ var materials =
                 u_size:          { value: 1.7,  control: "SizeSlider"    },
                 u_darkness:      { value: 10.0, control: "DarknesSlider" },
                 u_debug:         { value: 0,    control: "ToggleMarks"   },
-                info:            {value: "HAND EFFECT 1"}},
+                info:            {value: "Hands: Fireball"}},
 
-    vertexShader: document.getElementById( 'vertexShader' ).textContent,
-    fragmentShader: document.getElementById( 'fragmentShader_01' ).textContent
+    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentFireball' ).textContent
   } ),
 
-  // Mat 02
+  // Whirlpool
   new THREE.ShaderMaterial(
   {
     uniforms: { u_time:          { value: 1.0        },
@@ -112,11 +112,30 @@ var materials =
                 u_debug:         { value: 0          },
                 u_size:          { value: 1.7        },
                 u_darkness:      { value: 10.0       },
-                info:            {value: "FILTER EFFECT 1"    }},
+                info:            {value: "Filter: Whirlpool" }},
 
-    vertexShader: document.getElementById( 'vertexShader' ).textContent,
-    fragmentShader: document.getElementById( 'fragmentShader_02' ).textContent
+    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentWhirlpool' ).textContent
+  } ),
+  
+  // Toon
+  new THREE.ShaderMaterial(
+  {
+    uniforms: { u_time:          { value: 1.0        },
+                u_texture:       { value: texture    },
+                u_resolution:    { value: resolution },
+                u_fingers_right: { value: fingers[0] },
+                u_fingers_left:  { value: fingers[1] },
+                u_hands:         { value: hands      },
+                u_debug:         { value: 0          },
+                u_size:          { value: 1.7        },
+                u_darkness:      { value: 10.0       },
+                info:            {value: "Filter: Toon" }},
+
+    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentToon' ).textContent
   } )
+    
 ];
 
 export { resolution, materials, fingers };
