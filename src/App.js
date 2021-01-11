@@ -43,6 +43,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Link from '@material-ui/core/Link';
+import Hidden from '@material-ui/core/Hidden';
 
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
@@ -65,8 +66,6 @@ import { MovieFilter,
 //
 var mesh;
 var activeMat = 2, maxMat = 2;
-var controlsNum = 0;
-
 const drawerWidth = '20%';
 
 const useStyles = makeStyles((theme) => ({
@@ -355,7 +354,7 @@ export default function PersistentDrawerRight() {
     activeMat = panel;
     mesh.material = materials[activeMat];
   };
-
+  
   // Dialog
   const [openHelp, setOpenHelp] = React.useState(false);
   const handleOpenHelp = () => {
@@ -430,9 +429,9 @@ export default function PersistentDrawerRight() {
         </div>
         <Divider />
         
-        <Accordion expanded={expanded === '0'} onChange={handleAccordChange('0')}>
+        <Accordion expanded={activeMat == '0'} onChange={handleAccordChange('0')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '0' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -482,9 +481,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={expanded === '1'} onChange={handleAccordChange('1')}>
+        <Accordion expanded={activeMat == '1'} onChange={handleAccordChange('1')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '1' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -524,9 +523,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={expanded === '2'} onChange={handleAccordChange('2')}>
+        <Accordion expanded={activeMat == '2'} onChange={handleAccordChange('2')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '2' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -566,9 +565,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={expanded === '3'} onChange={handleAccordChange('3')}>
+        <Accordion expanded={activeMat == '3'} onChange={handleAccordChange('3')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '3' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -608,9 +607,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={expanded === '4'} onChange={handleAccordChange('4')}>
+        <Accordion expanded={activeMat == '4'} onChange={handleAccordChange('4')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '4' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -650,9 +649,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={expanded === '5'} onChange={handleAccordChange('5')}>
+        <Accordion expanded={activeMat == '5'} onChange={handleAccordChange('5')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '5' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -692,9 +691,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={expanded === '6'} onChange={handleAccordChange('6')}>
+        <Accordion expanded={activeMat == '6'} onChange={handleAccordChange('6')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '6' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -734,9 +733,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={expanded === '7'} onChange={handleAccordChange('7')}>
+        <Accordion expanded={activeMat == '7'} onChange={handleAccordChange('7')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '7' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -763,9 +762,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={expanded === '8'} onChange={handleAccordChange('8')}>
+        <Accordion expanded={activeMat == '8'} onChange={handleAccordChange('8')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '8' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -805,9 +804,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={expanded === '9'} onChange={handleAccordChange('9')}>
+        <Accordion expanded={activeMat == '9'} onChange={handleAccordChange('9')}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={activeMat == '9' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
