@@ -116,6 +116,14 @@ var materials =
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentToon' ).textContent
   } ),
+
+  // Posterize
+  new THREE.ShaderMaterial(
+  {
+    uniforms: { u_texture: { value: texture }},
+    vertexShader: document.getElementById( 'vertexDefault' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentPosterize' ).textContent
+  } ),
   
   // Crosshatch
   new THREE.ShaderMaterial(
