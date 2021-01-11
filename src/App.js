@@ -62,7 +62,7 @@ import { MovieFilter,
 // Globals
 //
 var mesh;
-var activeMat = 9, maxMat = 2;
+var activeMat = 7, maxMat = 2;
 var controlsNum = 0;
 
 const drawerWidth = '20%';
@@ -308,6 +308,13 @@ export default function PersistentDrawerRight() {
   const [sizeValue, setSizeValue] = React.useState(2.1);
   const handleSizeChange = (event, newValue) => {
     setSizeValue(newValue);
+    materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+  // Size handle
+  const [sizeHoneyValue, setHoneySizeValue] = React.useState(0.01);
+  const handleHoneySizeChange = (event, newValue) => {
+    setHoneySizeValue(newValue);
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
   };
 
@@ -718,7 +725,7 @@ export default function PersistentDrawerRight() {
             id="panel1bh-header"
           >
             <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Hex pixelization" />
+            <ListItemText primary="Honeycomb" />
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
@@ -727,28 +734,15 @@ export default function PersistentDrawerRight() {
                   <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                     <ListItemIcon><AllOut /></ListItemIcon>
                   </Tooltip>  
-                   <Slider value={sizeValue}
-                      onChange={handleSizeChange}
-                      defaultValue={2.1}
+                   <Slider value={sizeHoneyValue}
+                      onChange={handleHoneySizeChange}
+                      defaultValue={0.01}
                       valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.0}
-                      max={3.0}
+                      step={0.001}
+                      min={0.001}
+                      max={0.07}
                     />
                 </ListItem>
-                <ListItem divider={true}>
-                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
-                  </Tooltip>
-                  <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
-                      defaultValue={2.1}
-                      valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
-                   />
-                 </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
