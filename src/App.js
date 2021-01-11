@@ -64,7 +64,7 @@ import { MovieFilter,
 // Globals
 //
 var mesh;
-var activeMat = 6, maxMat = 2;
+var activeMat = 2, maxMat = 2;
 var controlsNum = 0;
 
 const drawerWidth = '20%';
@@ -313,7 +313,7 @@ export default function PersistentDrawerRight() {
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
   };
 
-  // Honeycomb size handle
+  // Honeycombs size handle
   const [sizeHoneyValue, setHoneySizeValue] = React.useState(0.01);
   const handleHoneySizeChange = (event, newValue) => {
     setHoneySizeValue(newValue);
@@ -741,7 +741,7 @@ export default function PersistentDrawerRight() {
             id="panel1bh-header"
           >
             <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Honeycomb" />
+            <ListItemText primary="Honeycombs" />
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
