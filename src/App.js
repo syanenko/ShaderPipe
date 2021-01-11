@@ -863,7 +863,7 @@ export default function PersistentDrawerRight() {
             <Link href="https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)">
                GLSL
             </Link>
-             &nbsp;language and Google's&nbsp;
+             &nbsp;and Google's&nbsp;
             <Link href="https://mediapipe.dev/">
                Mediapipe
             </Link>
