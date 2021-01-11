@@ -55,6 +55,8 @@ import { MovieFilter,
          ExpandMore,
          Grain,
          HelpOutline,
+         BorderBottom,
+         BorderLeft,
          ExpandLess } from '@material-ui/icons';
 
 
@@ -62,7 +64,7 @@ import { MovieFilter,
 // Globals
 //
 var mesh;
-var activeMat = 7, maxMat = 2;
+var activeMat = 6, maxMat = 2;
 var controlsNum = 0;
 
 const drawerWidth = '20%';
@@ -311,11 +313,25 @@ export default function PersistentDrawerRight() {
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
   };
 
-  // Size handle
+  // Honeycomb size handle
   const [sizeHoneyValue, setHoneySizeValue] = React.useState(0.01);
   const handleHoneySizeChange = (event, newValue) => {
     setHoneySizeValue(newValue);
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+  // Pixel x-size handle
+  const [pixelSizeXValue, setPixelSizeValueX] = React.useState(640.0);
+  const handlePixelSizeXChange = (event, newValue) => {
+    setPixelSizeValueX(newValue);
+    materials[activeMat].uniforms[ 'u_size_x' ].value = newValue;
+  };
+
+  // Pixel y-size handle
+  const [pixelSizeYValue, setPixelSizeValueY] = React.useState(480.0);
+  const handlePixelSizeYChange = (event, newValue) => {
+    setPixelSizeValueY(newValue);
+    materials[activeMat].uniforms[ 'u_size_y' ].value = newValue;
   };
 
   // Darkness handle
@@ -685,33 +701,33 @@ export default function PersistentDrawerRight() {
             <ListItemIcon><MovieFilter /></ListItemIcon>
             <ListItemText primary="Pixelization" />
           </AccordionSummary>
-          <Divider />          
+          <Divider />
           <AccordionDetails>
             <List className={classes.list}>
                 <ListItem divider={true}>
-                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><AllOut /></ListItemIcon>
+                  <Tooltip title="Size X" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><BorderBottom /></ListItemIcon>
                   </Tooltip>  
-                   <Slider value={sizeValue}
-                      onChange={handleSizeChange}
-                      defaultValue={2.1}
+                   <Slider value={pixelSizeXValue}
+                      onChange={handlePixelSizeXChange}
+                      defaultValue={640.}
                       valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.0}
-                      max={3.0}
+                      step={10.0}
+                      min={50.0}
+                      max={1000.0}
                     />
                 </ListItem>
                 <ListItem divider={true}>
-                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  <Tooltip title="Size Y" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><BorderLeft /></ListItemIcon>
                   </Tooltip>
-                  <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
-                      defaultValue={2.1}
+                  <Slider value={pixelSizeYValue}
+                      onChange={handlePixelSizeYChange}
+                      defaultValue={480.}
                       valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
+                      step={10.0}
+                      min={50.0}
+                      max={1000.0}
                    />
                  </ListItem>
             </List>
@@ -739,7 +755,7 @@ export default function PersistentDrawerRight() {
                       defaultValue={0.01}
                       valueLabelDisplay="auto"
                       step={0.001}
-                      min={0.001}
+                      min={0.005}
                       max={0.07}
                     />
                 </ListItem>

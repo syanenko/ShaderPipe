@@ -524,10 +524,13 @@
   uniform sampler2D u_texture;
   varying vec2 vUv;
 
+  uniform float u_size_x;
+  uniform float u_size_y;
+  
   void main() {
     
-   float dx = 5.*(1./600.);
-   float dy = 3.*(1./600.);
+   float dx = 5.*(1./u_size_x);
+   float dy = 3.*(1./u_size_y);
    
    vec2 coord = vec2(dx*floor(vUv.x/dx),
                      dy*floor(vUv.y/dy));

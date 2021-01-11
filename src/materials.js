@@ -144,7 +144,9 @@ var materials =
   // Pixelization
   new THREE.ShaderMaterial(
   {
-    uniforms: { u_texture: { value: texture }},
+    uniforms: { u_texture: { value: texture },
+                u_size_x:  { value: 400.0   },
+                u_size_y:  { value: 200.0   }},
     vertexShader:   document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentPix'   ).textContent
   } ),
