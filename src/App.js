@@ -362,7 +362,7 @@ export default function PersistentDrawerRight() {
                     </Tooltip>
                    <Checkbox 
                       color="primary"
-                      defaultChecked={drawMarksChecked}
+                      defaultChecked={false}
                       onChange={handleDrawMarks}
                       name="checkedA" />
                  </ListItem>

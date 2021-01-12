@@ -7,6 +7,13 @@ import { Hands  } from '@mediapipe/hands/hands';
 const handsProc = new Hands({locateFile: (file) => {
   return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/${file}`;
 }});
+
+handsProc.setOptions({
+  maxNumHands: 2,
+  minDetectionConfidence: 0.5,
+  minTrackingConfidence: 0.5
+});
+
 handsProc.onResults(onResults);
 
 // Camera
