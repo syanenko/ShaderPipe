@@ -180,16 +180,16 @@
    */
   -->
   <script id="fragmentToon" type="x-shader/x-fragment">
+  #define HUE_LEVELS_COUNT 6
+  #define SAT_LEVELS_COUNT 4
+  #define VAL_LEVELS_COUNT 4
+  
   uniform sampler2D u_texture;
   varying vec2 vUv;
-
-  #define HueLevCount 6
-  #define SatLevCount 7
-  #define ValLevCount 4
-
-  float HueLevels[HueLevCount];// = float[] (0.0, 80.0, 160.0, 240.0, 320.0, 360.0);
-  float SatLevels[SatLevCount];// = float[] (0.0, 0.15, 0.3, 0.45, 0.6, 0.8, 1.0);
-  float ValLevels[ValLevCount];// = float[] (0.0, 0.3, 0.6, 1.0);
+  
+  uniform float[HUE_LEVELS_COUNT] u_hue_levels;
+  uniform float[SAT_LEVELS_COUNT] u_sat_levels;
+  uniform float[VAL_LEVELS_COUNT] u_val_levels;
 
   vec3 RGBtoHSV( float r, float g, float b) {
      float minv, maxv, delta;
@@ -276,24 +276,24 @@
   float nearestLevel(float col, int mode) {
 
      int levCount;
-     if (mode==0) levCount = HueLevCount;
-     if (mode==1) levCount = SatLevCount;
-     if (mode==2) levCount = ValLevCount;
+     if (mode==0) levCount = HUE_LEVELS_COUNT;
+     if (mode==1) levCount = SAT_LEVELS_COUNT;
+     if (mode==2) levCount = VAL_LEVELS_COUNT;
      
      for (int i =0; i<levCount-1; i++ ) {
        if (mode==0) {
-          if (col >= HueLevels[i] && col <= HueLevels[i+1]) {
-            return HueLevels[i+1];
+          if (col >= u_hue_levels[i] && col <= u_hue_levels[i+1]) {
+            return u_hue_levels[i+1];
           }
        }
        if (mode==1) {
-          if (col >= SatLevels[i] && col <= SatLevels[i+1]) {
-            return SatLevels[i+1];
+          if (col >= u_sat_levels[i] && col <= u_sat_levels[i+1]) {
+            return u_sat_levels[i+1];
           }
        }
        if (mode==2) {
-          if (col >= ValLevels[i] && col <= ValLevels[i+1]) {
-            return ValLevels[i+1];
+          if (col >= u_val_levels[i] && col <= u_val_levels[i+1]) {
+            return u_val_levels[i+1];
           }
        }
      }
@@ -337,6 +337,7 @@
 
   void main(void)
   {
+  /*
     HueLevels[0] = 0.0;
     HueLevels[1] = 80.0;
     HueLevels[2] = 160.0;
@@ -344,19 +345,19 @@
     HueLevels[4] = 320.0;
     HueLevels[5] = 360.0;
 
-    SatLevels[0] = 0.0;
-    SatLevels[1] = 0.15;
-    SatLevels[2] = 0.30;
-    SatLevels[3] = 0.45;
-    SatLevels[4] = 0.60;
-    SatLevels[5] = 0.80;
-    SatLevels[6] = 1.0;
+    u_sat_levels[0] = 0.0;
+    u_sat_levels[1] = 0.15;
+    u_sat_levels[2] = 0.30;
+    u_sat_levels[3] = 0.45;
+    u_sat_levels[4] = 0.60;
+    u_sat_levels[5] = 0.80;
+    u_sat_levels[6] = 1.0;
     
-    ValLevels[0] = 0.0;
-    ValLevels[1] = 0.3;
-    ValLevels[2] = 0.6;
-    ValLevels[3] = 1.0;
-    
+    u_val_levels[0] = 0.0;
+    u_val_levels[1] = 0.3;
+    u_val_levels[2] = 0.6;
+    u_val_levels[3] = 1.0;
+*/    
     vec4 colorOrg = texture2D( u_texture, vUv );
     vec3 vHSV =  RGBtoHSV(colorOrg.r,colorOrg.g,colorOrg.b);
     vHSV.x = nearestLevel(vHSV.x, 0);

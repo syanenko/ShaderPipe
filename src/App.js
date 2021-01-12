@@ -61,7 +61,7 @@ import { MovieFilter,
 // Globals
 //
 var mesh;
-var activeMat = 3;
+var activeMat = 2;
 const drawerWidth = '20%';
 
 const useStyles = makeStyles((theme) => ({
@@ -205,6 +205,27 @@ export default function PersistentDrawerRight() {
   const handleSizeChange = (event, newValue) => {
     setSizeValue(newValue);
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+  // Toon hue handle
+  const [toonHue, setToonHue] = React.useState([0.0, 34.0, 69.0, 206.0, 284.0, 360.0]);
+  const handleToonHue = (event, newValue) => {
+    setToonHue(newValue);
+    materials[activeMat].uniforms[ 'u_hue_levels' ].value = newValue;
+  };
+
+  // Toon sat handle
+  const [toonSat, setToonSat] = React.useState([0.0, 0.3, 0.6, 1.0]);
+  const handleToonSat = (event, newValue) => {
+    setToonSat(newValue);
+    materials[activeMat].uniforms[ 'u_sat_levels' ].value = newValue;
+  };
+
+  // Toon value handle
+  const [toonValue, setToonValue] = React.useState([0.0, 0.3, 0.6, 1.0]);
+  const handleToonValue = (event, newValue) => {
+    setToonValue(newValue);
+    materials[activeMat].uniforms[ 'u_val_levels' ].value = newValue;
   };
 
   // Poster gamma handle
@@ -487,31 +508,46 @@ export default function PersistentDrawerRight() {
           <AccordionDetails>
             <List className={classes.list}>
                 <ListItem divider={true}>
-                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><AllOut /></ListItemIcon>
+                  <Tooltip title="Hue levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><ColorLens /></ListItemIcon>
                   </Tooltip>  
-                   <Slider value={sizeValue}
-                      onChange={handleSizeChange}
-                      defaultValue={2.1}
+                   <Slider value={toonHue}
+                      onChange={handleToonHue}
+                      defaultValue={[0.0, 80.0, 160.0, 240.0, 320.0, 360.0]}
                       valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.0}
-                      max={3.0}
+                      step={1.0}
+                      min={1.0}
+                      max={360.0}
                     />
                 </ListItem>
+
                 <ListItem divider={true}>
-                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
-                  </Tooltip>
-                  <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
-                      defaultValue={2.1}
+                  <Tooltip title="Saturation levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><InvertColors /></ListItemIcon>
+                  </Tooltip>  
+                   <Slider value={toonSat}
+                      onChange={handleToonSat}
+                      defaultValue={[0.0, 0.3, 0.6, 1.0]}
                       valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
-                   />
-                 </ListItem>
+                      step={0.01}
+                      min={0.01}
+                      max={1.0}
+                    />
+                </ListItem>
+
+                <ListItem divider={true}>
+                  <Tooltip title="Value levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  </Tooltip>  
+                   <Slider value={toonValue}
+                      onChange={handleToonValue}
+                      defaultValue={[0.0, 0.3, 0.6, 1.0]}
+                      valueLabelDisplay="auto"
+                      step={0.01}
+                      min={0.01}
+                      max={1.0}
+                    />
+                </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
