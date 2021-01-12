@@ -803,3 +803,6 @@ ReactDOM.render(
   <Scene />,
   document.getElementById('scene')
 );
+
+
+export {activeMat};

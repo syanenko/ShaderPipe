@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
-import { Camera } from '@mediapipe/camera_utils/camera_utils';
-import { Hands  } from '@mediapipe/hands/hands';
+import { Camera }    from '@mediapipe/camera_utils/camera_utils';
+import { Hands  }    from '@mediapipe/hands/hands';
+import { activeMat } from './App';
 
 // Hands
 const handsProc = new Hands({locateFile: (file) => {
@@ -15,19 +16,6 @@ handsProc.setOptions({
 });
 
 handsProc.onResults(onResults);
-
-// Camera
-const videoElement =
-  document.getElementsByClassName('input_video')[0];
-const camera = new Camera(videoElement, {
-    onFrame: async () => {
-      await handsProc.send({image: videoElement});
-    }
-  });
-camera.start();
-
-var resolution = new THREE.Vector2(camera.b.width, camera.b.height);
-var texture    = new THREE.VideoTexture( videoElement );
 
 const HAND_POINTS = 21;
 var fingers = [ new Array(HAND_POINTS), new Array(HAND_POINTS)];
@@ -85,6 +73,9 @@ function onResults(results)
   }
 }
 
+const videoElement = document.getElementsByClassName('input_video')[0];
+var texture = new THREE.VideoTexture( videoElement );
+var resolution = new THREE.Vector2(0, 0);
 var materials =
 [
   // Fireball
@@ -185,5 +176,18 @@ var materials =
     fragmentShader: document.getElementById( 'fragmentSobel' ).textContent
   } )
 ];
+
+// Camera
+const camera = new Camera(videoElement, {
+    onFrame: async () => {
+      if(materials[activeMat].uniforms['u_fingers_right'])
+      {
+        await handsProc.send({image: videoElement});
+      }
+    }
+  });
+camera.start();
+
+resolution = new THREE.Vector2(camera.b.width, camera.b.height);
 
 export { resolution, materials, fingers };
