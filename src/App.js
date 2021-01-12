@@ -48,8 +48,9 @@ import { MovieFilter,
          HelpOutline,
          BorderBottom,
          BorderLeft,
+         SwapHoriz,
+         SwapVert,
          ExpandLess } from '@material-ui/icons';
-
 
 //
 // Globals
@@ -199,6 +200,20 @@ export default function PersistentDrawerRight() {
   const handleSizeChange = (event, newValue) => {
     setSizeValue(newValue);
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+  // Sobel dX handle
+  const [sobelDxValue, setSobelDxValue] = React.useState(0.002);
+  const handleSobelDx = (event, newValue) => {
+    setSobelDxValue(newValue);
+    materials[activeMat].uniforms[ 'u_dX' ].value = newValue;
+  };
+  
+  // Sobel dY handle
+  const [sobelDyValue, setSobelDyValue] = React.useState(0.002);
+  const handleSobelDy = (event, newValue) => {
+    setSobelDyValue(newValue);
+    materials[activeMat].uniforms[ 'u_dY' ].value = newValue;
   };
 
   // Honeycombs size handle
@@ -706,29 +721,29 @@ export default function PersistentDrawerRight() {
           <AccordionDetails>
             <List className={classes.list}>
                 <ListItem divider={true}>
-                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><AllOut /></ListItemIcon>
+                  <Tooltip title="dX" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><SwapHoriz /></ListItemIcon>
                   </Tooltip>  
-                   <Slider value={sizeValue}
-                      onChange={handleSizeChange}
-                      defaultValue={2.1}
+                   <Slider value={sobelDxValue}
+                      onChange={handleSobelDx}
+                      defaultValue={0.002}
                       valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.0}
-                      max={3.0}
+                      step={0.0001}
+                      min={0.000}
+                      max={0.01}
                     />
                 </ListItem>
                 <ListItem divider={true}>
-                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  <Tooltip title="dY" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><SwapVert /></ListItemIcon>
                   </Tooltip>
-                  <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
-                      defaultValue={2.1}
+                  <Slider value={sobelDyValue}
+                      onChange={handleSobelDy}
+                      defaultValue={0.002}
                       valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
+                      step={0.0001}
+                      min={0.000}
+                      max={0.01}
                    />
                  </ListItem>
             </List>
