@@ -699,10 +699,108 @@
   }
   </script>
 
+<!--
+   fragmentMask
+  -->
+  <script id="fragmentMask" type="x-shader/x-fragment">
+    varying vec2 vUv;
+    
+    uniform float u_time;
+    uniform vec2 u_resolution;
+    uniform sampler2D u_texture;
+    
+    uniform vec2 u_face[7];
+    
+    uniform vec2 u_fingers_right[21];
+    uniform vec2 u_fingers_left[21];
+    uniform vec2 u_hands[2];
+
+    uniform bool u_debug;
+    
+    uniform float u_size;
+    uniform float u_darkness;
+
+    float random (vec2 fc) {
+        return fract(sin(dot(fc.xy,
+                  vec2(12.9898,78.233))) *
+                  43758.5453123);
+    }
+
+    void main()
+    {
+      vec2 fc = gl_FragCoord.xy / u_resolution.xy;
+
+      // Draw debug marks
+      if(u_debug)
+      {
+        float markSize = 0.008;
+        float dist = 0.0;
+        for(int i=0; i<21; i++)
+        {
+          dist = distance(fc, u_face[i]);
+          if(dist < markSize)
+          {
+            gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0) / (dist * 300.0);
+            return;
+          }
+          
+          dist = distance(fc, u_fingers_left[i]);
+          if(dist < markSize)
+          {
+            gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0) / (dist * 300.0);
+            return;
+          }
+          
+          dist = distance(fc, u_hands[0]);
+          if(dist < markSize)
+          {
+            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0) / (dist * 300.0);
+            return;
+          }
+          
+          dist = distance(fc, u_hands[1]);
+          if(dist < markSize)
+          {
+            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0) / (dist * 300.0);
+            return;
+          }
+        }
+      }
+
+      float noiseLevel = 0.004;
+      float tempo = 200.0;
+      float border = 160.0;
+      float d0 = 1.0, d1 = 1.0;
+      float disThresh = 0.008;
+      
+      if( u_hands[0] != vec2(0.0))
+        d0 = distance(fc, u_hands[0]);
+
+      if(u_hands[1] != vec2(0.0))
+        d1 = distance(fc, u_hands[1]);
+      
+      float noise = random(fc);
+      float pulse = sin(u_time * tempo * noise) * noise * 0.001;
+      float dist = pow(d0 * d1, u_size) + pulse;
+      
+      if(dist < disThresh)
+      {
+        gl_FragColor = texture2D(u_texture, vUv)  * (vec4( 0.1, 1.0, 0.1, 1.0) + (dist * border));
+
+      } else
+      {
+        vec4 color = vec4(vec3(dist) * u_darkness, 1.0);
+        gl_FragColor = texture2D(u_texture, vUv) - color;
+      }
+    }
+  </script>
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <video id="video" class="input_video" style="display:none; visibility: hidden;"></video>
+<!--    
+    <canvas class="output_canvas" width="640px" height="480px"></canvas>
+-->    
     <div id="root"></div>
   </body>
 

@@ -55,13 +55,14 @@ import { MovieFilter,
          Iso,
          InvertColors,
          ColorLens,
+         Face,
          ExpandLess } from '@material-ui/icons';
 
 //
 // Globals
 //
 var mesh;
-var activeMat = 2;
+var activeMat = 10;
 const drawerWidth = '20%';
 
 const useStyles = makeStyles((theme) => ({
@@ -800,6 +801,32 @@ export default function PersistentDrawerRight() {
             </List>
           </AccordionDetails>
         </Accordion>
+        
+        <Accordion expanded={activeMat === 10} onChange={handleAccordChange(10)}>
+          <AccordionSummary
+            expandIcon={activeMat === 10 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header">
+            <ListItemIcon><Face /></ListItemIcon>
+            <ListItemText primary="Mask" />
+          </AccordionSummary>
+          <Divider />
+          <AccordionDetails>
+            <List className={classes.list}>
+              <ListItem divider={true}>
+                <Tooltip title="Marks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><Grain /></ListItemIcon>
+                </Tooltip>
+               <Checkbox 
+                  color="primary"
+                  defaultChecked={false}
+                  onChange={handleDrawMarks}
+                  name="checkedA" />
+             </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
+        
       </Drawer>
       
       <Dialog
@@ -870,5 +897,6 @@ ReactDOM.render(
   document.getElementById('scene')
 );
 
+// TODO: Center scene, add face
 
 export {activeMat};
