@@ -50,13 +50,14 @@ import { MovieFilter,
          BorderLeft,
          SwapHoriz,
          SwapVert,
+         VerticalSplit,
          ExpandLess } from '@material-ui/icons';
 
 //
 // Globals
 //
 var mesh;
-var activeMat = 2;
+var activeMat = 8;
 const drawerWidth = '20%';
 
 const useStyles = makeStyles((theme) => ({
@@ -200,6 +201,13 @@ export default function PersistentDrawerRight() {
   const handleSizeChange = (event, newValue) => {
     setSizeValue(newValue);
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+  // Line handle
+  const [lineLimit, setLineLimit] = React.useState(0.5);
+  const handleLineLimit = (event, newValue) => {
+    setLineLimit(newValue);
+    materials[activeMat].uniforms[ 'u_limit' ].value = newValue;
   };
 
   // Sobel dX handle
@@ -673,37 +681,24 @@ export default function PersistentDrawerRight() {
             id="panel1bh-header"
           >
             <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Line" />
+            <ListItemText primary="Pen" />
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
                 <ListItem divider={true}>
-                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><AllOut /></ListItemIcon>
+                  <Tooltip title="Details" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><VerticalSplit /></ListItemIcon>
                   </Tooltip>  
-                   <Slider value={sizeValue}
-                      onChange={handleSizeChange}
-                      defaultValue={2.1}
+                   <Slider value={lineLimit}
+                      onChange={handleLineLimit}
+                      defaultValue={0.5}
                       valueLabelDisplay="auto"
                       step={0.01}
-                      min={0.0}
-                      max={3.0}
+                      min={0.01}
+                      max={1.5}
                     />
                 </ListItem>
-                <ListItem divider={true}>
-                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
-                  </Tooltip>
-                  <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
-                      defaultValue={2.1}
-                      valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
-                   />
-                 </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>

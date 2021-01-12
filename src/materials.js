@@ -161,7 +161,8 @@ var materials =
   // Line
   new THREE.ShaderMaterial(
   {
-    uniforms: { u_texture: { value: texture }},
+    uniforms: { u_texture: { value: texture },
+                u_limit:   { value: 0.5     }},
     vertexShader:   document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentLine'  ).textContent
   } ),
