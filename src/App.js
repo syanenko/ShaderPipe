@@ -352,19 +352,19 @@ export default function PersistentDrawerRight() {
           
           <IconButton
             color="inherit"
+            edge="end"
+            onClick={handleOpenHelp}
+            className={clsx(open && classes.hide)}>
+            <HelpOutline />
+          </IconButton>
+
+          <IconButton
+            color="inherit"
             aria-label="open drawer"
             edge="end"
             onClick={handleDrawerOpen}
             className={clsx(open && classes.hide)}>
             <MenuIcon />
-          </IconButton>
-
-          <IconButton
-            color="inherit"
-            edge="end"
-            onClick={handleOpenHelp}
-            className={clsx(open && classes.hide)}>
-            <HelpOutline />
           </IconButton>
           
         </Toolbar>
