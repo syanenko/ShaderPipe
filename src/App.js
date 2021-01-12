@@ -57,7 +57,7 @@ import { MovieFilter,
 // Globals
 //
 var mesh;
-var activeMat = 8;
+var activeMat = 5;
 const drawerWidth = '20%';
 
 const useStyles = makeStyles((theme) => ({

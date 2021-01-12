@@ -134,7 +134,10 @@ var materials =
   // Gobelin
   new THREE.ShaderMaterial(
   {
-    uniforms: { u_texture: { value: texture }},
+    uniforms: { u_texture: { value: texture },
+                u_size:    { value: 6.0     },
+                u_invert:  { value: 0       },
+                u_dim:     { value: 600.0   }},
     vertexShader:   document.getElementById( 'vertexDefault'   ).textContent,
     fragmentShader: document.getElementById( 'fragmentGobelin' ).textContent
   } ),
