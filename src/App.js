@@ -8,20 +8,15 @@ import { resolution, materials, fingers } from './materials';
 // TODO: separate UI
 import 'fontsource-roboto';
 import { Button } from '@material-ui/core';
-import { Paper } from '@material-ui/core';
 import { Slider } from '@material-ui/core';
 import { Checkbox } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { FormGroup } from '@material-ui/core';
-import { FormControlLabel } from '@material-ui/core';
-import { ListSubheader } from '@material-ui/core';
 import { List } from '@material-ui/core';
 import { ListItem } from '@material-ui/core';
 import { ListItemIcon } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
-import { Collapse } from '@material-ui/core';
 import { Divider } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -40,20 +35,15 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Link from '@material-ui/core/Link';
 import Hidden from '@material-ui/core/Hidden';
-
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import { MovieFilter,
          BubbleChart,
          Brightness4,
          PanTool,
          AllOut,
-         ExpandMore,
          Grain,
          HelpOutline,
          BorderBottom,
@@ -65,7 +55,7 @@ import { MovieFilter,
 // Globals
 //
 var mesh;
-var activeMat = 2, maxMat = 2;
+var activeMat = 2;
 const drawerWidth = '20%';
 
 const useStyles = makeStyles((theme) => ({
@@ -141,39 +131,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //
-// Toggle debug marks
-//
-class ToggleMarks extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {isToggleOn: materials[activeMat].uniforms[ 'u_debug' ].value};
-
-    // This binding is necessary to make `this` work in the callback
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick()
-  {
-    materials[activeMat].uniforms[ 'u_debug' ].value = !materials[activeMat].uniforms[ 'u_debug' ].value;    
-    
-    this.setState(state => ({
-      isToggleOn: materials[activeMat].uniforms[ 'u_debug' ].value
-    }));
-  }
-
-  render()
-  {
-    return (
-      <Button size='large' variant="contained" color="primary" onClick={this.handleClick}>
-        {materials[activeMat].uniforms[ 'u_debug' ].value ? 'Hide marks' : 'Draw marks'}
-      </Button>
-    );
-  }
-}
-
-//
 // Size
 //
+/*
 function SizeSlider() {
   const classes = useStyles();
   const [value, setValue] = React.useState(2.1);
@@ -240,7 +200,7 @@ function DarknesSlider() {
     </div>
   );
 };
-
+*/
 //
 // Scene
 //
@@ -341,7 +301,7 @@ export default function PersistentDrawerRight() {
   };
 
   // Draw marks handle
-  const [drawMarksChecked, setDrawMarksChecked] = React.useState(true);
+  const [drawMarksChecked, setDrawMarksChecked] = React.useState(false);
   const handleDrawMarks = (event) => {
     setDrawMarksChecked(event.target.checked);
     materials[activeMat].uniforms[ 'u_debug' ].value = event.target.checked;
@@ -429,9 +389,9 @@ export default function PersistentDrawerRight() {
         </div>
         <Divider />
         
-        <Accordion expanded={activeMat == '0'} onChange={handleAccordChange('0')}>
+        <Accordion expanded={activeMat === 0} onChange={handleAccordChange(0)}>
           <AccordionSummary
-            expandIcon={activeMat == '0' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 0 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -473,7 +433,7 @@ export default function PersistentDrawerRight() {
                     </Tooltip>
                    <Checkbox 
                       color="primary"
-                      defaultChecked={false}
+                      defaultChecked={drawMarksChecked}
                       onChange={handleDrawMarks}
                       name="checkedA" />
                  </ListItem>
@@ -481,9 +441,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat == '1'} onChange={handleAccordChange('1')}>
+        <Accordion expanded={activeMat === 1} onChange={handleAccordChange(1)}>
           <AccordionSummary
-            expandIcon={activeMat == '1' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 1 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -523,9 +483,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={activeMat == '2'} onChange={handleAccordChange('2')}>
+        <Accordion expanded={activeMat === 2} onChange={handleAccordChange(2)}>
           <AccordionSummary
-            expandIcon={activeMat == '2' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 2 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -565,9 +525,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat == '3'} onChange={handleAccordChange('3')}>
+        <Accordion expanded={activeMat === 3} onChange={handleAccordChange(3)}>
           <AccordionSummary
-            expandIcon={activeMat == '3' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 3 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -607,9 +567,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={activeMat == '4'} onChange={handleAccordChange('4')}>
+        <Accordion expanded={activeMat === 4} onChange={handleAccordChange(4)}>
           <AccordionSummary
-            expandIcon={activeMat == '4' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 4 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -649,9 +609,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={activeMat == '5'} onChange={handleAccordChange('5')}>
+        <Accordion expanded={activeMat === 5} onChange={handleAccordChange(5)}>
           <AccordionSummary
-            expandIcon={activeMat == '5' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 5 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -691,9 +651,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={activeMat == '6'} onChange={handleAccordChange('6')}>
+        <Accordion expanded={activeMat === 6} onChange={handleAccordChange(6)}>
           <AccordionSummary
-            expandIcon={activeMat == '6' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 6 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -733,9 +693,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat == '7'} onChange={handleAccordChange('7')}>
+        <Accordion expanded={activeMat === 7} onChange={handleAccordChange(7)}>
           <AccordionSummary
-            expandIcon={activeMat == '7' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 7 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -762,9 +722,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat == '8'} onChange={handleAccordChange('8')}>
+        <Accordion expanded={activeMat === 8} onChange={handleAccordChange(8)}>
           <AccordionSummary
-            expandIcon={activeMat == '8' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 8 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
@@ -804,9 +764,9 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat == '9'} onChange={handleAccordChange('9')}>
+        <Accordion expanded={activeMat === 9} onChange={handleAccordChange(9)}>
           <AccordionSummary
-            expandIcon={activeMat == '9' ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            expandIcon={activeMat === 9 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
