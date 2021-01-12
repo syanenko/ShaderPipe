@@ -863,7 +863,7 @@ export default function PersistentDrawerRight() {
             <br/>
           </Typography>
           <Typography gutterBottom>
-            Allow browser to use your camera, select image filtering <MovieFilter color="action"/> and hands pose effects <PanTool color="action"/> from menu, play with controls to adjust them.
+            Allow browser to use your camera, select image filtering <MovieFilter color="action"/>, face <Face color="action"/> or hands pose <PanTool color="action"/> effects from menu, play with controls to adjust them.
           </Typography>
           <Typography gutterBottom>
             <br/>
