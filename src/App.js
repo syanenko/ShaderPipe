@@ -51,6 +51,8 @@ import { MovieFilter,
          SwapHoriz,
          SwapVert,
          VerticalSplit,
+         ZoomOutMap,
+         Iso,
          ExpandLess } from '@material-ui/icons';
 
 //
@@ -201,6 +203,27 @@ export default function PersistentDrawerRight() {
   const handleSizeChange = (event, newValue) => {
     setSizeValue(newValue);
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+  // Gobelin size handle
+  const [gobelinSize, setGobelinSize] = React.useState(6.0);
+  const handleGobelinSize = (event, newValue) => {
+    setGobelinSize(newValue);
+    materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+  // Gobelin dim handle
+  const [gobelinDim, setGobelinDim] = React.useState(600.0);
+  const handleGobelinDim = (event, newValue) => {
+    setGobelinDim(newValue);
+    materials[activeMat].uniforms[ 'u_dim' ].value = newValue;
+  };
+
+  // Gobelin invert handle
+  const [gobelinInvert, setGobelinInvert] = React.useState(false);
+  const handleGobelinInvert = (event) => {
+    setGobelinInvert(event.target.checked);
+    materials[activeMat].uniforms[ 'u_invert' ].value = event.target.checked;
   };
 
   // Line handle
@@ -570,35 +593,47 @@ export default function PersistentDrawerRight() {
             <ListItemIcon><MovieFilter /></ListItemIcon>
             <ListItemText primary="Gobelin" />
           </AccordionSummary>
-          <Divider />          
+          <Divider />
+          
           <AccordionDetails>
             <List className={classes.list}>
                 <ListItem divider={true}>
                   <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                     <ListItemIcon><AllOut /></ListItemIcon>
                   </Tooltip>  
-                   <Slider value={sizeValue}
-                      onChange={handleSizeChange}
-                      defaultValue={2.1}
+                   <Slider value={gobelinSize}
+                      onChange={handleGobelinSize}
+                      defaultValue={6.0}
                       valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.0}
-                      max={3.0}
+                      step={1.0}
+                      min={5.0}
+                      max={25.0}
+                    />
+                </ListItem>
+                
+                <ListItem divider={true}>
+                  <Tooltip title="Dimension" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><ZoomOutMap /></ListItemIcon>
+                  </Tooltip>  
+                   <Slider value={gobelinDim}
+                      onChange={handleGobelinDim}
+                      defaultValue={600.0}
+                      valueLabelDisplay="auto"
+                      step={10.0}
+                      min={200.0}
+                      max={1000.0}
                     />
                 </ListItem>
                 <ListItem divider={true}>
-                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
-                  </Tooltip>
-                  <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
-                      defaultValue={2.1}
-                      valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
-                   />
-                 </ListItem>
+                  <Tooltip title="Invert" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><Iso /></ListItemIcon>
+                  </Tooltip>  
+                   <Checkbox 
+                      color="primary"
+                      defaultChecked={false}
+                      onChange={handleGobelinInvert}
+                      name="checkedGobelinInvert" />
+                </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
