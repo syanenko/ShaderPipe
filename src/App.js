@@ -567,37 +567,6 @@ export default function PersistentDrawerRight() {
             <ListItemIcon><MovieFilter /></ListItemIcon>
             <ListItemText primary="Crosshatch" />
           </AccordionSummary>
-          <Divider />          
-          <AccordionDetails>
-            <List className={classes.list}>
-                <ListItem divider={true}>
-                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><AllOut /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={sizeValue}
-                      onChange={handleSizeChange}
-                      defaultValue={2.1}
-                      valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.0}
-                      max={3.0}
-                    />
-                </ListItem>
-                <ListItem divider={true}>
-                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
-                  </Tooltip>
-                  <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
-                      defaultValue={2.1}
-                      valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
-                   />
-                 </ListItem>
-            </List>
-          </AccordionDetails>
         </Accordion>
         
         <Accordion expanded={activeMat === 5} onChange={handleAccordChange(5)}>
