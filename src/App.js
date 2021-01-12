@@ -229,14 +229,14 @@ export default function PersistentDrawerRight() {
   };
 
   // Poster gamma handle
-  const [posterGamma, setPosterGamma] = React.useState(0.5);
+  const [posterGamma, setPosterGamma] = React.useState(6.0);
   const handlePosterGamma = (event, newValue) => {
     setPosterGamma(newValue);
     materials[activeMat].uniforms[ 'u_gamma' ].value = newValue;
   };
 
   // Poster number of colors handle
-  const [posterNumColors, setPosterNumColors] = React.useState(8.0);
+  const [posterNumColors, setPosterNumColors] = React.useState(2.0);
   const handlePosterNumColors = (event, newValue) => {
     setPosterNumColors(newValue);
     materials[activeMat].uniforms[ 'u_num_colors' ].value = newValue;
