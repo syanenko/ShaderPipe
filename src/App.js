@@ -131,77 +131,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //
-// Size
-//
-/*
-function SizeSlider() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(2.1);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    materials[activeMat].uniforms[ 'u_size' ].value = newValue;
-  };
-
-  return (
-    <div>
-      <Grid container spacing={2}>
-        <Grid item>
-          <Typography id="continuous-slider" gutterBottom>
-            Size
-          </Typography>
-        </Grid>
-        <Grid item xs>
-          <Slider value={value}
-            onChange={handleChange}
-            defaultValue={2.1}
-            valueLabelDisplay="auto"
-            step={0.01}
-            min={0.0}
-            max={3.0}
-          />
-        </Grid>
-      </Grid>
-    </div>
-  );
-};
-
-//
-// Darkness
-//
-function DarknesSlider() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(1.5);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    materials[activeMat].uniforms[ 'u_darkness' ].value = newValue;
-  };
-
-  return (
-    <div>
-      <Grid container spacing={2}>
-        <Grid item>
-          <Typography id="continuous-slider" gutterBottom>
-            Darkness
-          </Typography>
-        </Grid>
-        <Grid item xs>
-          <Slider value={value}
-            onChange={handleChange}
-            aria-labelledby="continuous-slider"
-            valueLabelDisplay="auto"
-            step={0.1}
-            min={0.0}
-            max={15.0}
-          />
-        </Grid>
-      </Grid>
-    </div>
-  );
-};
-*/
-//
 // Scene
 //
 class Scene extends React.Component
@@ -863,9 +792,8 @@ export default function PersistentDrawerRight() {
 }
 
 //
-// TODO: Add filters and hands effects
+// Rendering
 //
-
 ReactDOM.render(
   <PersistentDrawerRight />,
   document.getElementById("root")
