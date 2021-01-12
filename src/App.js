@@ -53,13 +53,15 @@ import { MovieFilter,
          VerticalSplit,
          ZoomOutMap,
          Iso,
+         InvertColors,
+         ColorLens,
          ExpandLess } from '@material-ui/icons';
 
 //
 // Globals
 //
 var mesh;
-var activeMat = 5;
+var activeMat = 3;
 const drawerWidth = '20%';
 
 const useStyles = makeStyles((theme) => ({
@@ -203,6 +205,20 @@ export default function PersistentDrawerRight() {
   const handleSizeChange = (event, newValue) => {
     setSizeValue(newValue);
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+  // Poster gamma handle
+  const [posterGamma, setPosterGamma] = React.useState(0.5);
+  const handlePosterGamma = (event, newValue) => {
+    setPosterGamma(newValue);
+    materials[activeMat].uniforms[ 'u_gamma' ].value = newValue;
+  };
+
+  // Poster number of colors handle
+  const [posterNumColors, setPosterNumColors] = React.useState(8.0);
+  const handlePosterNumColors = (event, newValue) => {
+    setPosterNumColors(newValue);
+    materials[activeMat].uniforms[ 'u_num_colors' ].value = newValue;
   };
 
   // Gobelin size handle
@@ -513,29 +529,29 @@ export default function PersistentDrawerRight() {
           <AccordionDetails>
             <List className={classes.list}>
                 <ListItem divider={true}>
-                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><AllOut /></ListItemIcon>
+                  <Tooltip title="Gamma" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><InvertColors /></ListItemIcon>
                   </Tooltip>  
-                   <Slider value={sizeValue}
-                      onChange={handleSizeChange}
-                      defaultValue={2.1}
+                   <Slider value={posterGamma}
+                      onChange={handlePosterGamma}
+                      defaultValue={0.4}
                       valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.0}
-                      max={3.0}
+                      step={0.1}
+                      min={0.1}
+                      max={12.0}
                     />
                 </ListItem>
                 <ListItem divider={true}>
-                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  <Tooltip title="Number of colors" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><ColorLens /></ListItemIcon>
                   </Tooltip>
-                  <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
-                      defaultValue={2.1}
+                  <Slider value={posterNumColors}
+                      onChange={handlePosterNumColors}
+                      defaultValue={12.0}
                       valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
+                      step={1.0}
+                      min={2.0}
+                      max={32.0}
                    />
                  </ListItem>
             </List>
