@@ -3,8 +3,6 @@ import * as THREE from 'three';
 import { Camera    } from '@mediapipe/camera_utils/camera_utils';
 import { Hands     } from '@mediapipe/hands/hands';
 import { FaceMesh  } from '@mediapipe/face_mesh/face_mesh';
-// import { Control   } from '@mediapipe/control_utils/control_utils';
-import { drawConnectors, FACEMESH_TESSELATION, FACEMESH_RIGHT_EYE, FACEMESH_RIGHT_EYEBROW, FACEMESH_LEFT_EYE, FACEMESH_LEFT_EYEBROW, FACEMESH_FACE_OVAL, FACEMESH_LIPS } from '@mediapipe/drawing_utils/drawing_utils';
 import { activeMat } from './App';
 
 //
@@ -31,7 +29,7 @@ for(let i=0; i<MAX_HAND_POINT; i++)
 var hands = [ new THREE.Vector2(), new THREE.Vector2()];
 
 // Hands results
-function onResults(results)
+function onHandsResults(results)
 {
   for (let f = 0; f < fingers[0].length; f++)
     fingers[0][f].x = fingers[0][f].y = 
@@ -72,7 +70,7 @@ function onResults(results)
   }
 }
 
-handsProc.onResults(onResults);
+handsProc.onResults(onHandsResults);
 
 //
 // Face
