@@ -1,10 +1,10 @@
 import * as THREE    from 'three';
 import { Camera    } from '@mediapipe/camera_utils/camera_utils';
+import { handsProc } from './mediapipe';
+import { faceProc }  from './mediapipe';
 import { fingers }   from './mediapipe';
 import { hands }     from './mediapipe';
 import { face }      from './mediapipe';
-import { handsProc } from './mediapipe';
-import { faceProc }  from './mediapipe';
 import { activeMat } from './App';
 
 //
