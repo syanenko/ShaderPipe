@@ -63,7 +63,7 @@ import { Scene } from './scene';
 // Globals
 //
 const drawerWidth = '20%';
-var activeMat = 10;
+var activeMat = 2;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -161,7 +161,7 @@ export default function PersistentDrawerRight() {
   };
 
   // Toon hue handle
-  const [toonHue, setToonHue] = React.useState([0.0, 34.0, 69.0, 206.0, 284.0, 360.0]);
+  const [toonHue, setToonHue] = React.useState([1.0, 106.0, 219.0, 296.0]);
   const handleToonHue = (event, newValue) => {
     setToonHue(newValue);
     materials[activeMat].uniforms[ 'u_hue_levels' ].value = newValue;
@@ -491,7 +491,7 @@ export default function PersistentDrawerRight() {
                   </Tooltip>  
                    <Slider value={toonHue}
                       onChange={handleToonHue}
-                      defaultValue={[0.0, 80.0, 160.0, 240.0, 320.0, 360.0]}
+                      defaultValue={[1.0, 106.0, 219.0, 296.0]}
                       valueLabelDisplay="auto"
                       step={1.0}
                       min={1.0}

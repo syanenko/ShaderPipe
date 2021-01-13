@@ -66,7 +66,7 @@ var materials =
   new THREE.ShaderMaterial(
   {
     uniforms: { u_texture:    { value: texture },
-                u_hue_levels: { value: [0.0, 34.0, 69.0, 206.0, 284.0, 360.0] },
+                u_hue_levels: { value: [1.0, 106.0, 219.0, 296.0] },
                 u_sat_levels: { value: [0.0, 0.3, 0.6, 1.0] },
                 u_val_levels: { value: [0.0, 0.3, 0.6, 1.0] }},
     vertexShader:   document.getElementById( 'vertexDefault' ).textContent,
