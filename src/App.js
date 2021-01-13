@@ -2,11 +2,7 @@ import './App.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as THREE from 'three';
-import { resolution, materials } from './materials';
-import { fingers } from './mediapipe';
 
-// TODO: separate UI
 import 'fontsource-roboto';
 import { Button } from '@material-ui/core';
 import { Slider } from '@material-ui/core';
@@ -59,12 +55,15 @@ import { MovieFilter,
          Face,
          ExpandLess } from '@material-ui/icons';
 
+import { materials } from './materials';
+import { mesh } from './scene';
+import { Scene } from './scene';
+
 //
 // Globals
 //
-var mesh;
-var activeMat = 10;
 const drawerWidth = '20%';
+var activeMat = 10;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -137,45 +136,6 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgba(63, 81, 181, 1)'
   }
 }));
-
-//
-// Scene
-//
-class Scene extends React.Component
-{
-  componentDidMount()
-  {
-    const scene    = new THREE.Scene();
-    const camera   = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(resolution.x, resolution.y);
-
-    // document.body.appendChild( renderer.domElement );
-    // use ref as a mount point of the Three.js scene instead of the document.body
-    this.mount.appendChild(renderer.domElement);
-
-    const geometry = new THREE.PlaneBufferGeometry( 2, 2 );
-    mesh = new THREE.Mesh(geometry, materials[activeMat]);
-    scene.add(mesh);
-
-    var animate = function ()
-    {
-      requestAnimationFrame( animate );
-
-      if(materials[activeMat].uniforms['u_time'])
-        materials[activeMat].uniforms['u_time'].value = performance.now() / 1000;
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-  }
-
-  render()
-  {
-    return ( <div ref={ref =>	(this.mount = ref)} />)
-  }
-}
 
 //
 // Drawer
@@ -888,7 +848,5 @@ ReactDOM.render(
   <Scene />,
   document.getElementById('scene')
 );
-
-// TODO: Center scene, add face
 
 export {activeMat};
