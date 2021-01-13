@@ -3,7 +3,8 @@ import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as THREE from 'three';
-import { resolution, materials, fingers } from './materials';
+import { resolution, materials } from './materials';
+import { fingers } from './mediapipe';
 
 // TODO: separate UI
 import 'fontsource-roboto';
@@ -163,16 +164,7 @@ class Scene extends React.Component
 
       if(materials[activeMat].uniforms['u_time'])
         materials[activeMat].uniforms['u_time'].value = performance.now() / 1000;
-        
-      if(materials[activeMat].uniforms['u_resolution'])
-        materials[activeMat].uniforms['u_resolution'].value = resolution;
-        
-      if(materials[activeMat].uniforms['u_fingers_right'])
-        materials[activeMat].uniforms['u_fingers_right'].value = fingers[0];
-      
-      if(materials[activeMat].uniforms['u_fingers_left'])
-        materials[activeMat].uniforms['u_fingers_left'].value = fingers[1];
-      
+
       renderer.render(scene, camera);
     };
 
