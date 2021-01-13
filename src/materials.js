@@ -148,7 +148,7 @@ var materials =
                 u_texture:       { value: texture    },
                 u_resolution:    { value: resolution },
                 u_face:          { value: face       },
-                u_debug:         { value: 1          }},
+                u_debug:         { value: 0          }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentMask' ).textContent
