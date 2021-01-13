@@ -55,7 +55,7 @@ import { MovieFilter,
          Face,
          ExpandLess } from '@material-ui/icons';
 
-import { materials } from './materials';
+import { resolution, materials } from './materials';
 import { mesh } from './scene';
 import { Scene } from './scene';
 
@@ -63,7 +63,11 @@ import { Scene } from './scene';
 // Globals
 //
 const drawerWidth = '20%';
-var activeMat = 2;
+var activeMat = 10;
+
+// TODO: Adjust by resize
+resolution.x *= 1.8;
+resolution.y *= 1.8;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -182,14 +186,14 @@ export default function PersistentDrawerRight() {
   };
 
   // Poster gamma handle
-  const [posterGamma, setPosterGamma] = React.useState(6.0);
+  const [posterGamma, setPosterGamma] = React.useState(4.0);
   const handlePosterGamma = (event, newValue) => {
     setPosterGamma(newValue);
     materials[activeMat].uniforms[ 'u_gamma' ].value = newValue;
   };
 
   // Poster number of colors handle
-  const [posterNumColors, setPosterNumColors] = React.useState(2.0);
+  const [posterNumColors, setPosterNumColors] = React.useState(8.0);
   const handlePosterNumColors = (event, newValue) => {
     setPosterNumColors(newValue);
     materials[activeMat].uniforms[ 'u_num_colors' ].value = newValue;
@@ -266,7 +270,7 @@ export default function PersistentDrawerRight() {
   };
 
   // Draw marks handle
-  const [drawMarksChecked, setDrawMarksChecked] = React.useState(false);
+  const [drawMarksChecked, setDrawMarksChecked] = React.useState(true);
   const handleDrawMarks = (event) => {
     setDrawMarksChecked(event.target.checked);
     materials[activeMat].uniforms[ 'u_debug' ].value = event.target.checked;
@@ -371,7 +375,7 @@ export default function PersistentDrawerRight() {
                 </Tooltip>
                <Checkbox 
                   color="primary"
-                  defaultChecked={false}
+                  defaultChecked={true}
                   onChange={handleDrawMarks}
                   name="checkedA" />
              </ListItem>
@@ -548,7 +552,7 @@ export default function PersistentDrawerRight() {
                   </Tooltip>  
                    <Slider value={posterGamma}
                       onChange={handlePosterGamma}
-                      defaultValue={0.4}
+                      defaultValue={4.0}
                       valueLabelDisplay="auto"
                       step={0.1}
                       min={0.1}
@@ -561,7 +565,7 @@ export default function PersistentDrawerRight() {
                   </Tooltip>
                   <Slider value={posterNumColors}
                       onChange={handlePosterNumColors}
-                      defaultValue={12.0}
+                      defaultValue={8.0}
                       valueLabelDisplay="auto"
                       step={1.0}
                       min={2.0}
