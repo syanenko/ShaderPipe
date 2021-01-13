@@ -182,14 +182,14 @@ export default function PersistentDrawerRight() {
   };
 
   // Poster gamma handle
-  const [posterGamma, setPosterGamma] = React.useState(6.0);
+  const [posterGamma, setPosterGamma] = React.useState(5.7);
   const handlePosterGamma = (event, newValue) => {
     setPosterGamma(newValue);
     materials[activeMat].uniforms[ 'u_gamma' ].value = newValue;
   };
 
   // Poster number of colors handle
-  const [posterNumColors, setPosterNumColors] = React.useState(2.0);
+  const [posterNumColors, setPosterNumColors] = React.useState(8.0);
   const handlePosterNumColors = (event, newValue) => {
     setPosterNumColors(newValue);
     materials[activeMat].uniforms[ 'u_num_colors' ].value = newValue;
@@ -548,7 +548,7 @@ export default function PersistentDrawerRight() {
                   </Tooltip>  
                    <Slider value={posterGamma}
                       onChange={handlePosterGamma}
-                      defaultValue={0.4}
+                      defaultValue={5.7}
                       valueLabelDisplay="auto"
                       step={0.1}
                       min={0.1}
@@ -561,7 +561,7 @@ export default function PersistentDrawerRight() {
                   </Tooltip>
                   <Slider value={posterNumColors}
                       onChange={handlePosterNumColors}
-                      defaultValue={12.0}
+                      defaultValue={8.0}
                       valueLabelDisplay="auto"
                       step={1.0}
                       min={2.0}

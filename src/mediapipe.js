@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { Hands     } from '@mediapipe/hands/hands';
 import { FaceMesh  } from '@mediapipe/face_mesh/face_mesh';
-
+import { scale } from './scene';
+ 
 //
 // Hands
 //
@@ -47,8 +48,8 @@ function onHandsResults(results)
             if(!results.multiHandLandmarks[h][f])
               continue;
             
-            fingers[h][f].x = results.multiHandLandmarks[h][f].x;
-            fingers[h][f].y = 1 - results.multiHandLandmarks[h][f].y;
+            fingers[h][f].x = results.multiHandLandmarks[h][f].x * scale;
+            fingers[h][f].y = (1 - results.multiHandLandmarks[h][f].y) * scale;
 
             hands[h].x += fingers[h][f].x;
             hands[h].y += fingers[h][f].y;
@@ -79,7 +80,7 @@ const faceProc = new FaceMesh({locateFile: (file) => {
 faceProc.setOptions({
   maxNumFaces: 1,
   minDetectionConfidence: 0.5,
-  minTrackingConfidence: 0.5
+  minTrackingConfidence:  0.5
 });
 
 const MAX_FACE_POINT = 468;
@@ -98,8 +99,8 @@ function onFaceMeshResults(results)
     {
       for (let i=0; i<MAX_FACE_POINT; i++ )
       {
-          face[i].x = landmarks[i].x;
-          face[i].y = 1 - landmarks[i].y;
+          face[i].x = landmarks[i].x * scale;
+          face[i].y = (1 - landmarks[i].y) * scale;
       }
     }
   }

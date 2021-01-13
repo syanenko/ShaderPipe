@@ -7,6 +7,7 @@ import { activeMat } from './App';
 // Scene
 //
 var mesh;
+var scale = 1.8;
 
 class Scene extends React.Component
 {
@@ -15,7 +16,8 @@ class Scene extends React.Component
     const scene    = new THREE.Scene();
     const camera   = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
     const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(resolution.x, resolution.y);
+    
+    renderer.setSize(resolution.x * scale, resolution.y * scale);
 
     // document.body.appendChild( renderer.domElement );
     // use ref as a mount point of the Three.js scene instead of the document.body
@@ -44,4 +46,4 @@ class Scene extends React.Component
   }
 }
 
-export {Scene, mesh};
+export {Scene, mesh, scale};

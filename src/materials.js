@@ -77,8 +77,8 @@ var materials =
   new THREE.ShaderMaterial(
   {
     uniforms: { u_texture:    { value: texture },
-                u_gamma:      { value: 6.0     },
-                u_num_colors: { value: 2.0    }},
+                u_gamma:      { value: 5.7     },
+                u_num_colors: { value: 8.0     }},
     
     vertexShader:   document.getElementById( 'vertexDefault'     ).textContent,
     fragmentShader: document.getElementById( 'fragmentPosterize' ).textContent
