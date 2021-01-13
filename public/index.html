@@ -38,14 +38,16 @@
    fragmentFireball
   -->
   <script id="fragmentFireball" type="x-shader/x-fragment">
+    #define MAX_HAND_POINT 21
+    
     varying vec2 vUv;
     
     uniform float u_time;
     uniform vec2 u_resolution;
     uniform sampler2D u_texture;
     
-    uniform vec2 u_fingers_right[21];
-    uniform vec2 u_fingers_left[21];
+    uniform vec2 u_fingers_right[MAX_HAND_POINT];
+    uniform vec2 u_fingers_left[MAX_HAND_POINT];
     uniform vec2 u_hands[2];
 
     uniform bool u_debug;
@@ -68,7 +70,7 @@
       {
         float markSize = 0.008;
         float dist = 0.0;
-        for(int i=0; i<21; i++)
+        for(int i=0; i<MAX_HAND_POINT; i++)
         {
           dist = distance(fc, u_fingers_right[i]);
           if(dist < markSize)
@@ -337,27 +339,6 @@
 
   void main(void)
   {
-  /*
-    HueLevels[0] = 0.0;
-    HueLevels[1] = 80.0;
-    HueLevels[2] = 160.0;
-    HueLevels[3] = 240.0;
-    HueLevels[4] = 320.0;
-    HueLevels[5] = 360.0;
-
-    u_sat_levels[0] = 0.0;
-    u_sat_levels[1] = 0.15;
-    u_sat_levels[2] = 0.30;
-    u_sat_levels[3] = 0.45;
-    u_sat_levels[4] = 0.60;
-    u_sat_levels[5] = 0.80;
-    u_sat_levels[6] = 1.0;
-    
-    u_val_levels[0] = 0.0;
-    u_val_levels[1] = 0.3;
-    u_val_levels[2] = 0.6;
-    u_val_levels[3] = 1.0;
-*/    
     vec4 colorOrg = texture2D( u_texture, vUv );
     vec3 vHSV =  RGBtoHSV(colorOrg.r,colorOrg.g,colorOrg.b);
     vHSV.x = nearestLevel(vHSV.x, 0);
@@ -703,17 +684,16 @@
    fragmentMask
   -->
   <script id="fragmentMask" type="x-shader/x-fragment">
+    #define MAX_FACE_POINT 468
+    #define MARK_SIZE      0.004
+    
     varying vec2 vUv;
     
     uniform float u_time;
     uniform vec2 u_resolution;
     uniform sampler2D u_texture;
     
-    uniform vec2 u_face[7];
-    
-    uniform vec2 u_fingers_right[21];
-    uniform vec2 u_fingers_left[21];
-    uniform vec2 u_hands[2];
+    uniform vec2 u_face[MAX_FACE_POINT];
 
     uniform bool u_debug;
     
@@ -733,40 +713,18 @@
       // Draw debug marks
       if(u_debug)
       {
-        float markSize = 0.008;
         float dist = 0.0;
-        for(int i=0; i<21; i++)
+        for(int i=0; i<MAX_FACE_POINT; i++)
         {
           dist = distance(fc, u_face[i]);
-          if(dist < markSize)
+          if(dist < MARK_SIZE)
           {
             gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0) / (dist * 300.0);
             return;
           }
-          
-          dist = distance(fc, u_fingers_left[i]);
-          if(dist < markSize)
-          {
-            gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0) / (dist * 300.0);
-            return;
-          }
-          
-          dist = distance(fc, u_hands[0]);
-          if(dist < markSize)
-          {
-            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0) / (dist * 300.0);
-            return;
-          }
-          
-          dist = distance(fc, u_hands[1]);
-          if(dist < markSize)
-          {
-            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0) / (dist * 300.0);
-            return;
-          }
         }
       }
-
+      /*
       float noiseLevel = 0.004;
       float tempo = 200.0;
       float border = 160.0;
@@ -791,7 +749,9 @@
       {
         vec4 color = vec4(vec3(dist) * u_darkness, 1.0);
         gl_FragColor = texture2D(u_texture, vUv) - color;
-      }
+      }*/
+      
+      gl_FragColor = texture2D(u_texture, vUv);
     }
   </script>
 

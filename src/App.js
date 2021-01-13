@@ -402,6 +402,31 @@ export default function PersistentDrawerRight() {
         </div>
         <Divider />
         
+        <Accordion expanded={activeMat === 10} onChange={handleAccordChange(10)}>
+          <AccordionSummary
+            expandIcon={activeMat === 10 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
+            aria-controls="panel1bh-content"
+            id="panel1bh-header">
+            <ListItemIcon><Face /></ListItemIcon>
+            <ListItemText primary="Mask" />
+          </AccordionSummary>
+          <Divider />
+          <AccordionDetails>
+            <List className={classes.list}>
+              <ListItem divider={true}>
+                <Tooltip title="Marks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><Grain /></ListItemIcon>
+                </Tooltip>
+               <Checkbox 
+                  color="primary"
+                  defaultChecked={false}
+                  onChange={handleDrawMarks}
+                  name="checkedA" />
+             </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
+        
         <Accordion expanded={activeMat === 0} onChange={handleAccordChange(0)}>
           <AccordionSummary
             expandIcon={activeMat === 0 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
@@ -798,31 +823,6 @@ export default function PersistentDrawerRight() {
                       max={0.01}
                    />
                  </ListItem>
-            </List>
-          </AccordionDetails>
-        </Accordion>
-        
-        <Accordion expanded={activeMat === 10} onChange={handleAccordChange(10)}>
-          <AccordionSummary
-            expandIcon={activeMat === 10 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header">
-            <ListItemIcon><Face /></ListItemIcon>
-            <ListItemText primary="Mask" />
-          </AccordionSummary>
-          <Divider />
-          <AccordionDetails>
-            <List className={classes.list}>
-              <ListItem divider={true}>
-                <Tooltip title="Marks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><Grain /></ListItemIcon>
-                </Tooltip>
-               <Checkbox 
-                  color="primary"
-                  defaultChecked={false}
-                  onChange={handleDrawMarks}
-                  name="checkedA" />
-             </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>

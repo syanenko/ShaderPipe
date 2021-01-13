@@ -20,11 +20,9 @@ handsProc.setOptions({
   minTrackingConfidence: 0.5
 });
 
-handsProc.onResults(onResults);
-
-const HAND_POINTS = 21;
-var fingers = [ new Array(HAND_POINTS), new Array(HAND_POINTS)];
-for(let i=0; i<HAND_POINTS; i++)
+const MAX_HAND_POINT = 21;
+var fingers = [ new Array(MAX_HAND_POINT), new Array(MAX_HAND_POINT)];
+for(let i=0; i<MAX_HAND_POINT; i++)
 {
   fingers[0][i] = new THREE.Vector2();
   fingers[1][i] = new THREE.Vector2();
@@ -62,10 +60,10 @@ function onResults(results)
           }
       }
 
-      hands[0].x /= HAND_POINTS;
-      hands[0].y /= HAND_POINTS;
-      hands[1].x /= HAND_POINTS;
-      hands[1].y /= HAND_POINTS;
+      hands[0].x /= MAX_HAND_POINT;
+      hands[0].y /= MAX_HAND_POINT;
+      hands[1].x /= MAX_HAND_POINT;
+      hands[1].y /= MAX_HAND_POINT;
     }
   
   } catch(e)
@@ -74,8 +72,10 @@ function onResults(results)
   }
 }
 
+handsProc.onResults(onResults);
+
 //
-// Face mesh
+// Face
 //
 const faceMesh = new FaceMesh({locateFile: (file) => {
   return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
@@ -87,9 +87,40 @@ faceMesh.setOptions({
   minTrackingConfidence: 0.5
 });
 
+const MAX_FACE_POINT = 468;
+var face = [];
+for(let i=0; i<MAX_FACE_POINT; i++)
+{
+  face[i] = new THREE.Vector2();
+}
+
+// Face results
+function onFaceMeshResults(results)
+{
+  if (results.multiFaceLandmarks)
+  {
+    for (const landmarks of results.multiFaceLandmarks)
+    {
+      for (let i=0; i<MAX_FACE_POINT; i++ )
+      {
+          face[i].x = landmarks[i].x;
+          face[i].y = 1 - landmarks[i].y;
+      }
+    }
+  }
+}
+
+faceMesh.onResults(onFaceMeshResults);
+
+//
+// Globals
+//
 const videoElement = document.getElementsByClassName('input_video')[0];
 var texture = new THREE.VideoTexture( videoElement );
 var resolution = new THREE.Vector2(0, 0);
+//
+// Materials
+//
 var materials =
 [
   // Fireball
@@ -206,35 +237,13 @@ var materials =
     uniforms: { u_time:          { value: 1.0 },
                 u_texture:       { value: texture    },
                 u_resolution:    { value: resolution },
-                u_face:          { value: [0,1,2]    },
-                u_debug:         { value: 0,    control: "ToggleMarks" }},
+                u_face:          { value: face       },
+                u_debug:         { value: 1          }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentMask' ).textContent
   } ),
-
 ];
-
-// Face results
-function onFaceMeshResults(results)
-{
-  if (results.multiFaceLandmarks)
-  {
-    for (const landmarks of results.multiFaceLandmarks)
-    {
-      // console.dir(landmarks);
-      materials[activeMat].uniforms['u_face'].value = [new THREE.Vector2(landmarks[0].x, 1 - landmarks[0].y),
-                                                       new THREE.Vector2(landmarks[1].x, 1 - landmarks[1].y),
-                                                       new THREE.Vector2(landmarks[2].x, 1 - landmarks[2].y),
-                                                       new THREE.Vector2(landmarks[3].x, 1 - landmarks[3].y),
-                                                       new THREE.Vector2(landmarks[4].x, 1 - landmarks[4].y),
-                                                       new THREE.Vector2(landmarks[5].x, 1 - landmarks[5].y),
-                                                       new THREE.Vector2(landmarks[6].x, 1 - landmarks[6].y)];
-    }
-  }
-}
-
-faceMesh.onResults(onFaceMeshResults);
 
 // Camera
 const camera = new Camera(videoElement, {
