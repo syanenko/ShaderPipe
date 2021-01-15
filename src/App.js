@@ -340,10 +340,11 @@ export default function PersistentDrawerRight() {
 
           <IconButton
             color="inherit"
+            aria-label="open drawer"
             edge="end"
-            onClick={handleOpenHelp}
+            onClick={handleEffectsOpen}
             className={clsx(open && classes.hide)}>
-            <HelpOutline />
+            <BubbleChart />
           </IconButton>
 
           <IconButton
@@ -356,11 +357,10 @@ export default function PersistentDrawerRight() {
 
           <IconButton
             color="inherit"
-            aria-label="open drawer"
             edge="end"
-            onClick={handleEffectsOpen}
+            onClick={handleOpenHelp}
             className={clsx(open && classes.hide)}>
-            <BubbleChart />
+            <HelpOutline />
           </IconButton>
           
         </Toolbar>
