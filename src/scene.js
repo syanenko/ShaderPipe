@@ -41,7 +41,6 @@ class Scene extends React.Component
 
   render()
   {
-    // renderer.setSize(resolution.x, resolution.y);
     return ( <div ref={ref =>	(this.mount = ref)} />)
   }
 }

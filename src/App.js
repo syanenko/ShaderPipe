@@ -187,11 +187,12 @@ export default function PersistentDrawerRight() {
   };
 
 // Scale handle
-  const [scaleValue, setScaleValue] = React.useState(1.0);
+  const [scaleValue, setScaleValue] = React.useState(resolution.y);
   const handleScaleChange = (event, newValue) => {
     setScaleValue(newValue);
-    resolution.x = 640.0 * newValue;
-    resolution.y = 480.0 * newValue;
+    const aspect = resolution.x / resolution.y;
+    resolution.y = newValue;
+    resolution.x = resolution.y * aspect;
     renderer.setSize(resolution.x, resolution.y);
   };
 
@@ -398,16 +399,16 @@ export default function PersistentDrawerRight() {
         <Divider />
         <List>
          <ListItem divider={true}>
-                      <Tooltip title="Scale" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                      <Tooltip title="Frame height" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                         <ListItemIcon><ZoomOutMap/></ListItemIcon>
                       </Tooltip>
                      <Slider value={scaleValue}
                         onChange={handleScaleChange}
-                        defaultValue={1.0}
+                        defaultValue={resolution.y}
                         valueLabelDisplay="auto"
-                        step={0.01}
-                        min={0.5}
-                        max={3.0}
+                        step={1.0}
+                        min={480}
+                        max={1080}
                       />
           </ListItem>
           </List>
