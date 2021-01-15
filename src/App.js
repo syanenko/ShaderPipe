@@ -883,7 +883,7 @@ export default function PersistentDrawerRight() {
             <br/>
             Sources at &nbsp;
             <Link href="https://github.com/syanenko/shaderplay">
-               GitHub repository
+               GitHub
             </Link>.
           </Typography>
         </DialogContent>
