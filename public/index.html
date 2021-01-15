@@ -142,6 +142,8 @@
     uniform float     u_time;
     uniform sampler2D u_texture;    
     uniform vec2      u_resolution;
+    uniform float     u_a;
+    uniform float     u_b;
 
     void main()
     {
@@ -149,10 +151,10 @@
       float a = u_time * 40.0;
       float d, e, f, g = 1.0 / 40.0 ,h ,i ,r ,q;
 
-      e = 400.0 * ( p.x * 0.5 + 0.5 );
-      f = 400.0 * ( p.y * 0.5 + 0.5 );
-      i = 200.0 + sin( e * g + a / 150.0 ) * 20.0;
-      d = 200.0 + cos( f * g / 2.0 ) * 18.0 + cos( e * g ) * 7.0;
+      e = u_a * ( p.x * 0.5 + 0.5 );
+      f = u_a * ( p.y * 0.5 + 0.5 );
+      i = u_b + sin( e * g + a / 150.0 ) * 20.0;
+      d = u_b + cos( f * g / 2.0 ) * 18.0 + cos( e * g ) * 7.0;
       r = sqrt( pow( abs( i - e ), 2.0 ) + pow( abs( d - f ), 2.0 ) );
       q = f / r;
       e = ( r * cos( q ) ) - a / 2.0;

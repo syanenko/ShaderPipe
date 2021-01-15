@@ -54,9 +54,11 @@ var materials =
   // Whirlpool
   new THREE.ShaderMaterial(
   {
-    uniforms: { u_time:          { value: 1.0        },
-                u_texture:       { value: texture    },
-                u_resolution:    { value: resolution }},
+    uniforms: { u_time:       { value: 1.0        },
+                u_texture:    { value: texture    },
+                u_resolution: { value: resolution },
+                u_a:          { value: 400.0      },
+                u_b:          { value: 200.0      }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentWhirlpool' ).textContent

@@ -54,6 +54,8 @@ import { MovieFilter,
          ColorLens,
          Face,
          Settings,
+         CallMade,
+         CallReceived,
          ExpandLess } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
@@ -169,6 +171,20 @@ export default function PersistentDrawerRight() {
   const handleSizeChange = (event, newValue) => {
     setSizeValue(newValue);
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+// WhirlpoolA handle
+  const [whirlpoolA, setWhirlpoolA] = React.useState(400.0);
+  const handleWhirlpoolA = (event, newValue) => {
+    setWhirlpoolA(newValue);
+    materials[activeMat].uniforms[ 'u_a' ].value = newValue;
+  };
+
+// WhirlpoolB handle
+  const [whirlpoolB, setWhirlpoolB] = React.useState(200.0);
+  const handleWhirlpoolB = (event, newValue) => {
+    setWhirlpoolB(newValue);
+    materials[activeMat].uniforms[ 'u_b' ].value = newValue;
   };
 
 // Scale handle
@@ -506,29 +522,29 @@ export default function PersistentDrawerRight() {
           <AccordionDetails>
             <List className={classes.list}>
                 <ListItem divider={true}>
-                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><AllOut /></ListItemIcon>
+                  <Tooltip title="Scale A" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><CallReceived /></ListItemIcon>
                   </Tooltip>  
-                   <Slider value={sizeValue}
-                      onChange={handleSizeChange}
+                   <Slider value={whirlpoolA}
+                      onChange={handleWhirlpoolA}
                       defaultValue={2.1}
                       valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.0}
-                      max={3.0}
+                      step={10.0}
+                      min={10.0}
+                      max={1000.0}
                     />
                 </ListItem>
                 <ListItem divider={true}>
-                  <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
+                  <Tooltip title="Scale B" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <ListItemIcon><CallMade /></ListItemIcon>
                   </Tooltip>
-                  <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
+                  <Slider value={whirlpoolB}
+                      onChange={handleWhirlpoolB}
                       defaultValue={2.1}
                       valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
+                      step={10.0}
+                      min={10.0}
+                      max={1000.0}
                    />
                  </ListItem>
             </List>
