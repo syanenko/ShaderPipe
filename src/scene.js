@@ -7,14 +7,15 @@ import { activeMat } from './App';
 // Scene
 //
 var mesh;
-
+var renderer;
+  
 class Scene extends React.Component
 {
   componentDidMount()
   {
     const scene    = new THREE.Scene();
     const camera   = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
-    const renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer();
     renderer.setSize(resolution.x, resolution.y);
 
     // document.body.appendChild( renderer.domElement );
@@ -40,8 +41,9 @@ class Scene extends React.Component
 
   render()
   {
+    // renderer.setSize(resolution.x, resolution.y);
     return ( <div ref={ref =>	(this.mount = ref)} />)
   }
 }
 
-export {Scene, mesh};
+export {Scene, mesh, renderer};

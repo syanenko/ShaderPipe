@@ -53,21 +53,19 @@ import { MovieFilter,
          InvertColors,
          ColorLens,
          Face,
+         Settings,
          ExpandLess } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
-import { mesh } from './scene';
 import { Scene } from './scene';
+import { mesh } from './scene';
+import { renderer } from './scene';
 
 //
 // Globals
 //
 const drawerWidth = '20%';
-var activeMat = 10;
-
-// TODO: Adjust by resize
-resolution.x *= 1.8;
-resolution.y *= 1.8;
+var activeMat = 2;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -149,19 +147,37 @@ export default function PersistentDrawerRight() {
   const theme = useTheme();
 
   // Drawer handles
-  const [open, setOpen] = React.useState(false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const [open, setEffectsOpen] = React.useState(false);
+  const handleEffectsOpen = () => {
+    setEffectsOpen(true);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleEffectsClose = () => {
+    setEffectsOpen(false);
   };
 
+  // Settings handle
+  const [openSettings, setOpenSettings] = React.useState(false);
+  const handleSettingsOpen = () => {
+    setOpenSettings(true);
+  };
+  const handleSettingsClose = () => {
+    setOpenSettings(false);
+  };
+  
   // Size handle
   const [sizeValue, setSizeValue] = React.useState(2.1);
   const handleSizeChange = (event, newValue) => {
     setSizeValue(newValue);
     materials[activeMat].uniforms[ 'u_size' ].value = newValue;
+  };
+
+// Scale handle
+  const [scaleValue, setScaleValue] = React.useState(1.0);
+  const handleScaleChange = (event, newValue) => {
+    setScaleValue(newValue);
+    resolution.x = 640.0 * newValue;
+    resolution.y = 480.0 * newValue;
+    renderer.setSize(resolution.x, resolution.y);
   };
 
   // Toon hue handle
@@ -306,7 +322,7 @@ export default function PersistentDrawerRight() {
           <Typography variant="h6" noWrap className={classes.title}>
             Shader play
           </Typography>
-          
+
           <IconButton
             color="inherit"
             edge="end"
@@ -317,9 +333,17 @@ export default function PersistentDrawerRight() {
 
           <IconButton
             color="inherit"
+            edge="end"
+            onClick={handleSettingsOpen}
+            className={clsx(open && classes.hide)}>
+            <Settings />
+          </IconButton>
+
+          <IconButton
+            color="inherit"
             aria-label="open drawer"
             edge="end"
-            onClick={handleDrawerOpen}
+            onClick={handleEffectsOpen}
             className={clsx(open && classes.hide)}>
             <MenuIcon />
           </IconButton>
@@ -339,7 +363,41 @@ export default function PersistentDrawerRight() {
           </Grid>
         </div>
       </main>
-      
+
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="right"
+        open={openSettings}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <ListItemIcon><Settings/></ListItemIcon>
+          <ListItemText primary="Settings" />
+          <IconButton onClick={handleSettingsClose}>
+            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+         <ListItem divider={true}>
+                      <Tooltip title="Scale" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                        <ListItemIcon><ZoomOutMap/></ListItemIcon>
+                      </Tooltip>
+                     <Slider value={scaleValue}
+                        onChange={handleScaleChange}
+                        defaultValue={1.0}
+                        valueLabelDisplay="auto"
+                        step={0.01}
+                        min={0.5}
+                        max={3.0}
+                      />
+          </ListItem>
+          </List>
+      </Drawer>
+
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -352,7 +410,7 @@ export default function PersistentDrawerRight() {
         <div className={classes.drawerHeader}>
           <ListItemIcon><BubbleChart/></ListItemIcon>
           <ListItemText primary="Effects" />
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleEffectsClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
