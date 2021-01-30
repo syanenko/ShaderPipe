@@ -149,66 +149,66 @@ export default function PersistentDrawerRight() {
 
   // Drawer handles
   const [open, setEffectsOpen] = React.useState(false);
-  const handleEffectsOpen = () => {
+  function handleEffectsOpen() {
     setEffectsOpen(true);
-  };
-  const handleEffectsClose = () => {
+  }
+  function handleEffectsClose() {
     setEffectsOpen(false);
-  };
+  }
 
   // Settings handle
   const [openSettings, setOpenSettings] = React.useState(false);
-  const handleSettingsOpen = () => {
+  function handleSettingsOpen() {
     setOpenSettings(true);
-  };
-  const handleSettingsClose = () => {
+  }
+  function handleSettingsClose() {
     setOpenSettings(false);
-  };
+  }
   
   // Size handle
   const [sizeValue, setSizeValue] = React.useState(2.1);
-  const handleSizeChange = (event, newValue) => {
+  function handleSizeChange(event, newValue) {
     setSizeValue(newValue);
-    materials[activeMat].uniforms[ 'u_size' ].value = newValue;
-  };
+    materials[activeMat].uniforms['u_size'].value = newValue;
+  }
 
 // WhirlpoolA handle
   const [whirlpoolA, setWhirlpoolA] = React.useState(400.0);
-  const handleWhirlpoolA = (event, newValue) => {
+  function handleWhirlpoolA(event, newValue) {
     setWhirlpoolA(newValue);
-    materials[activeMat].uniforms[ 'u_a' ].value = newValue;
-  };
+    materials[activeMat].uniforms['u_a'].value = newValue;
+  }
 
 // WhirlpoolB handle
   const [whirlpoolB, setWhirlpoolB] = React.useState(200.0);
-  const handleWhirlpoolB = (event, newValue) => {
+  function handleWhirlpoolB(event, newValue) {
     setWhirlpoolB(newValue);
-    materials[activeMat].uniforms[ 'u_b' ].value = newValue;
-  };
+    materials[activeMat].uniforms['u_b'].value = newValue;
+  }
 
 // Scale handle
   const [scaleValue, setScaleValue] = React.useState(resolution.y);
-  const handleScaleChange = (event, newValue) => {
+  function handleScaleChange(event, newValue) {
     setScaleValue(newValue);
     const aspect = resolution.x / resolution.y;
     resolution.y = newValue;
     resolution.x = resolution.y * aspect;
     renderer.setSize(resolution.x, resolution.y);
-  };
+  }
 
   // Toon hue handle
   const [toonHue, setToonHue] = React.useState([1.0, 106.0, 219.0, 296.0]);
-  const handleToonHue = (event, newValue) => {
+  function handleToonHue(event, newValue) {
     setToonHue(newValue);
-    materials[activeMat].uniforms[ 'u_hue_levels' ].value = newValue;
-  };
+    materials[activeMat].uniforms['u_hue_levels'].value = newValue;
+  }
 
   // Toon sat handle
   const [toonSat, setToonSat] = React.useState([0.0, 0.3, 0.6, 1.0]);
-  const handleToonSat = (event, newValue) => {
+  function handleToonSat(event, newValue) {
     setToonSat(newValue);
-    materials[activeMat].uniforms[ 'u_sat_levels' ].value = newValue;
-  };
+    materials[activeMat].uniforms['u_sat_levels'].value = newValue;
+  }
 
   // Toon value handle
   const [toonValue, setToonValue] = React.useState([0.0, 0.3, 0.6, 1.0]);
