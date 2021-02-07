@@ -687,24 +687,19 @@
 
 <!--
    fragmentMask
-  -->
+-->
   <script id="fragmentMask" type="x-shader/x-fragment">
-    #define MAX_FACE_POINT 468
+    #define MAX_FACE_POINT 120 // 468
     #define MARK_SIZE      0.002
     
     varying vec2 vUv;
     
-    uniform float u_time;
-    uniform vec2 u_resolution;
+    uniform float     u_time;
     uniform sampler2D u_texture;
+    uniform vec2      u_resolution;
+    uniform vec2      u_face[MAX_FACE_POINT];
+    uniform bool      u_debug;
     
-    uniform vec2 u_face[MAX_FACE_POINT];
-
-    uniform bool u_debug;
-    
-    uniform float u_size;
-    uniform float u_darkness;
-
     float random (vec2 fc) {
         return fract(sin(dot(fc.xy,
                   vec2(12.9898,78.233))) *
@@ -729,33 +724,7 @@
           }
         }
       }
-      /*
-      float noiseLevel = 0.004;
-      float tempo = 200.0;
-      float border = 160.0;
-      float d0 = 1.0, d1 = 1.0;
-      float disThresh = 0.008;
-      
-      if( u_hands[0] != vec2(0.0))
-        d0 = distance(fc, u_hands[0]);
 
-      if(u_hands[1] != vec2(0.0))
-        d1 = distance(fc, u_hands[1]);
-      
-      float noise = random(fc);
-      float pulse = sin(u_time * tempo * noise) * noise * 0.001;
-      float dist = pow(d0 * d1, u_size) + pulse;
-      
-      if(dist < disThresh)
-      {
-        gl_FragColor = texture2D(u_texture, vUv)  * (vec4( 0.1, 1.0, 0.1, 1.0) + (dist * border));
-
-      } else
-      {
-        vec4 color = vec4(vec3(dist) * u_darkness, 1.0);
-        gl_FragColor = texture2D(u_texture, vUv) - color;
-      }*/
-      
       gl_FragColor = texture2D(u_texture, vUv);
     }
   </script>
