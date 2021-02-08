@@ -82,7 +82,7 @@ faceProc.setOptions({
   minTrackingConfidence: 0.5
 });
 
-const MAX_FACE_POINT = 120;  // 468
+const MAX_FACE_POINT = 468;
 var face = [];
 for(let i=0; i<MAX_FACE_POINT; i++)
 {
