@@ -31,8 +31,8 @@ class Scene extends React.Component
     mesh.translateY(0.5);
     scene.add(mesh);
 
-    const maskMat = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
-    const marksMat = new THREE.PointsMaterial( { color: 0x880000 } );
+    const maskMat = new THREE.LineBasicMaterial( { color: 0x00FF00 } );
+    const marksMat = new THREE.PointsMaterial( { color: 0xFF0000, size: 4.0 } );
     var maskGeom, mask, marks;
 
     var animate = function ()
