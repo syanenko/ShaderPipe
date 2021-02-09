@@ -699,12 +699,10 @@
    fragmentMask
 -->
   <script id="fragmentMask" type="x-shader/x-fragment">
-    #define MAX_FACE_POINT 64
-
     varying vec2 vUv;
     uniform sampler2D u_texture;
-    uniform vec2      u_face[MAX_FACE_POINT];
-    
+    uniform bool u_face;
+
     void main()
     {
       gl_FragColor = texture2D(u_texture, vUv);

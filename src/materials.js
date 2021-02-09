@@ -147,7 +147,7 @@ var materials =
   new THREE.ShaderMaterial(
   {
     uniforms: { u_texture:       { value: texture    },
-                u_face:          { value: face       }},
+                u_face:          { value: true       }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentMask' ).textContent,
