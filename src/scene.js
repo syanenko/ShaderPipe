@@ -24,6 +24,7 @@ class Scene extends React.Component
     // use ref as a mount point of the Three.js scene instead of the document.body
     this.mount.appendChild(renderer.domElement);
 
+    // TODO: Apply scale / transfer
     const geometry = new THREE.PlaneBufferGeometry( 2, 2 );
     mesh = new THREE.Mesh(geometry, materials[activeMat]);
     mesh.translateZ(-0.1); 
