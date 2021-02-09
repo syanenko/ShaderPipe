@@ -16,7 +16,7 @@ class Scene extends React.Component
   componentDidMount()
   {
     const scene    = new THREE.Scene();
-    const camera   = new THREE.OrthographicCamera( -1, 1, 1, -1, 0, 1 );
+    const camera   = new THREE.OrthographicCamera( 0, 1, 1, 0, 0, 1 );
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(resolution.x, resolution.y);
 
@@ -24,10 +24,11 @@ class Scene extends React.Component
     // use ref as a mount point of the Three.js scene instead of the document.body
     this.mount.appendChild(renderer.domElement);
 
-    // TODO: Apply scale / transfer
-    const geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+    const geometry = new THREE.PlaneBufferGeometry( 1, 1 );
     mesh = new THREE.Mesh(geometry, materials[activeMat]);
-    mesh.translateZ(-0.1); 
+    mesh.translateZ(-0.1);
+    mesh.translateX(0.5);
+    mesh.translateY(0.5);
     scene.add(mesh);
 
     var maskMat = new THREE.LineBasicMaterial( { color: 0x00ff00 } );

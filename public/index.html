@@ -700,7 +700,7 @@
 -->
   <script id="fragmentMask" type="x-shader/x-fragment">
     #define MAX_FACE_POINT 468
-    #define MARK_SIZE      0.002
+    #define MARK_SIZE      0.004
     
     varying vec2 vUv;
     
@@ -710,12 +710,6 @@
     uniform vec2      u_face[MAX_FACE_POINT];
     uniform bool      u_debug;
     
-    float random (vec2 fc) {
-        return fract(sin(dot(fc.xy,
-                  vec2(12.9898,78.233))) *
-                  43758.5453123);
-    }
-
     void main()
     {
       vec2 fc = gl_FragCoord.xy / u_resolution.xy;
@@ -729,7 +723,7 @@
           dist = distance(fc, u_face[i]);
           if(dist < MARK_SIZE)
           {
-            gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0) / (dist * 300.0);
+            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0) / (dist * 300.0);
             return;
           }
         }
