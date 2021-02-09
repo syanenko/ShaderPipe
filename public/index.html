@@ -699,36 +699,14 @@
    fragmentMask
 -->
   <script id="fragmentMask" type="x-shader/x-fragment">
-    #define MAX_FACE_POINT 468
-    #define MARK_SIZE      0.004
-    
+    #define MAX_FACE_POINT 64
+
     varying vec2 vUv;
-    
-    uniform float     u_time;
     uniform sampler2D u_texture;
-    uniform vec2      u_resolution;
     uniform vec2      u_face[MAX_FACE_POINT];
-    uniform bool      u_debug;
     
     void main()
     {
-      vec2 fc = gl_FragCoord.xy / u_resolution.xy;
-
-      // Draw debug marks
-      if(u_debug)
-      {
-        float dist = 0.0;
-        for(int i=0; i<MAX_FACE_POINT; i++)
-        {
-          dist = distance(fc, u_face[i]);
-          if(dist < MARK_SIZE)
-          {
-            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0) / (dist * 300.0);
-            return;
-          }
-        }
-      }
-
       gl_FragColor = texture2D(u_texture, vUv);
     }
   </script>

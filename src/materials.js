@@ -146,14 +146,11 @@ var materials =
   // Mask
   new THREE.ShaderMaterial(
   {
-    uniforms: { u_time:          { value: 1.0 },
-                u_texture:       { value: texture    },
-                u_resolution:    { value: resolution },
-                u_face:          { value: face       },
-                u_debug:         { value: 1          }},
+    uniforms: { u_texture:       { value: texture    },
+                u_face:          { value: face       }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
-    fragmentShader: document.getElementById( 'fragmentMask' ).textContent
+    fragmentShader: document.getElementById( 'fragmentMask' ).textContent,
   } ),
 ];
 

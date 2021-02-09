@@ -302,10 +302,10 @@ export default function PersistentDrawerRight() {
   };
 
   // Draw marks handle
-  const [drawMarksChecked, setDrawMarksChecked] = React.useState(true);
+  const [drawMarksChecked, setDrawMarksChecked] = React.useState(false);
   const handleDrawMarks = (event) => {
     setDrawMarksChecked(event.target.checked);
-    materials[activeMat].uniforms[ 'u_debug' ].value = event.target.checked;
+    materials[activeMat].debug = event.target.checked;
   };
   
   // Accordion handle
@@ -449,7 +449,7 @@ export default function PersistentDrawerRight() {
                 </Tooltip>
                <Checkbox 
                   color="primary"
-                  defaultChecked={true}
+                  defaultChecked={false}
                   onChange={handleDrawMarks}
                   name="checkedA" />
              </ListItem>

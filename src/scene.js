@@ -24,15 +24,16 @@ class Scene extends React.Component
     // use ref as a mount point of the Three.js scene instead of the document.body
     this.mount.appendChild(renderer.domElement);
 
-    const geometry = new THREE.PlaneBufferGeometry( 1, 1 );
-    mesh = new THREE.Mesh(geometry, materials[activeMat]);
+    const texGeom = new THREE.PlaneBufferGeometry( 1, 1 );
+    mesh = new THREE.Mesh(texGeom, materials[activeMat]);
     mesh.translateZ(-0.1);
     mesh.translateX(0.5);
     mesh.translateY(0.5);
     scene.add(mesh);
 
-    var maskMat = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
-    var maskGeom, mask;
+    const maskMat = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
+    const marksMat = new THREE.PointsMaterial( { color: 0x880000 } );
+    var maskGeom, mask, marks;
 
     var animate = function ()
     {
@@ -43,16 +44,25 @@ class Scene extends React.Component
 
       if(materials[activeMat].uniforms['u_face'])
       {
+        // Draw mask
         maskGeom = new THREE.BufferGeometry().setFromPoints( face );
         mask = new THREE.Line( maskGeom, maskMat );
         scene.add(mask);
+
+        // Draw marks
+        if(materials[activeMat].debug)
+        {
+          marks = new THREE.Points( maskGeom, marksMat );
+          scene.add(marks);
+        }
       }
-    
+
       renderer.render(scene, camera);
 
       if(materials[activeMat].uniforms['u_face'])
       {
-        scene.remove(mask);        
+        scene.remove(mask);
+        scene.remove(marks);
         maskGeom.dispose();
       }
     };
