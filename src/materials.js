@@ -4,7 +4,6 @@ import { handsProc } from './mediapipe';
 import { faceProc }  from './mediapipe';
 import { fingers }   from './mediapipe';
 import { hands }     from './mediapipe';
-import { face }      from './mediapipe';
 import { activeMat } from './App';
 
 //
@@ -45,7 +44,7 @@ var materials =
                 u_hands:         { value: hands      },
                 u_size:          { value: 1.7        },
                 u_darkness:      { value: 10.0       },
-                u_debug:         { value: 0          }},
+                u_debug:         { value: false      }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentFireball' ).textContent
@@ -147,7 +146,8 @@ var materials =
   new THREE.ShaderMaterial(
   {
     uniforms: { u_texture:       { value: texture    },
-                u_face:          { value: true       }},
+                u_face:          { value: true       },
+                u_debug:         { value: false      }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentMask' ).textContent,

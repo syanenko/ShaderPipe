@@ -305,7 +305,7 @@ export default function PersistentDrawerRight() {
   const [drawMarksChecked, setDrawMarksChecked] = React.useState(false);
   const handleDrawMarks = (event) => {
     setDrawMarksChecked(event.target.checked);
-    materials[activeMat].debug = event.target.checked;
+    materials[activeMat].uniforms[ 'u_debug' ].value = event.target.checked;
   };
   
   // Accordion handle

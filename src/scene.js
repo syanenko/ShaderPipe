@@ -9,7 +9,6 @@ import { activeMat } from './App';
 //
 var mesh;
 var renderer;
-var mask;
   
 class Scene extends React.Component
 {
@@ -56,7 +55,7 @@ class Scene extends React.Component
         scene.add(mask);
 
         // Draw marks
-        if(materials[activeMat].debug)
+        if(materials[activeMat].uniforms['u_debug'].value)
         {
           marks = new THREE.Points( maskGeom, marksMat );
           scene.add(marks);
@@ -68,7 +67,8 @@ class Scene extends React.Component
       if(materials[activeMat].uniforms['u_face'])
       {
         scene.remove(mask);
-        scene.remove(marks);
+        if(materials[activeMat].uniforms['u_debug'].value)
+          scene.remove(marks);
         maskGeom.dispose();
       }
     };
