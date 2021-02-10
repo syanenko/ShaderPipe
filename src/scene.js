@@ -45,7 +45,13 @@ class Scene extends React.Component
       if(materials[activeMat].uniforms['u_face'])
       {
         // Draw mask
-        maskGeom = new THREE.BufferGeometry().setFromPoints( face );
+        // TODO: Draw selected trigles
+        // maskGeom = new THREE.BufferGeometry().setFromPoints( face );
+        var points = [];
+        points.push(face[10], face[20], face[30], face[10]);
+        points.push(face[100], face[120], face[130], face[100]);
+        points.push(face[400], face[420], face[430], face[400]);
+        maskGeom = new THREE.BufferGeometry().setFromPoints( points );
         mask = new THREE.Line( maskGeom, maskMat );
         scene.add(mask);
 
