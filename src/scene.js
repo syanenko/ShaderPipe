@@ -16,7 +16,7 @@ class Scene extends React.Component
   componentDidMount()
   {
     const scene    = new THREE.Scene();
-    const camera   = new THREE.OrthographicCamera( 0, 1, 1, 0, 0, 1 );
+    const camera   = new THREE.OrthographicCamera( 0, 1, 1, 0, 10, 0 );
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(resolution.x, resolution.y);
 
@@ -27,7 +27,7 @@ class Scene extends React.Component
     // Video
     const videoGeom = new THREE.PlaneBufferGeometry( 1, 1 );
     videoMesh = new THREE.Mesh(videoGeom, materials[activeMat]);
-    videoMesh.position.z = -0.1;
+    videoMesh.position.z = 0.0;
     videoMesh.position.x = 0.5;
     videoMesh.position.y = 0.5;
     scene.add(videoMesh);
@@ -81,6 +81,7 @@ class Scene extends React.Component
     // maskGeom.setAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
     maskGeom.setDrawRange( 0, 3);
     var mask = new THREE.Mesh(maskGeom, maskMat);
+    mask.position.z = -1;
     scene.add(mask);
 
     const light = new THREE.PointLight( 0xffffff, 1, 100 );
@@ -104,7 +105,7 @@ class Scene extends React.Component
         const shapes = font.generateShapes( c.toString(), 0.005 );
         const geometry = new THREE.ShapeBufferGeometry( shapes );
         text[c] = new THREE.Mesh( geometry, matText );
-        text[c].position.z = -0.1;
+        text[c].position.z = -2;
         scene.add( text[c] );
       }
     });
