@@ -8,7 +8,7 @@ import { activeMat } from './App';
 // Scene
 //
 var renderer;
-var videoMesh; 
+var videoMesh;
 class Scene extends React.Component
 {
   componentDidMount()
@@ -24,7 +24,7 @@ class Scene extends React.Component
 
     // Video
     const videoGeom = new THREE.PlaneBufferGeometry( 1, 1 );
-    const videoMesh = new THREE.Mesh(videoGeom, materials[activeMat]);
+    videoMesh = new THREE.Mesh(videoGeom, materials[activeMat]);
     videoMesh.translateZ(-0.1);
     videoMesh.translateX(0.5);
     videoMesh.translateY(0.5);
@@ -112,12 +112,13 @@ class Scene extends React.Component
       maskGeom.computeVertexNormals();
 
       // Marks
-      if(materials[activeMat].uniforms['u_debug'].value)
-      {
-        scene.remove(marks);
-        marks = new THREE.Points( maskGeom, marksMat );
-        scene.add(marks);
-      }
+      if(materials[activeMat].uniforms['u_debug'])
+        if(materials[activeMat].uniforms['u_debug'].value)
+        {
+          scene.remove(marks);
+          marks = new THREE.Points( maskGeom, marksMat );
+          scene.add(marks);
+        }
 
       renderer.render(scene, camera);
     };
