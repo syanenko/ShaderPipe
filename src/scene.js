@@ -1,7 +1,7 @@
 import React from 'react';
 import * as THREE from 'three';
 import { resolution, materials } from './materials';
-import { face }      from './mediapipe';
+import { face, needsDraw } from './mediapipe';
 import { activeMat } from './App';
 
 const MAX_FACE_POINT = 468;
@@ -118,7 +118,7 @@ class Scene extends React.Component
 
       for(let c=0; c < MAX_FACE_POINT; c++ )
       {
-        const shapes = font.generateShapes( c.toString(), 0.0025 );
+        const shapes = font.generateShapes( c.toString(), 0.005 );
         const geometry = new THREE.ShapeBufferGeometry( shapes );
         landmarks[c] = new THREE.Mesh( geometry, matText );
         geometry.computeBoundingBox();        
@@ -137,7 +137,7 @@ class Scene extends React.Component
       if(materials[activeMat].uniforms['u_time'])
         materials[activeMat].uniforms['u_time'].value = performance.now() / 1000;
 
-      if(materials[activeMat].uniforms['u_face'])
+      if(materials[activeMat].uniforms['u_face'] && needsDraw)
       {
         maskGeom.attributes.position.needsUpdate = true;
         let positions = maskGeom.attributes.position.array;
@@ -166,7 +166,7 @@ class Scene extends React.Component
         positions[17] = 0;
 
         maskGeom.computeVertexNormals();
-        mask.visible = true; // TODO: temporary
+        mask.visible = true;
 
         if(materials[activeMat].uniforms['u_debug'])
           if(materials[activeMat].uniforms['u_debug'].value)
@@ -199,7 +199,7 @@ class Scene extends React.Component
           }
       } else
       {
-        mask.visible = false; // TODO: temporary
+        mask.visible = false;
         if(marks.visible)
         {
           for(let p=0; p < MAX_FACE_POINT; p++)
@@ -208,7 +208,7 @@ class Scene extends React.Component
           marks.visible = false;
         }
       }
-    
+
       renderer.render(scene, camera);
     };
 

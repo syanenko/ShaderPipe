@@ -89,13 +89,17 @@ for(let i=0; i<MAX_FACE_POINT; i++)
   face[i] = new THREE.Vector2();
 }
 
+var needsDraw = false;
+
 // Face results
 function onFaceMeshResults(results)
 {
+  needsDraw = false;
   if (results.multiFaceLandmarks)
   {
     for (const landmarks of results.multiFaceLandmarks)
     {
+      needsDraw = true;      
       for (let i=0; i<MAX_FACE_POINT; i++ )
       {
           face[i].x = landmarks[i].x;
@@ -107,4 +111,4 @@ function onFaceMeshResults(results)
 
 faceProc.onResults(onFaceMeshResults);
 
-export { handsProc, faceProc, fingers, hands, face };
+export { handsProc, faceProc, fingers, hands, face, needsDraw };
