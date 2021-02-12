@@ -15,7 +15,7 @@ class Scene extends React.Component
   {
     const scene    = new THREE.Scene();
     const camera   = new THREE.OrthographicCamera( 0, 1, 1, 0, 0, 1 );
-    const renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer();
     renderer.setSize(resolution.x, resolution.y);
 
     // document.body.appendChild( renderer.domElement );
@@ -85,7 +85,9 @@ class Scene extends React.Component
     light.position.set( 1, 1, 1 );
     scene.add( light );
 
-    let marks;
+    var marks = new THREE.Points( maskGeom, marksMat );
+    scene.add(marks);
+
     var animate = function ()
     {
       requestAnimationFrame( animate );
@@ -108,17 +110,19 @@ class Scene extends React.Component
         positions[6] = face[10].x;
         positions[7] = face[10].y;
         positions[8] = 0;
-      }
-      maskGeom.computeVertexNormals();
 
-      // Marks
+        maskGeom.computeVertexNormals();
+        mask.visible = true; // TODO: temporary
+      } else
+      {
+        mask.visible = false; // TODO: temporary
+      }
+
       if(materials[activeMat].uniforms['u_debug'])
         if(materials[activeMat].uniforms['u_debug'].value)
-        {
-          scene.remove(marks);
-          marks = new THREE.Points( maskGeom, marksMat );
-          scene.add(marks);
-        }
+          marks.visible = true;
+        else
+          marks.visible = false;
 
       renderer.render(scene, camera);
     };
