@@ -42,7 +42,7 @@ class Scene extends React.Component
     // Mask prepare
     var maskGeom = new THREE.BufferGeometry();
     const MAX_POINTS = 10;
-    const NUM_TRIANGLES = 1;
+    const NUM_TRIANGLES = 2;
     const positions = new Float32Array( MAX_POINTS * 3 );
     var normals     = new Float32Array( NUM_TRIANGLES * 3 * 3 );
     var colors      = new Float32Array( NUM_TRIANGLES * 3 * 3 );
@@ -65,6 +65,21 @@ class Scene extends React.Component
     colors[7] = color.g;
     colors[8] = color.r;
 
+    color.setRGB( 1, 0, 0 );
+    colors[9] = color.b;
+    colors[10] = color.g;
+    colors[11] = color.r;
+
+    color.setRGB( 0, 1, 0 );
+    colors[12] = color.b;
+    colors[13] = color.g;
+    colors[14] = color.r;
+
+    color.setRGB( 0, 0, 1 );
+    colors[15] = color.b;
+    colors[16] = color.g;
+    colors[17] = color.r;
+
     // uvs
     /*
     uvs[0] = 0;
@@ -79,7 +94,7 @@ class Scene extends React.Component
     maskGeom.setAttribute( 'normal', new THREE.BufferAttribute( normals, 3 ) );
     maskGeom.setAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
     // maskGeom.setAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
-    maskGeom.setDrawRange( 0, 3);
+    maskGeom.setDrawRange( 0, 6);
     var mask = new THREE.Mesh(maskGeom, maskMat);
     mask.position.z = -1;
     scene.add(mask);
@@ -137,6 +152,18 @@ class Scene extends React.Component
         positions[6] = face[83].x;
         positions[7] = face[83].y;
         positions[8] = 0;
+
+        positions[9] = face[164].x;
+        positions[10] = face[164].y;
+        positions[11] = 0;
+
+        positions[12] = face[37].x;
+        positions[13] = face[37].y;
+        positions[14] = 0;
+
+        positions[15] = face[267].x;
+        positions[16] = face[267].y;
+        positions[17] = 0;
 
         maskGeom.computeVertexNormals();
         mask.visible = true; // TODO: temporary
