@@ -59,7 +59,7 @@ import { MovieFilter,
 
 import { resolution, materials } from './materials';
 import { Scene } from './scene';
-import { mesh } from './scene';
+import { videoMesh } from './scene';
 import { renderer } from './scene';
 
 //
@@ -313,7 +313,7 @@ export default function PersistentDrawerRight() {
   const handleAccordChange = (panel) => (event, isExpanded) => {
     setAccordExpanded(isExpanded ? panel : false);
     activeMat = panel;
-    mesh.material = materials[activeMat];
+    videoMesh.material = materials[activeMat];
   };
   
   // Dialog
