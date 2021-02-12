@@ -88,11 +88,12 @@ class Scene extends React.Component
     light.position.set( 1, 1, 1 );
     scene.add( light );
 
+    // Mask marks
     var marks = new THREE.Points( maskGeom, marksMat );
     scene.add(marks);
 
-    // Text
-    var text = [MAX_FACE_POINT];
+    // Text landmarks
+    var landmarks = [MAX_FACE_POINT];
     const loader = new THREE.FontLoader();
     loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font )
     {
@@ -104,13 +105,13 @@ class Scene extends React.Component
       {
         const shapes = font.generateShapes( c.toString(), 0.0025 );
         const geometry = new THREE.ShapeBufferGeometry( shapes );
-        text[c] = new THREE.Mesh( geometry, matText );
+        landmarks[c] = new THREE.Mesh( geometry, matText );
         geometry.computeBoundingBox();        
         const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
         geometry.translate( xMid, 0, 0 );
-        text[c].position.z = -2;
+        landmarks[c].position.z = -2;
 
-        scene.add( text[c] );
+        scene.add( landmarks[c] );
       }
     });
 
@@ -139,42 +140,48 @@ class Scene extends React.Component
 
         maskGeom.computeVertexNormals();
         mask.visible = true; // TODO: temporary
+
+        if(materials[activeMat].uniforms['u_debug'])
+          if(materials[activeMat].uniforms['u_debug'].value)
+          {
+            if(!marks.visible)
+            {
+              for(let c=0; c < MAX_FACE_POINT; c++)
+                scene.add(landmarks[c]);
+              scene.add(marks);
+              marks.visible = true;
+            }
+
+            for(let p=0; p < MAX_FACE_POINT; p++)
+              if(landmarks[p])
+                if(landmarks[p].position)
+                {
+                      landmarks[p].position.x = face[p].x;
+                      landmarks[p].position.y = face[p].y;
+                      landmarks[p].visible = true;
+                }
+          } else
+          {
+            if(marks.visible)
+            {
+              for(let p=0; p < MAX_FACE_POINT; p++)
+                scene.remove(landmarks[p]);
+              scene.remove(marks);
+              marks.visible = false;
+            }
+          }
       } else
       {
         mask.visible = false; // TODO: temporary
-      }
-
-      if(materials[activeMat].uniforms['u_debug'])
-        if(materials[activeMat].uniforms['u_debug'].value)
+        if(marks.visible)
         {
-          if(!marks.visible)
-          {
-            for(let c=0; c < MAX_FACE_POINT; c++ )
-              scene.add(text[c]);
-            scene.add(marks);
-            marks.visible = true;
-          }
-
           for(let p=0; p < MAX_FACE_POINT; p++)
-          if(text[p])  
-            if(text[p].position)
-            {
-              text[p].position.x = face[p].x;
-              text[p].position.y = face[p].y;
-              text[p].visible = true;
-            }
+            scene.remove(landmarks[p]);
+          scene.remove(marks);
+          marks.visible = false;
         }
-        else
-        {
-          if(marks.visible)
-          {
-            for(let c=0; c < MAX_FACE_POINT; c++ )
-              scene.remove(text[c]);
-            scene.remove(marks);
-            marks.visible = false;
-          }
-       }
-
+      }
+    
       renderer.render(scene, camera);
     };
 
