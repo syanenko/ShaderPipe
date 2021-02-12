@@ -85,6 +85,7 @@ class Scene extends React.Component
     light.position.set( 1, 1, 1 );
     scene.add( light );
 
+    let marks;
     var animate = function ()
     {
       requestAnimationFrame( animate );
@@ -94,8 +95,8 @@ class Scene extends React.Component
 
       if(materials[activeMat].uniforms['u_face'])
       {
-        mask.geometry.attributes.position.needsUpdate = true;
-        let positions = mask.geometry.attributes.position.array;
+        maskGeom.attributes.position.needsUpdate = true;
+        let positions = maskGeom.attributes.position.array;
         positions[0] = face[230].x;
         positions[1] = face[230].y;
         positions[2] = 0;
@@ -108,18 +109,17 @@ class Scene extends React.Component
         positions[7] = face[10].y;
         positions[8] = 0;
       }
-      mask.geometry.computeVertexNormals();
+      maskGeom.computeVertexNormals();
 
       // Marks
       if(materials[activeMat].uniforms['u_debug'].value)
       {
-        var marks = new THREE.Points( maskGeom, marksMat );
+        scene.remove(marks);
+        marks = new THREE.Points( maskGeom, marksMat );
         scene.add(marks);
       }
 
       renderer.render(scene, camera);
-
-      scene.remove(marks);
     };
 
     animate();
