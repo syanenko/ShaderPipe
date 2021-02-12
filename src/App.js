@@ -408,7 +408,7 @@ export default function PersistentDrawerRight() {
                         valueLabelDisplay="auto"
                         step={1.0}
                         min={480}
-                        max={1080}
+                        max={5200}
                       />
           </ListItem>
           </List>

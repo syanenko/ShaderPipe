@@ -102,10 +102,14 @@ class Scene extends React.Component
 
       for(let c=0; c < MAX_FACE_POINT; c++ )
       {
-        const shapes = font.generateShapes( c.toString(), 0.005 );
+        const shapes = font.generateShapes( c.toString(), 0.0025 );
         const geometry = new THREE.ShapeBufferGeometry( shapes );
         text[c] = new THREE.Mesh( geometry, matText );
+        geometry.computeBoundingBox();        
+        const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+        geometry.translate( xMid, 0, 0 );
         text[c].position.z = -2;
+
         scene.add( text[c] );
       }
     });
@@ -121,16 +125,16 @@ class Scene extends React.Component
       {
         maskGeom.attributes.position.needsUpdate = true;
         let positions = maskGeom.attributes.position.array;
-        positions[0] = face[230].x;
-        positions[1] = face[230].y;
+        positions[0] = face[152].x;
+        positions[1] = face[152].y;
         positions[2] = 0;
 
-        positions[3] = face[20].x;
-        positions[4] = face[20].y;
+        positions[3] = face[313].x;
+        positions[4] = face[313].y;
         positions[5] = 0;
 
-        positions[6] = face[10].x;
-        positions[7] = face[10].y;
+        positions[6] = face[83].x;
+        positions[7] = face[83].y;
         positions[8] = 0;
 
         maskGeom.computeVertexNormals();
