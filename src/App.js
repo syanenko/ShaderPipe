@@ -66,7 +66,7 @@ import { renderer } from './scene';
 // Globals
 //
 const drawerWidth = '20%';
-var activeMat = 2;
+var activeMat = 10;
 
 const useStyles = makeStyles((theme) => ({
   root: {
