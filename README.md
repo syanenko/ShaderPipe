@@ -4,6 +4,6 @@ Simple sandbox for experiments with [GLSL](https://www.khronos.org/opengl/wiki/C
                
 Allow browser to use your camera, select image filtering, face or hands pose effects from menu, play with controls to adjust them.
 
-Live demo: [Shaderplay](https://virtualkiln.ru/)
+Live demo: [Shader Pipe](https://virtualkiln.ru/)
 
 Contact me at [LinkedIn](https://www.linkedin.com/in/sergey-yanenko-57b21a96/).
