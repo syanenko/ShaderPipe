@@ -336,7 +336,7 @@ export default function PersistentDrawerRight() {
       >
         <Toolbar>
           <Typography variant="h6" noWrap className={classes.title}>
-            Shader play
+            Shader Pipe
           </Typography>
 
           <IconButton
@@ -866,7 +866,7 @@ export default function PersistentDrawerRight() {
         aria-describedby="alert-dialog-description">
       
         <DialogTitle id="alert-dialog-title">
-        {"Shader play"}
+        {"Shader Pipe"}
         </DialogTitle>
         <DialogContent>
           <Typography gutterBottom>
@@ -898,7 +898,7 @@ export default function PersistentDrawerRight() {
           <Typography gutterBottom>
             <br/>
             Sources at &nbsp;
-            <Link href="https://github.com/syanenko/shaderplay">
+            <Link href="https://github.com/syanenko/shaderpipe">
                GitHub
             </Link>.
           </Typography>
