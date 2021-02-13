@@ -540,7 +540,7 @@ export default function PersistentDrawerRight() {
                     />
                   </ListItem>
                   <ListItem divider={true}>
-                    <Tooltip title="Marks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                    <Tooltip title="Landmarks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                       <ListItemIcon><Grain /></ListItemIcon>
                     </Tooltip>
                    <Checkbox 
