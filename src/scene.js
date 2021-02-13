@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import { resolution, materials } from './materials';
 import { face, needsDraw } from './mediapipe';
-import { activeMat } from './App';
+import { activeMat, fontScale } from './App';
 
 const MAX_FACE_POINT = 468;
 
@@ -11,6 +11,8 @@ const MAX_FACE_POINT = 468;
 //
 var renderer;
 var videoMesh;
+var fontScaleCache = fontScale;
+
 class Scene extends React.Component
 {
   componentDidMount()
@@ -108,29 +110,41 @@ class Scene extends React.Component
     scene.add(marks);
 
     // Text landmarks
+    var font;
     var landmarks = [MAX_FACE_POINT];
-    const loader = new THREE.FontLoader();
-    loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font )
+    
+    function loadLandmarks ()
     {
-      const matText = new THREE.LineBasicMaterial( {
-        color: 0xFF0000
-      } );
+      const matText = new THREE.LineBasicMaterial( { color: 0xFF0000 } );
 
-      for(let c=0; c < MAX_FACE_POINT; c++ )
+      for( let c=0; c < MAX_FACE_POINT; c++ )
       {
-        const shapes = font.generateShapes( c.toString(), 0.005 );
+        scene.remove( landmarks[c] );
+
+        if(landmarks[c])
+          if(landmarks[c].geometry)
+            landmarks[c].geometry.dispose();
+
+        const shapes = font.generateShapes( c.toString(), fontScale );
         const geometry = new THREE.ShapeBufferGeometry( shapes );
         landmarks[c] = new THREE.Mesh( geometry, matText );
-        geometry.computeBoundingBox();        
+        geometry.computeBoundingBox();
         const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
         geometry.translate( xMid, 0, 0 );
         landmarks[c].position.z = -2;
 
         scene.add( landmarks[c] );
       }
-    });
-
-    var animate = function ()
+    }
+    
+    const loader = new THREE.FontLoader();
+    loader.load( 'fonts/helvetiker_regular.typeface.json', function ( _font ){
+       font = _font;
+       loadLandmarks();
+      });
+    
+    // Animation
+      var animate = function ()
     {
       requestAnimationFrame( animate );
 
@@ -185,7 +199,14 @@ class Scene extends React.Component
                 {
                       landmarks[p].position.x = face[p].x;
                       landmarks[p].position.y = face[p].y;
-                      landmarks[p].visible = true;
+                }
+                
+                console.log("QQ: " + fontScale);
+                console.log("QQC: " + fontScaleCache);
+                if(fontScale != fontScaleCache)
+                {
+                  loadLandmarks();
+                  fontScaleCache = fontScale;
                 }
           } else
           {

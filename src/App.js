@@ -55,7 +55,8 @@ import { MovieFilter,
          Settings,
          CallMade,
          CallReceived,
-         ExpandLess } from '@material-ui/icons';
+         ExpandLess,
+         FormatSize } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
 import { Scene } from './scene';
@@ -67,6 +68,7 @@ import { renderer } from './scene';
 //
 const drawerWidth = '20%';
 var activeMat = 10;
+var fontScale = 0.005;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -195,6 +197,13 @@ export default function PersistentDrawerRight() {
     resolution.x = resolution.y * aspect;
     renderer.setSize(resolution.x, resolution.y);
   }
+
+// Fonts scale handle
+const [fontScaleValue, setFontScale] = React.useState(0.005);
+function handleFontScaleChange(event, newValue) {
+  setFontScale(newValue);
+  fontScale = newValue;
+}
 
   // Toon hue handle
   const [toonHue, setToonHue] = React.useState([1.0, 106.0, 219.0, 296.0]);
@@ -409,6 +418,19 @@ export default function PersistentDrawerRight() {
                         step={1.0}
                         min={480}
                         max={5200}
+                      />
+          </ListItem>
+          <ListItem divider={true}>
+                      <Tooltip title="Font scale" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                        <ListItemIcon><FormatSize/></ListItemIcon>
+                      </Tooltip>
+                     <Slider value={fontScaleValue}
+                        onChange={handleFontScaleChange}
+                        defaultValue={0.005}
+                        valueLabelDisplay="auto"
+                        step={0.0001}
+                        min={0.001}
+                        max={0.01}
                       />
           </ListItem>
           </List>
@@ -909,7 +931,6 @@ export default function PersistentDrawerRight() {
           </Button>
         </DialogActions>
       </Dialog>
-      
     </div>
   );
 }
@@ -927,4 +948,4 @@ ReactDOM.render(
   document.getElementById('scene')
 );
 
-export {activeMat};
+export {activeMat, fontScale};
