@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import { resolution, materials } from './materials';
 import { face, needsDraw } from './mediapipe';
-import { activeMat, fontScale } from './App';
+import { activeMat, fontSize, threshold } from './App';
 
 const MAX_FACE_POINT = 468;
 
@@ -11,7 +11,7 @@ const MAX_FACE_POINT = 468;
 //
 var renderer;
 var videoMesh;
-var fontScaleCache = fontScale;
+var fontSizeCache = fontSize;
 
 class Scene extends React.Component
 {
@@ -22,8 +22,6 @@ class Scene extends React.Component
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(resolution.x, resolution.y);
 
-    // document.body.appendChild( renderer.domElement );
-    // use ref as a mount point of the Three.js scene instead of the document.body
     this.mount.appendChild(renderer.domElement);
 
     // Video
@@ -125,7 +123,7 @@ class Scene extends React.Component
           if(landmarks[c].geometry)
             landmarks[c].geometry.dispose();
 
-        const shapes = font.generateShapes( c.toString(), fontScale );
+        const shapes = font.generateShapes( c.toString(), fontSize );
         const geometry = new THREE.ShapeBufferGeometry( shapes );
         landmarks[c] = new THREE.Mesh( geometry, matText );
         geometry.computeBoundingBox();
@@ -142,9 +140,9 @@ class Scene extends React.Component
        font = _font;
        loadLandmarks();
       });
-    
+
     // Animation
-      var animate = function ()
+    var animate = function ()
     {
       requestAnimationFrame( animate );
 
@@ -155,29 +153,28 @@ class Scene extends React.Component
       {
         maskGeom.attributes.position.needsUpdate = true;
         let positions = maskGeom.attributes.position.array;
-        positions[0] = face[152].x;
-        positions[1] = face[152].y;
-        positions[2] = 0;
 
-        positions[3] = face[313].x;
-        positions[4] = face[313].y;
-        positions[5] = 0;
+        // DEBUG: Test mask
+        const maskTest = [152, 313, 83, 164, 37, 267];
 
-        positions[6] = face[83].x;
-        positions[7] = face[83].y;
-        positions[8] = 0;
+        let p = 0;
+        let moveAverage = 0;
+        maskTest.forEach(function(i) {
+          moveAverage += Math.abs(positions[p++] - face[i].x)
+          moveAverage += Math.abs(positions[p++] - face[i].y);
+          p++;
+        });
+        moveAverage /= (maskTest.length * 2);
 
-        positions[9] = face[164].x;
-        positions[10] = face[164].y;
-        positions[11] = 0;
-
-        positions[12] = face[37].x;
-        positions[13] = face[37].y;
-        positions[14] = 0;
-
-        positions[15] = face[267].x;
-        positions[16] = face[267].y;
-        positions[17] = 0;
+        if( moveAverage > threshold)
+        {
+          p = 0;
+          maskTest.forEach(function(i){
+                positions[p++] = face[i].x;
+                positions[p++] = face[i].y;
+                positions[p++] = 0;
+            });
+        }
 
         maskGeom.computeVertexNormals();
         mask.visible = true;
@@ -197,17 +194,18 @@ class Scene extends React.Component
               if(landmarks[p])
                 if(landmarks[p].position)
                 {
-                      landmarks[p].position.x = face[p].x;
-                      landmarks[p].position.y = face[p].y;
+                  if( Math.abs(landmarks[p].position.x - face[p].x) > threshold)
+                    landmarks[p].position.x = face[p].x;
+
+                  if( Math.abs(landmarks[p].position.y - face[p].y) > threshold)
+                    landmarks[p].position.y = face[p].y;
                 }
                 
-                console.log("QQ: " + fontScale);
-                console.log("QQC: " + fontScaleCache);
-                if(fontScale != fontScaleCache)
-                {
-                  loadLandmarks();
-                  fontScaleCache = fontScale;
-                }
+              if(fontSize != fontSizeCache)
+              {
+                loadLandmarks();
+                fontSizeCache = fontSize;
+              }
           } else
           {
             if(marks.visible)

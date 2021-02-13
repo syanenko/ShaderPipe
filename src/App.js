@@ -56,6 +56,7 @@ import { MovieFilter,
          CallMade,
          CallReceived,
          ExpandLess,
+         Equalizer,
          FormatSize } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
@@ -68,7 +69,8 @@ import { renderer } from './scene';
 //
 const drawerWidth = '20%';
 var activeMat = 10;
-var fontScale = 0.005;
+var fontSize = 0.005;
+var threshold = 0.003;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -198,12 +200,19 @@ export default function PersistentDrawerRight() {
     renderer.setSize(resolution.x, resolution.y);
   }
 
-// Fonts scale handle
-const [fontScaleValue, setFontScale] = React.useState(0.005);
-function handleFontScaleChange(event, newValue) {
-  setFontScale(newValue);
-  fontScale = newValue;
-}
+  // Fonts scale handle
+  const [fontSizeValue, setFontSize] = React.useState(0.005);
+  function handleFontSizeChange(event, newValue) {
+    setFontSize(newValue);
+    fontSize = newValue;
+  }
+
+  // Threshold change handle
+  const [thresholdValue, setThresholdValue] = React.useState(0.003);
+  function handleThresholdChange(event, newValue) {
+    setThresholdValue(newValue);
+    threshold = newValue;
+  }
 
   // Toon hue handle
   const [toonHue, setToonHue] = React.useState([1.0, 106.0, 219.0, 296.0]);
@@ -421,12 +430,25 @@ function handleFontScaleChange(event, newValue) {
                       />
           </ListItem>
           <ListItem divider={true}>
-                      <Tooltip title="Font scale" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                      <Tooltip title="Landmarks size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                         <ListItemIcon><FormatSize/></ListItemIcon>
                       </Tooltip>
-                     <Slider value={fontScaleValue}
-                        onChange={handleFontScaleChange}
+                     <Slider value={fontSizeValue}
+                        onChange={handleFontSizeChange}
                         defaultValue={0.005}
+                        valueLabelDisplay="auto"
+                        step={0.0001}
+                        min={0.001}
+                        max={0.01}
+                      />
+          </ListItem>
+          <ListItem divider={true}>
+                      <Tooltip title="Noise threshold" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                        <ListItemIcon><Equalizer/></ListItemIcon>
+                      </Tooltip>
+                     <Slider value={thresholdValue}
+                        onChange={handleThresholdChange}
+                        defaultValue={0.003}
                         valueLabelDisplay="auto"
                         step={0.0001}
                         min={0.001}
@@ -948,4 +970,4 @@ ReactDOM.render(
   document.getElementById('scene')
 );
 
-export {activeMat, fontScale};
+export {activeMat, fontSize, threshold};
