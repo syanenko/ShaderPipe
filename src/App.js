@@ -74,7 +74,7 @@ import { renderer } from './scene';
 // Globals
 //
 const drawerWidth = '20%';
-var activeMat = 0;
+var activeMat = 10;
 var activeMask = 2;
 var fontSize = 0.005;
 var threshold = 0.0001;
