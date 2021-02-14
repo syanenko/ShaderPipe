@@ -111,4 +111,4 @@ function onFaceMeshResults(results)
 
 faceProc.onResults(onFaceMeshResults);
 
-export { handsProc, faceProc, fingers, hands, face, needsDraw };
+export { handsProc, faceProc, fingers, hands, face, MAX_FACE_POINT, needsDraw };

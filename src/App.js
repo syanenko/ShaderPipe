@@ -69,8 +69,9 @@ import { renderer } from './scene';
 //
 const drawerWidth = '20%';
 var activeMat = 10;
+var activeMask = 2;
 var fontSize = 0.005;
-var threshold = 0.003;
+var threshold = 0.0001;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -208,7 +209,7 @@ export default function PersistentDrawerRight() {
   }
 
   // Threshold change handle
-  const [thresholdValue, setThresholdValue] = React.useState(0.003);
+  const [thresholdValue, setThresholdValue] = React.useState(0.0001);
   function handleThresholdChange(event, newValue) {
     setThresholdValue(newValue);
     threshold = newValue;
@@ -328,9 +329,10 @@ export default function PersistentDrawerRight() {
   
   // Accordion handle
   const [expanded, setAccordExpanded] = React.useState(false);
-  const handleAccordChange = (panel) => (event, isExpanded) => {
-    setAccordExpanded(isExpanded ? panel : false);
-    activeMat = panel;
+  const handleAccordChange = (material, mask) => (event, isExpanded) => {
+    setAccordExpanded(isExpanded ? material : false);
+    activeMat = material;
+    activeMask = mask;
     videoMesh.material = materials[activeMat];
   };
   
@@ -448,10 +450,10 @@ export default function PersistentDrawerRight() {
                       </Tooltip>
                      <Slider value={thresholdValue}
                         onChange={handleThresholdChange}
-                        defaultValue={0.003}
+                        defaultValue={0.0001}
                         valueLabelDisplay="auto"
                         step={0.0001}
-                        min={0.001}
+                        min={0.0001}
                         max={0.01}
                       />
           </ListItem>
@@ -476,13 +478,13 @@ export default function PersistentDrawerRight() {
         </div>
         <Divider />
         
-        <Accordion expanded={activeMat === 10} onChange={handleAccordChange(10)}>
+        <Accordion expanded={activeMat === 10} onChange={handleAccordChange(10, 2)}>
           <AccordionSummary
             expandIcon={activeMat === 10 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header">
             <ListItemIcon><Face /></ListItemIcon>
-            <ListItemText primary="Mask" />
+            <ListItemText primary="Daemon" />
           </AccordionSummary>
           <Divider />
           <AccordionDetails>
@@ -970,4 +972,4 @@ ReactDOM.render(
   document.getElementById('scene')
 );
 
-export {activeMat, fontSize, threshold};
+export {activeMat, fontSize, threshold, activeMask};
