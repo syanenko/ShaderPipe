@@ -40,7 +40,7 @@ maskGeom.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
 maskGeom.setAttribute( 'normal', new THREE.BufferAttribute( normals, 3 ) );
 maskGeom.setAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 // maskGeom.setAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
-maskGeom.setDrawRange( 0, 19);
+maskGeom.setDrawRange( 0, 19); // TODO: Set according current mask
 
 const maskMat = new THREE.MeshPhongMaterial( { vertexColors: true } );
 var mask = new THREE.Mesh(maskGeom, maskMat);

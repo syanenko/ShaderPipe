@@ -72,6 +72,7 @@ var activeMat = 10;
 var activeMask = 2;
 var fontSize = 0.005;
 var threshold = 0.0001;
+var drawMarks = false;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -324,7 +325,7 @@ export default function PersistentDrawerRight() {
   const [drawMarksChecked, setDrawMarksChecked] = React.useState(false);
   const handleDrawMarks = (event) => {
     setDrawMarksChecked(event.target.checked);
-    materials[activeMat].uniforms[ 'u_debug' ].value = event.target.checked;
+    drawMarks = event.target.checked;
   };
   
   // Accordion handle
@@ -419,44 +420,57 @@ export default function PersistentDrawerRight() {
         <Divider />
         <List>
          <ListItem divider={true}>
-                      <Tooltip title="Frame height" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                        <ListItemIcon><ZoomOutMap/></ListItemIcon>
-                      </Tooltip>
-                     <Slider value={scaleValue}
-                        onChange={handleScaleChange}
-                        defaultValue={resolution.y}
-                        valueLabelDisplay="auto"
-                        step={1.0}
-                        min={480}
-                        max={5200}
-                      />
+            <Tooltip title="Frame height" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+              <ListItemIcon><ZoomOutMap/></ListItemIcon>
+            </Tooltip>
+            <Slider value={scaleValue}
+              onChange={handleScaleChange}
+              defaultValue={resolution.y}
+              valueLabelDisplay="auto"
+              step={1.0}
+              min={480}
+              max={5200}
+            />
           </ListItem>
+
           <ListItem divider={true}>
-                      <Tooltip title="Landmarks size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                        <ListItemIcon><FormatSize/></ListItemIcon>
-                      </Tooltip>
-                     <Slider value={fontSizeValue}
-                        onChange={handleFontSizeChange}
-                        defaultValue={0.005}
-                        valueLabelDisplay="auto"
-                        step={0.0001}
-                        min={0.001}
-                        max={0.01}
-                      />
+            <Tooltip title="Noise threshold" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+              <ListItemIcon><Equalizer/></ListItemIcon>
+            </Tooltip>
+            <Slider value={thresholdValue}
+              onChange={handleThresholdChange}
+              defaultValue={0.0001}
+              valueLabelDisplay="auto"
+              step={0.0001}
+              min={0.0001}
+              max={0.01}
+            />
           </ListItem>
+
           <ListItem divider={true}>
-                      <Tooltip title="Noise threshold" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                        <ListItemIcon><Equalizer/></ListItemIcon>
-                      </Tooltip>
-                     <Slider value={thresholdValue}
-                        onChange={handleThresholdChange}
-                        defaultValue={0.0001}
-                        valueLabelDisplay="auto"
-                        step={0.0001}
-                        min={0.0001}
-                        max={0.01}
-                      />
+            <Tooltip title="Landmarks size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+              <ListItemIcon><FormatSize/></ListItemIcon>
+            </Tooltip>
+            <Slider value={fontSizeValue}
+              onChange={handleFontSizeChange}
+              defaultValue={0.005}
+              valueLabelDisplay="auto"
+              step={0.0001}
+              min={0.001}
+              max={0.01}/>
           </ListItem>
+
+          <ListItem divider={true}>
+            <Tooltip title="Landmarks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+              <ListItemIcon><Grain /></ListItemIcon>
+            </Tooltip>
+            <Checkbox 
+              color="primary"
+              defaultChecked={false}
+              onChange={handleDrawMarks}
+              name="checkedA" />
+          </ListItem>
+
           </List>
       </Drawer>
 
@@ -486,21 +500,6 @@ export default function PersistentDrawerRight() {
             <ListItemIcon><Face /></ListItemIcon>
             <ListItemText primary="Daemon" />
           </AccordionSummary>
-          <Divider />
-          <AccordionDetails>
-            <List className={classes.list}>
-              <ListItem divider={true}>
-                <Tooltip title="Landmarks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><Grain /></ListItemIcon>
-                </Tooltip>
-               <Checkbox 
-                  color="primary"
-                  defaultChecked={false}
-                  onChange={handleDrawMarks}
-                  name="checkedA" />
-             </ListItem>
-            </List>
-          </AccordionDetails>
         </Accordion>
         
         <Accordion expanded={activeMat === 0} onChange={handleAccordChange(0)}>
@@ -515,42 +514,32 @@ export default function PersistentDrawerRight() {
           <Divider />
           <AccordionDetails>
             <List className={classes.list}>
-                  <ListItem divider={true}>
-                    <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                      <ListItemIcon><AllOut /></ListItemIcon>
-                    </Tooltip>   
-                    <Slider value={sizeValue}
-                      onChange={handleSizeChange}
-                      defaultValue={2.1}
-                      valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.0}
-                      max={3.0}
-                    />
-                  </ListItem>
-                  <ListItem divider={true}>
-                    <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                      <ListItemIcon><Brightness4 /></ListItemIcon>
-                    </Tooltip>
-                   <Slider value={darknessValue}
-                      onChange={handleDarknessChange}
-                      defaultValue={2.1}
-                      valueLabelDisplay="auto"
-                      step={0.1}
-                      min={0.0}
-                      max={15.0}
-                    />
-                  </ListItem>
-                  <ListItem divider={true}>
-                    <Tooltip title="Landmarks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                      <ListItemIcon><Grain /></ListItemIcon>
-                    </Tooltip>
-                   <Checkbox 
-                      color="primary"
-                      defaultChecked={false}
-                      onChange={handleDrawMarks}
-                      name="checkedA" />
-                 </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><AllOut /></ListItemIcon>
+                </Tooltip>   
+                <Slider value={sizeValue}
+                  onChange={handleSizeChange}
+                  defaultValue={2.1}
+                  valueLabelDisplay="auto"
+                  step={0.01}
+                  min={0.0}
+                  max={3.0}
+                />
+              </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><Brightness4 /></ListItemIcon>
+                </Tooltip>
+                <Slider value={darknessValue}
+                  onChange={handleDarknessChange}
+                  defaultValue={2.1}
+                  valueLabelDisplay="auto"
+                  step={0.1}
+                  min={0.0}
+                  max={15.0}
+                />
+              </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
@@ -559,40 +548,39 @@ export default function PersistentDrawerRight() {
           <AccordionSummary
             expandIcon={activeMat === 1 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
+            id="panel1bh-header">
             <ListItemIcon><MovieFilter /></ListItemIcon>
             <ListItemText primary="Whirlpool" />
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
-                <ListItem divider={true}>
-                  <Tooltip title="Scale A" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><CallReceived /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={whirlpoolA}
-                      onChange={handleWhirlpoolA}
-                      defaultValue={2.1}
-                      valueLabelDisplay="auto"
-                      step={10.0}
-                      min={10.0}
-                      max={1000.0}
-                    />
-                </ListItem>
-                <ListItem divider={true}>
-                  <Tooltip title="Scale B" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><CallMade /></ListItemIcon>
-                  </Tooltip>
-                  <Slider value={whirlpoolB}
-                      onChange={handleWhirlpoolB}
-                      defaultValue={2.1}
-                      valueLabelDisplay="auto"
-                      step={10.0}
-                      min={10.0}
-                      max={1000.0}
-                   />
-                 </ListItem>
+            <ListItem divider={true}>
+              <Tooltip title="Scale A" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                <ListItemIcon><CallReceived /></ListItemIcon>
+              </Tooltip>  
+                <Slider value={whirlpoolA}
+                  onChange={handleWhirlpoolA}
+                  defaultValue={2.1}
+                  valueLabelDisplay="auto"
+                  step={10.0}
+                  min={10.0}
+                  max={1000.0}
+                />
+            </ListItem>
+            <ListItem divider={true}>
+              <Tooltip title="Scale B" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                <ListItemIcon><CallMade /></ListItemIcon>
+              </Tooltip>
+              <Slider value={whirlpoolB}
+                  onChange={handleWhirlpoolB}
+                  defaultValue={2.1}
+                  valueLabelDisplay="auto"
+                  step={10.0}
+                  min={10.0}
+                  max={1000.0}
+                />
+              </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
@@ -609,47 +597,47 @@ export default function PersistentDrawerRight() {
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
-                <ListItem divider={true}>
-                  <Tooltip title="Hue levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><ColorLens /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={toonHue}
-                      onChange={handleToonHue}
-                      defaultValue={[1.0, 106.0, 219.0, 296.0]}
-                      valueLabelDisplay="auto"
-                      step={1.0}
-                      min={1.0}
-                      max={360.0}
-                    />
-                </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Hue levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><ColorLens /></ListItemIcon>
+                </Tooltip>  
+                  <Slider value={toonHue}
+                    onChange={handleToonHue}
+                    defaultValue={[1.0, 106.0, 219.0, 296.0]}
+                    valueLabelDisplay="auto"
+                    step={1.0}
+                    min={1.0}
+                    max={360.0}
+                  />
+              </ListItem>
 
-                <ListItem divider={true}>
-                  <Tooltip title="Saturation levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><InvertColors /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={toonSat}
-                      onChange={handleToonSat}
-                      defaultValue={[0.0, 0.3, 0.6, 1.0]}
-                      valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.01}
-                      max={1.0}
-                    />
-                </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Saturation levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><InvertColors /></ListItemIcon>
+                </Tooltip>  
+                  <Slider value={toonSat}
+                    onChange={handleToonSat}
+                    defaultValue={[0.0, 0.3, 0.6, 1.0]}
+                    valueLabelDisplay="auto"
+                    step={0.01}
+                    min={0.01}
+                    max={1.0}
+                  />
+              </ListItem>
 
-                <ListItem divider={true}>
-                  <Tooltip title="Value levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Brightness4 /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={toonValue}
-                      onChange={handleToonValue}
-                      defaultValue={[0.0, 0.3, 0.6, 1.0]}
-                      valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.01}
-                      max={1.0}
-                    />
-                </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Value levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><Brightness4 /></ListItemIcon>
+                </Tooltip>  
+                  <Slider value={toonValue}
+                    onChange={handleToonValue}
+                    defaultValue={[0.0, 0.3, 0.6, 1.0]}
+                    valueLabelDisplay="auto"
+                    step={0.01}
+                    min={0.01}
+                    max={1.0}
+                  />
+              </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
@@ -720,43 +708,43 @@ export default function PersistentDrawerRight() {
           
           <AccordionDetails>
             <List className={classes.list}>
-                <ListItem divider={true}>
-                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><AllOut /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={gobelinSize}
-                      onChange={handleGobelinSize}
-                      defaultValue={6.0}
-                      valueLabelDisplay="auto"
-                      step={1.0}
-                      min={5.0}
-                      max={25.0}
-                    />
-                </ListItem>
-                
-                <ListItem divider={true}>
-                  <Tooltip title="Dimension" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><ZoomOutMap /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={gobelinDim}
-                      onChange={handleGobelinDim}
-                      defaultValue={600.0}
-                      valueLabelDisplay="auto"
-                      step={10.0}
-                      min={200.0}
-                      max={1000.0}
-                    />
-                </ListItem>
-                <ListItem divider={true}>
-                  <Tooltip title="Invert" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><Iso /></ListItemIcon>
-                  </Tooltip>  
-                   <Checkbox 
-                      color="primary"
-                      defaultChecked={false}
-                      onChange={handleGobelinInvert}
-                      name="checkedGobelinInvert" />
-                </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><AllOut /></ListItemIcon>
+                </Tooltip>  
+                  <Slider value={gobelinSize}
+                    onChange={handleGobelinSize}
+                    defaultValue={6.0}
+                    valueLabelDisplay="auto"
+                    step={1.0}
+                    min={5.0}
+                    max={25.0}
+                  />
+              </ListItem>
+              
+              <ListItem divider={true}>
+                <Tooltip title="Dimension" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><ZoomOutMap /></ListItemIcon>
+                </Tooltip>  
+                  <Slider value={gobelinDim}
+                    onChange={handleGobelinDim}
+                    defaultValue={600.0}
+                    valueLabelDisplay="auto"
+                    step={10.0}
+                    min={200.0}
+                    max={1000.0}
+                  />
+              </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Invert" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><Iso /></ListItemIcon>
+                </Tooltip>  
+                  <Checkbox 
+                    color="primary"
+                    defaultChecked={false}
+                    onChange={handleGobelinInvert}
+                    name="checkedGobelinInvert" />
+              </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
@@ -773,32 +761,32 @@ export default function PersistentDrawerRight() {
           <Divider />
           <AccordionDetails>
             <List className={classes.list}>
-                <ListItem divider={true}>
-                  <Tooltip title="Size X" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><BorderBottom /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={pixelSizeXValue}
-                      onChange={handlePixelSizeXChange}
-                      defaultValue={640.}
-                      valueLabelDisplay="auto"
-                      step={10.0}
-                      min={50.0}
-                      max={1000.0}
-                    />
+              <ListItem divider={true}>
+                <Tooltip title="Size X" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><BorderBottom /></ListItemIcon>
+                </Tooltip>  
+                  <Slider value={pixelSizeXValue}
+                    onChange={handlePixelSizeXChange}
+                    defaultValue={640.}
+                    valueLabelDisplay="auto"
+                    step={10.0}
+                    min={50.0}
+                    max={1000.0}
+                  />
+              </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Size Y" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><BorderLeft /></ListItemIcon>
+                </Tooltip>
+                <Slider value={pixelSizeYValue}
+                    onChange={handlePixelSizeYChange}
+                    defaultValue={480.}
+                    valueLabelDisplay="auto"
+                    step={10.0}
+                    min={50.0}
+                    max={1000.0}
+                  />
                 </ListItem>
-                <ListItem divider={true}>
-                  <Tooltip title="Size Y" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><BorderLeft /></ListItemIcon>
-                  </Tooltip>
-                  <Slider value={pixelSizeYValue}
-                      onChange={handlePixelSizeYChange}
-                      defaultValue={480.}
-                      valueLabelDisplay="auto"
-                      step={10.0}
-                      min={50.0}
-                      max={1000.0}
-                   />
-                 </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
@@ -815,19 +803,19 @@ export default function PersistentDrawerRight() {
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
-                <ListItem divider={true}>
-                  <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><AllOut /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={sizeHoneyValue}
-                      onChange={handleHoneySizeChange}
-                      defaultValue={0.01}
-                      valueLabelDisplay="auto"
-                      step={0.001}
-                      min={0.005}
-                      max={0.07}
-                    />
-                </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><AllOut /></ListItemIcon>
+                </Tooltip>  
+                  <Slider value={sizeHoneyValue}
+                    onChange={handleHoneySizeChange}
+                    defaultValue={0.01}
+                    valueLabelDisplay="auto"
+                    step={0.001}
+                    min={0.005}
+                    max={0.07}
+                  />
+              </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
@@ -844,19 +832,19 @@ export default function PersistentDrawerRight() {
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
-                <ListItem divider={true}>
-                  <Tooltip title="Details" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><VerticalSplit /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={lineLimit}
-                      onChange={handleLineLimit}
-                      defaultValue={0.5}
-                      valueLabelDisplay="auto"
-                      step={0.01}
-                      min={0.01}
-                      max={1.5}
-                    />
-                </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Details" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><VerticalSplit /></ListItemIcon>
+                </Tooltip>  
+                  <Slider value={lineLimit}
+                    onChange={handleLineLimit}
+                    defaultValue={0.5}
+                    valueLabelDisplay="auto"
+                    step={0.01}
+                    min={0.01}
+                    max={1.5}
+                  />
+              </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
@@ -873,32 +861,32 @@ export default function PersistentDrawerRight() {
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
-                <ListItem divider={true}>
-                  <Tooltip title="dX" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><SwapHoriz /></ListItemIcon>
-                  </Tooltip>  
-                   <Slider value={sobelDxValue}
-                      onChange={handleSobelDx}
-                      defaultValue={0.002}
-                      valueLabelDisplay="auto"
-                      step={0.0001}
-                      min={0.000}
-                      max={0.01}
-                    />
-                </ListItem>
-                <ListItem divider={true}>
-                  <Tooltip title="dY" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><SwapVert /></ListItemIcon>
-                  </Tooltip>
-                  <Slider value={sobelDyValue}
-                      onChange={handleSobelDy}
-                      defaultValue={0.002}
-                      valueLabelDisplay="auto"
-                      step={0.0001}
-                      min={0.000}
-                      max={0.01}
-                   />
-                 </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="dX" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><SwapHoriz /></ListItemIcon>
+                </Tooltip>  
+                  <Slider value={sobelDxValue}
+                    onChange={handleSobelDx}
+                    defaultValue={0.002}
+                    valueLabelDisplay="auto"
+                    step={0.0001}
+                    min={0.000}
+                    max={0.01}
+                  />
+              </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="dY" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><SwapVert /></ListItemIcon>
+                </Tooltip>
+                <Slider value={sobelDyValue}
+                    onChange={handleSobelDy}
+                    defaultValue={0.002}
+                    valueLabelDisplay="auto"
+                    step={0.0001}
+                    min={0.000}
+                    max={0.01}
+                  />
+              </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
@@ -972,4 +960,4 @@ ReactDOM.render(
   document.getElementById('scene')
 );
 
-export {activeMat, fontSize, threshold, activeMask};
+export {activeMat, fontSize, threshold, activeMask, drawMarks};

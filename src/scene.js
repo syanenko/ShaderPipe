@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import { resolution, materials } from './materials';
 import { face, MAX_FACE_POINT, needsDraw } from './mediapipe';
-import { activeMat, activeMask, fontSize, threshold } from './App';
+import { activeMat, activeMask, fontSize, threshold, drawMarks } from './App';
 import { mask, maskPoints, marks } from './mask';
 
 //
@@ -79,8 +79,11 @@ class Scene extends React.Component
       requestAnimationFrame( animate );
 
       if(materials[activeMat].uniforms['u_time'])
-        materials[activeMat].uniforms['u_time'].value = performance.now() / 1000;
-
+         materials[activeMat].uniforms['u_time'].value = performance.now() / 1000;
+ 
+      if(materials[activeMat].uniforms['u_debug'])
+         materials[activeMat].uniforms['u_debug'].value = drawMarks;
+ 
       if(materials[activeMat].uniforms['u_face'] && needsDraw)
       {
         mask.geometry.attributes.position.needsUpdate = true;
@@ -108,43 +111,42 @@ class Scene extends React.Component
         mask.geometry.computeVertexNormals();
         mask.visible = true;
 
-        if(materials[activeMat].uniforms['u_debug'])
-          if(materials[activeMat].uniforms['u_debug'].value)
+        if(drawMarks)
+        {
+          if(!marks.visible)
           {
-            if(!marks.visible)
-            {
-              for(let c=0; c < MAX_FACE_POINT; c++)
-                scene.add(landmarks[c]);
-              scene.add(marks);
-              marks.visible = true;
-            }
-
-            for(let p=0; p < MAX_FACE_POINT; p++)
-              if(landmarks[p])
-                if(landmarks[p].position)
-                {
-                  if( Math.abs(landmarks[p].position.x - face[p].x) > threshold)
-                    landmarks[p].position.x = face[p].x;
-
-                  if( Math.abs(landmarks[p].position.y - face[p].y) > threshold)
-                    landmarks[p].position.y = face[p].y;
-                }
-                
-              if(fontSize != fontSizeCache)
-              {
-                loadLandmarks();
-                fontSizeCache = fontSize;
-              }
-          } else
-          {
-            if(marks.visible)
-            {
-              for(let p=0; p < MAX_FACE_POINT; p++)
-                scene.remove(landmarks[p]);
-              scene.remove(marks);
-              marks.visible = false;
-            }
+            for(let c=0; c < MAX_FACE_POINT; c++)
+              scene.add(landmarks[c]);
+            scene.add(marks);
+            marks.visible = true;
           }
+
+          for(let p=0; p < MAX_FACE_POINT; p++)
+            if(landmarks[p])
+              if(landmarks[p].position)
+              {
+                if( Math.abs(landmarks[p].position.x - face[p].x) > threshold)
+                  landmarks[p].position.x = face[p].x;
+
+                if( Math.abs(landmarks[p].position.y - face[p].y) > threshold)
+                  landmarks[p].position.y = face[p].y;
+              }
+              
+            if(fontSize != fontSizeCache)
+            {
+              loadLandmarks();
+              fontSizeCache = fontSize;
+            }
+        } else
+        {
+          if(marks.visible)
+          {
+            for(let p=0; p < MAX_FACE_POINT; p++)
+              scene.remove(landmarks[p]);
+            scene.remove(marks);
+            marks.visible = false;
+          }
+        }
       } else
       {
         mask.visible = false;
