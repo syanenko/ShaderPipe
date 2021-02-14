@@ -36,15 +36,17 @@ var materials =
   // Fireball
   new THREE.ShaderMaterial(
   {
-    uniforms: { u_time:          { value: 0.0 },
-                u_texture:       { value: texture    },
-                u_resolution:    { value: resolution },
-                u_fingers_right: { value: fingers[0] },
-                u_fingers_left:  { value: fingers[1] },
-                u_hands:         { value: hands      },
-                u_size:          { value: 1.7        },
-                u_darkness:      { value: 10.0       },
-                u_debug:         { value: false      }},
+    uniforms: { u_time:             { value: 0.0        },
+                u_texture:          { value: texture    },
+                u_resolution:       { value: resolution },
+                u_fingers_right:    { value: fingers[0] },
+                u_fingers_left:     { value: fingers[1] },
+                u_hands:            { value: hands      },
+                u_size:             { value: 1.7        },
+                u_darkness:         { value: 10.0       },
+                u_left_hand_color:  { value: [1,0,0,1]  },
+                u_right_hand_color: { value: [1,0,0,1]  },
+                u_debug:            { value: false      }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentFireball' ).textContent

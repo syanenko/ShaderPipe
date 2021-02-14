@@ -45,12 +45,8 @@
   //
   // Shaders
   //
-    <div id="shaders"></div>
-    <script>$('#shaders').load('./shaders.html')</script>
-  -->
 
-  <!--
-   vertexDefault
+  vertexDefault
   -->
   <script id="vertexDefault" type="x-shader/x-vertex">
     varying vec2 vUv;
@@ -78,6 +74,9 @@
     uniform vec2 u_fingers_left[MAX_HAND_POINT];
     uniform vec2 u_hands[2];
 
+    uniform vec4 u_left_hand_color;
+    uniform vec4 u_right_hand_color;
+    
     uniform bool u_debug;
     
     uniform float u_size;
@@ -148,8 +147,8 @@
       
       if(dist < disThresh)
       {
-        gl_FragColor = texture2D(u_texture, vUv)  * (vec4( 0.1, 1.0, 0.1, 1.0) + (dist * border));
-
+        // TODO: Mix left/right colors
+        gl_FragColor = texture2D(u_texture, vUv)  * (u_left_hand_color + (dist * border));
       } else
       {
         vec4 color = vec4(vec3(dist) * u_darkness, 1.0);

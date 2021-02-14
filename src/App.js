@@ -61,7 +61,9 @@ import { MovieFilter,
          FormatSize,
          Filter1,
          Filter2,
-         Filter3 } from '@material-ui/icons';
+         Filter3,
+         ThumbUp,
+         ThumbDown } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
 import { Scene } from './scene';
@@ -72,7 +74,7 @@ import { renderer } from './scene';
 // Globals
 //
 const drawerWidth = '20%';
-var activeMat = 10;
+var activeMat = 0;
 var activeMask = 2;
 var fontSize = 0.005;
 var threshold = 0.0001;
@@ -587,6 +589,32 @@ export default function PersistentDrawerRight() {
                   min={0.0}
                   max={15.0}
                 />
+              </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Color" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><ColorLens /></ListItemIcon>
+                </Tooltip>
+                <ChromePicker
+                color={ '#000' }
+                onChangeComplete={color => {
+                  materials[activeMat].uniforms['u_left_hand_color'].value = [parseFloat(color.rgb.r) / 255.0,
+                                                                              parseFloat(color.rgb.g) / 255.0,
+                                                                              parseFloat(color.rgb.b) / 255.0,
+                                                                              parseFloat(color.rgb.a) / 255.0]; }}/>
+{/*                                                                              
+              </ListItem>
+              <ListItem divider={true}>
+                <Tooltip title="Right hand color" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><ThumbDown /></ListItemIcon>
+                </Tooltip>
+                <ChromePicker
+                color={ '#000' }
+                onChangeComplete={color => {
+                  materials[activeMat].uniforms['u_right_hand_color'].value = [parseFloat(color.rgb.r) / 255.0,
+                                                                               parseFloat(color.rgb.g) / 255.0,
+                                                                               parseFloat(color.rgb.b) / 255.0,
+                                                                               parseFloat(color.rgb.a) / 255.0]; }}/>
+*/}                                                                               
               </ListItem>
             </List>
           </AccordionDetails>
