@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import { resolution, materials } from './materials';
 import { face, MAX_FACE_POINT, needsDraw } from './mediapipe';
-import { activeMat, activeMask, fontSize, threshold, drawMarks } from './App';
+import { activeMat, activeMask, fontSize, threshold, drawMarks, maskVertColors } from './App';
 import { mask, maskPoints, marks } from './mask';
 
 //
@@ -10,7 +10,7 @@ import { mask, maskPoints, marks } from './mask';
 //
 var renderer;
 var videoMesh;
-var fontSizeCache = fontSize;
+var fontSizeCurrent = fontSize;
 
 class Scene extends React.Component
 {
@@ -87,6 +87,7 @@ class Scene extends React.Component
       if(materials[activeMat].uniforms['u_face'] && needsDraw)
       {
         mask.geometry.attributes.position.needsUpdate = true;
+        mask.geometry.attributes.color.needsUpdate = true;
         let positions = mask.geometry.attributes.position.array;
 
         let p = 0;
@@ -98,7 +99,8 @@ class Scene extends React.Component
         });
         moveAverage /= (maskPoints[activeMask].length * 2);
 
-        if( moveAverage > threshold)
+        // Update positions
+        if(moveAverage > threshold)
         {
           p = 0;
           maskPoints[activeMask].forEach(function(i){
@@ -106,6 +108,22 @@ class Scene extends React.Component
                 positions[p++] = face[i].y;
                 positions[p++] = 0;
             });
+        }
+
+        // Update colors
+        for(let c=0; c<mask.geometry.attributes.color.array.length;)
+        {
+          mask.geometry.attributes.color.array[c++] = maskVertColors[0].r;
+          mask.geometry.attributes.color.array[c++] = maskVertColors[0].g;
+          mask.geometry.attributes.color.array[c++] = maskVertColors[0].b;
+
+          mask.geometry.attributes.color.array[c++] = maskVertColors[1].r;
+          mask.geometry.attributes.color.array[c++] = maskVertColors[1].g;
+          mask.geometry.attributes.color.array[c++] = maskVertColors[1].b;
+
+          mask.geometry.attributes.color.array[c++] = maskVertColors[2].r;
+          mask.geometry.attributes.color.array[c++] = maskVertColors[2].g;
+          mask.geometry.attributes.color.array[c++] = maskVertColors[2].b;
         }
 
         mask.geometry.computeVertexNormals();
@@ -132,10 +150,10 @@ class Scene extends React.Component
                   landmarks[p].position.y = face[p].y;
               }
               
-            if(fontSize != fontSizeCache)
+            if(fontSize !== fontSizeCurrent)
             {
               loadLandmarks();
-              fontSizeCache = fontSize;
+              fontSizeCurrent = fontSize;
             }
         } else
         {

@@ -34,6 +34,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Link from '@material-ui/core/Link';
 import Hidden from '@material-ui/core/Hidden';
+import { ChromePicker } from 'react-color';
 
 import { MovieFilter,
          BubbleChart,
@@ -57,7 +58,10 @@ import { MovieFilter,
          CallReceived,
          ExpandLess,
          Equalizer,
-         FormatSize } from '@material-ui/icons';
+         FormatSize,
+         Filter1,
+         Filter2,
+         Filter3 } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
 import { Scene } from './scene';
@@ -73,6 +77,7 @@ var activeMask = 2;
 var fontSize = 0.005;
 var threshold = 0.0001;
 var drawMarks = false;
+var maskVertColors = [{r:1, g:0, b:0 }, {r:0, g:1, b:0 }, {r:0, g:0, b:1 }];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -336,7 +341,7 @@ export default function PersistentDrawerRight() {
     activeMask = mask;
     videoMesh.material = materials[activeMat];
   };
-  
+
   // Dialog
   const [openHelp, setOpenHelp] = React.useState(false);
   const handleOpenHelp = () => {
@@ -498,8 +503,51 @@ export default function PersistentDrawerRight() {
             aria-controls="panel1bh-content"
             id="panel1bh-header">
             <ListItemIcon><Face /></ListItemIcon>
-            <ListItemText primary="Daemon" />
+            <ListItemText primary="Demon" />
           </AccordionSummary>
+          <Divider />
+          <AccordionDetails>
+            <List className={classes.list}>
+              <ListItem divider={true}>
+                <Tooltip title="Vertex 1" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><Filter1 /></ListItemIcon>
+                </Tooltip>
+                <ChromePicker
+                color={ '#000' }
+                onChangeComplete={color => {
+                  maskVertColors[0].r = parseFloat(color.rgb.r) / 255.0;
+                  maskVertColors[0].g = parseFloat(color.rgb.g) / 255.0;
+                  maskVertColors[0].b = parseFloat(color.rgb.b) / 255.0;
+                }}/>
+              </ListItem>
+
+              <ListItem divider={true}>
+                <Tooltip title="Vertex 2" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><Filter2 /></ListItemIcon>
+                </Tooltip>
+                <ChromePicker
+                  color={ '#000' }
+                  onChangeComplete={color => {
+                    maskVertColors[1].r = parseFloat(color.rgb.r) / 255.0;
+                    maskVertColors[1].g = parseFloat(color.rgb.g) / 255.0;
+                    maskVertColors[1].b = parseFloat(color.rgb.b) / 255.0;
+                  }}/>
+              </ListItem>
+
+              <ListItem divider={true}>
+                <Tooltip title="Vertex 3" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><Filter3 /></ListItemIcon>
+                </Tooltip>
+                <ChromePicker
+                  color={ '#000' }
+                  onChangeComplete={color => {
+                    maskVertColors[2].r = parseFloat(color.rgb.r) / 255.0;
+                    maskVertColors[2].g = parseFloat(color.rgb.g) / 255.0;
+                    maskVertColors[2].b = parseFloat(color.rgb.b) / 255.0;
+                  }}/>
+              </ListItem>
+            </List>
+          </AccordionDetails>
         </Accordion>
         
         <Accordion expanded={activeMat === 0} onChange={handleAccordChange(0)}>
@@ -960,4 +1008,4 @@ ReactDOM.render(
   document.getElementById('scene')
 );
 
-export {activeMat, fontSize, threshold, activeMask, drawMarks};
+export {activeMat, fontSize, threshold, activeMask, drawMarks, maskVertColors};
