@@ -2,8 +2,8 @@ import React from 'react';
 import * as THREE from 'three';
 import { resolution, materials } from './materials';
 import { face, MAX_FACE_POINT, needsDraw } from './mediapipe';
-import { activeMat, activeMask, fontSize, threshold, drawMarks, maskVertColors } from './App';
-import { mask, maskPoints, marks } from './mask';
+import { activeMat, activeMask, fontSize, threshold, drawMarks } from './App';
+import { mask, masksData, marks } from './mask';
 
 //
 // Scene
@@ -84,46 +84,48 @@ class Scene extends React.Component
       if(materials[activeMat].uniforms['u_debug'])
          materials[activeMat].uniforms['u_debug'].value = drawMarks;
  
+      
       if(materials[activeMat].uniforms['u_face'] && needsDraw)
       {
+        mask.geometry.setDrawRange( 0, masksData[activeMask].range);
+        // Update positions
         mask.geometry.attributes.position.needsUpdate = true;
-        mask.geometry.attributes.color.needsUpdate = true;
+        
         let positions = mask.geometry.attributes.position.array;
-
         let p = 0;
         let moveAverage = 0;
-        maskPoints[activeMask].forEach(function(i) {
+        masksData[activeMask].points.forEach(function(i) {
           moveAverage += Math.abs(positions[p++] - face[i].x)
           moveAverage += Math.abs(positions[p++] - face[i].y);
           p++;
         });
-        moveAverage /= (maskPoints[activeMask].length * 2);
-
-        // Update positions
+        moveAverage /= (masksData[activeMask].points.length * 2);
+        
         if(moveAverage > threshold)
         {
           p = 0;
-          maskPoints[activeMask].forEach(function(i){
+          masksData[activeMask].points.forEach(function(i){
                 positions[p++] = face[i].x;
                 positions[p++] = face[i].y;
                 positions[p++] = 0;
             });
         }
-
+        
         // Update colors
+        mask.geometry.attributes.color.needsUpdate = true;
         for(let c=0; c<mask.geometry.attributes.color.array.length;)
         {
-          mask.geometry.attributes.color.array[c++] = maskVertColors[0].r;
-          mask.geometry.attributes.color.array[c++] = maskVertColors[0].g;
-          mask.geometry.attributes.color.array[c++] = maskVertColors[0].b;
+          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[0].r;
+          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[0].g;
+          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[0].b;
 
-          mask.geometry.attributes.color.array[c++] = maskVertColors[1].r;
-          mask.geometry.attributes.color.array[c++] = maskVertColors[1].g;
-          mask.geometry.attributes.color.array[c++] = maskVertColors[1].b;
+          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[1].r;
+          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[1].g;
+          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[1].b;
 
-          mask.geometry.attributes.color.array[c++] = maskVertColors[2].r;
-          mask.geometry.attributes.color.array[c++] = maskVertColors[2].g;
-          mask.geometry.attributes.color.array[c++] = maskVertColors[2].b;
+          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].r;
+          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].g;
+          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].b;
         }
 
         mask.geometry.computeVertexNormals();

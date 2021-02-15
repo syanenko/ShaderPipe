@@ -70,6 +70,7 @@ import { resolution, materials } from './materials';
 import { Scene } from './scene';
 import { videoMesh } from './scene';
 import { renderer } from './scene';
+import { masksData } from './mask';
 
 //
 // Globals
@@ -553,9 +554,9 @@ export default function PersistentDrawerRight() {
                 <ChromePicker
                 color={ '#000' }
                 onChangeComplete={color => {
-                  maskVertColors[0].r = parseFloat(color.rgb.r) / 255.0;
-                  maskVertColors[0].g = parseFloat(color.rgb.g) / 255.0;
-                  maskVertColors[0].b = parseFloat(color.rgb.b) / 255.0;
+                  masksData[activeMask].colors[0].r  = parseFloat(color.rgb.r) / 255.0;
+                  masksData[activeMask].colors[0].g  = parseFloat(color.rgb.g) / 255.0;
+                  masksData[activeMask].colors[0].b  = parseFloat(color.rgb.b) / 255.0;
                 }}/>
               </ListItem>
 
@@ -566,9 +567,9 @@ export default function PersistentDrawerRight() {
                 <ChromePicker
                   color={ '#000' }
                   onChangeComplete={color => {
-                    maskVertColors[1].r = parseFloat(color.rgb.r) / 255.0;
-                    maskVertColors[1].g = parseFloat(color.rgb.g) / 255.0;
-                    maskVertColors[1].b = parseFloat(color.rgb.b) / 255.0;
+                    masksData[activeMask].colors[1].r  = parseFloat(color.rgb.r) / 255.0;
+                    masksData[activeMask].colors[1].g  = parseFloat(color.rgb.g) / 255.0;
+                    masksData[activeMask].colors[1].b  = parseFloat(color.rgb.b) / 255.0;
                   }}/>
               </ListItem>
 
@@ -579,9 +580,9 @@ export default function PersistentDrawerRight() {
                 <ChromePicker
                   color={ '#000' }
                   onChangeComplete={color => {
-                    maskVertColors[2].r = parseFloat(color.rgb.r) / 255.0;
-                    maskVertColors[2].g = parseFloat(color.rgb.g) / 255.0;
-                    maskVertColors[2].b = parseFloat(color.rgb.b) / 255.0;
+                    masksData[activeMask].colors[2].r  = parseFloat(color.rgb.r) / 255.0;
+                    masksData[activeMask].colors[2].g  = parseFloat(color.rgb.g) / 255.0;
+                    masksData[activeMask].colors[2].b  = parseFloat(color.rgb.b) / 255.0;
                   }}/>
               </ListItem>
             </List>
