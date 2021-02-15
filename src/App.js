@@ -385,7 +385,7 @@ export default function PersistentDrawerRight() {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        <Toolbar position="sticky">
           <Typography variant="h6" noWrap className={classes.title}>
             Shader Pipe
           </Typography>
