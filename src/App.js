@@ -63,7 +63,8 @@ import { MovieFilter,
          Filter2,
          Filter3,
          ThumbUp,
-         ThumbDown } from '@material-ui/icons';
+         ThumbDown,
+         SignalCellularNull } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
 import { Scene } from './scene';
@@ -328,6 +329,27 @@ export default function PersistentDrawerRight() {
     materials[activeMat].uniforms[ 'u_darkness' ].value = newValue;
   };
 
+  // Active mask handle
+  const masksMarks = [
+    {
+      value: 0,
+      label: 'Beard',
+    },
+    {
+      value: 1,
+      label: 'Eyes',
+    },
+    {
+      value: 2,
+      label: 'Demon',
+    }
+  ];
+  const [activeMaskValue, setActiveMaskValue] = React.useState(2);
+  function handleActiveMaskChange(event, newValue) {
+    setDarknessValue(newValue);
+    activeMask = newValue;
+  }
+
   // Draw marks handle
   const [drawMarksChecked, setDrawMarksChecked] = React.useState(false);
   const handleDrawMarks = (event) => {
@@ -505,11 +527,25 @@ export default function PersistentDrawerRight() {
             aria-controls="panel1bh-content"
             id="panel1bh-header">
             <ListItemIcon><Face /></ListItemIcon>
-            <ListItemText primary="Demon" />
+            <ListItemText primary="Masks" />
           </AccordionSummary>
           <Divider />
           <AccordionDetails>
             <List className={classes.list}>
+              <ListItem divider={true}>
+                <Tooltip title="Geometry" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><SignalCellularNull /></ListItemIcon>
+                </Tooltip>
+                <Slider value={activeMask}
+                  onChange={handleActiveMaskChange}
+                  defaultValue={2}
+                  valueLabelDisplay="auto"
+                  marks={masksMarks}
+                  step={1}
+                  min={0}
+                  max={2}/>
+              </ListItem>
+
               <ListItem divider={true}>
                 <Tooltip title="Vertex 1" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                   <ListItemIcon><Filter1 /></ListItemIcon>
@@ -556,8 +592,7 @@ export default function PersistentDrawerRight() {
           <AccordionSummary
             expandIcon={activeMat === 0 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
+            id="panel1bh-header">
             <ListItemIcon><PanTool/></ListItemIcon>
             <ListItemText primary="Fireball" />
           </AccordionSummary>
@@ -587,8 +622,7 @@ export default function PersistentDrawerRight() {
                   valueLabelDisplay="auto"
                   step={0.1}
                   min={0.0}
-                  max={15.0}
-                />
+                  max={15.0}/>
               </ListItem>
               <ListItem divider={true}>
                 <Tooltip title="Color" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
