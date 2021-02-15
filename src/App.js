@@ -3,6 +3,8 @@ import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import * as THREE from 'three';
+
 import 'fontsource-roboto';
 import { Button } from '@material-ui/core';
 import { Slider } from '@material-ui/core';
@@ -64,7 +66,8 @@ import { MovieFilter,
          Filter3,
          ThumbUp,
          ThumbDown,
-         SignalCellularNull } from '@material-ui/icons';
+         SignalCellularNull,
+         Business } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
 import { Scene } from './scene';
@@ -78,10 +81,11 @@ import { masksData } from './mask';
 const drawerWidth = '20%';
 var activeMat = 10;
 var activeMask = 2;
+var activeBlending = 4;
 var fontSize = 0.005;
 var threshold = 0.0001;
 var drawMarks = false;
-var maskVertColors = [{r:1, g:0, b:0 }, {r:0, g:1, b:0 }, {r:0, g:0, b:1 }];
+var matTransparency = false;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -347,9 +351,52 @@ export default function PersistentDrawerRight() {
   ];
   const [activeMaskValue, setActiveMaskValue] = React.useState(2);
   function handleActiveMaskChange(event, newValue) {
-    setDarknessValue(newValue);
+    setActiveMaskValue(newValue);
     activeMask = newValue;
   }
+
+  // Active blending handle
+  const blendings = [ THREE.NoBlending,
+                      THREE.NormalBlending,
+                      THREE.AdditiveBlending,
+                      THREE.SubtractiveBlending,
+                      THREE.MultiplyBlending ];
+
+  const blendingsMarks = [
+    {
+      value: 0,
+      label: 'No',
+    },
+    {
+      value: 1,
+      label: 'Normal',
+    },
+    {
+      value: 2,
+      label: 'Add',
+    },
+    {
+      value: 3,
+      label: 'Sub',
+    },
+    {
+      value: 4,
+      label: 'Mul',
+    }
+  ];
+
+  const [blendingValue, setBlendingValue] = React.useState(4);
+  function handleBlendingChange(event, newValue) {
+    setBlendingValue(newValue);
+    activeBlending = blendings[newValue];
+  }
+
+  // Material transparency handle
+  const [matTransparencyValue, setMatTransparencyValue] = React.useState(false);
+  const handleMatTransparency = (event) => {
+    setMatTransparencyValue(event.target.checked);
+    matTransparency = event.target.checked;
+  };
 
   // Draw marks handle
   const [drawMarksChecked, setDrawMarksChecked] = React.useState(false);
@@ -500,7 +547,6 @@ export default function PersistentDrawerRight() {
               onChange={handleDrawMarks}
               name="checkedA" />
           </ListItem>
-
           </List>
       </Drawer>
 
@@ -537,7 +583,7 @@ export default function PersistentDrawerRight() {
                 <Tooltip title="Geometry" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                   <ListItemIcon><SignalCellularNull /></ListItemIcon>
                 </Tooltip>
-                <Slider value={activeMask}
+                <Slider value={activeMaskValue}
                   onChange={handleActiveMaskChange}
                   defaultValue={2}
                   valueLabelDisplay="auto"
@@ -547,6 +593,32 @@ export default function PersistentDrawerRight() {
                   max={2}/>
               </ListItem>
 
+              <ListItem divider={true}>
+                <Tooltip title="Blending" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                  <ListItemIcon><Business /></ListItemIcon>
+                </Tooltip>
+                <Slider value={blendingValue}
+                  onChange={handleBlendingChange}
+                  defaultValue={3}
+                  valueLabelDisplay="auto"
+                  marks={blendingsMarks}
+                  step={1}
+                  min={0}
+                  max={4}/>
+              </ListItem>
+
+{/* Future use with texture (?)
+
+              <ListItem divider={true}>
+              <Tooltip title="Transparency" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+                <ListItemIcon><Grain /></ListItemIcon>
+              </Tooltip>
+              <Checkbox 
+                color="primary"
+                defaultChecked={false}
+                onChange={handleMatTransparency}/>
+              </ListItem>
+*/}
               <ListItem divider={true}>
                 <Tooltip title="Vertex 1" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                   <ListItemIcon><Filter1 /></ListItemIcon>
@@ -1071,4 +1143,4 @@ ReactDOM.render(
   document.getElementById('scene')
 );
 
-export {activeMat, fontSize, threshold, activeMask, drawMarks, maskVertColors};
+export {activeMat, fontSize, threshold, activeMask, activeBlending, drawMarks, matTransparency};

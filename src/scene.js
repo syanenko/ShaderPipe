@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import { resolution, materials } from './materials';
 import { face, MAX_FACE_POINT, needsDraw } from './mediapipe';
-import { activeMat, activeMask, fontSize, threshold, drawMarks } from './App';
+import { activeMat, activeMask, activeBlending, fontSize, threshold, drawMarks, matTransparency } from './App';
 import { mask, masksData, marks } from './mask';
 
 //
@@ -87,7 +87,9 @@ class Scene extends React.Component
       
       if(materials[activeMat].uniforms['u_face'] && needsDraw)
       {
+        // TODO: Update only on change
         mask.geometry.setDrawRange( 0, masksData[activeMask].range);
+        
         // Update positions
         mask.geometry.attributes.position.needsUpdate = true;
         
@@ -111,7 +113,7 @@ class Scene extends React.Component
             });
         }
         
-        // Update colors
+        // Update colors TODO: Update only on change
         mask.geometry.attributes.color.needsUpdate = true;
         for(let c=0; c<mask.geometry.attributes.color.array.length;)
         {
@@ -127,6 +129,11 @@ class Scene extends React.Component
           mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].g;
           mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].b;
         }
+
+        // Update materials TODO: Update only on change
+        mask.material.blending = activeBlending;
+        // Future use with texture (?)
+        // mask.material.transparent = matTransparency;
 
         mask.geometry.computeVertexNormals();
         mask.visible = true;

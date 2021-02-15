@@ -19,7 +19,12 @@ maskGeom.setAttribute( 'normal', new THREE.BufferAttribute( normals, 3 ) );
 maskGeom.setAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 // maskGeom.setAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
 
-const maskMat = new THREE.MeshPhongMaterial( { vertexColors: true, side: THREE.DoubleSide } );
+// Test
+//const maskMat = new THREE.MeshPhongMaterial( { vertexColors: true, side: THREE.DoubleSide } );
+const maskMat = new THREE.MeshBasicMaterial( { vertexColors: true, side: THREE.DoubleSide} );
+maskMat.transparent = true; // Future use with texture (?)
+maskMat.blending = THREE.NoBlending;
+
 var mask = new THREE.Mesh(maskGeom, maskMat);
 mask.position.z = -1;
 
@@ -58,9 +63,17 @@ const masksData = [
             152,  313,  83,
             164,   37, 267],
     range: 19,
+   /* Black/Yellow/Green
     colors: [ { r:0.0, g:0.0, b:0.0 },
               { r:0.196, g:0.894, b:0.113 },
-              { r:0.713, g:0.819, b:0.250 }]
+              { r:0.713, g:0.819, b:0.250 }],
+    */
+    colors: [ { r:0.0, g:1.0, b:0.0 },
+              { r:1.0, g:1.0, b:1.0 },
+              { r:1.0, g:1.0, b:1.0 }],
+
+    transparent: false,
+    blending: THREE.AdditiveBlending
   }
 
 ];
