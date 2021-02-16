@@ -67,7 +67,8 @@ import { MovieFilter,
          ThumbUp,
          ThumbDown,
          SignalCellularNull,
-         Business } from '@material-ui/icons';
+         Business,
+         BlurOn } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
 import { Scene } from './scene';
@@ -351,7 +352,10 @@ export default function PersistentDrawerRight() {
   function handleActiveMaskChange(event, newValue) {
     setActiveMaskValue(newValue);
     activeMask = newValue;
+    mask.geometry = masksData[activeMask].geometry;
     mask.geometry.setDrawRange( 0, masksData[activeMask].range);
+
+    mask.material = masksData[activeMask].material;
   }
 
   // Blending handle
@@ -383,14 +387,14 @@ export default function PersistentDrawerRight() {
     }
   ];
 
-  const [blendingValue, setBlendingValue] = React.useState(4);
-  function handleBlendingChange(event, newValue) {
+  const [blendingValue, setBlendingValue] = React.useState(1);
+  function handleBlending(event, newValue) {
     setBlendingValue(newValue);
     mask.material.blending = blendings[newValue];
   }
 
   // Material transparency handle
-  const [matTransparencyValue, setMatTransparencyValue] = React.useState(false);
+  const [matTransparencyValue, setMatTransparencyValue] = React.useState(true);
   const handleMatTransparency = (event) => {
     setMatTransparencyValue(event.target.checked);
     mask.material.transparent = event.target.checked;
@@ -598,8 +602,8 @@ export default function PersistentDrawerRight() {
                   <ListItemIcon><Business /></ListItemIcon>
                 </Tooltip>
                 <Slider value={blendingValue}
-                  onChange={handleBlendingChange}
-                  defaultValue={4}
+                  onChange={handleBlending}
+                  defaultValue={1}
                   valueLabelDisplay="auto"
                   marks={blendingsMarks}
                   step={1}
@@ -609,11 +613,11 @@ export default function PersistentDrawerRight() {
 
               <ListItem divider={true}>
               <Tooltip title="Transparency" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                <ListItemIcon><Grain /></ListItemIcon>
+                <ListItemIcon><BlurOn /></ListItemIcon>
               </Tooltip>
               <Checkbox 
                 color="primary"
-                defaultChecked={false}
+                defaultChecked={true}
                 onChange={handleMatTransparency}/>
               </ListItem>
 

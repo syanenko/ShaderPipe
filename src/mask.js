@@ -2,27 +2,44 @@ import * as THREE from 'three';
 
 const MAX_POINTS = 18;
 const NUM_TRIANGLES = 6;
+const NUM_UVS = NUM_TRIANGLES * 3 * 2;
 const positions = new Float32Array( MAX_POINTS * 3 );
 var normals     = new Float32Array( NUM_TRIANGLES * 3 * 3 );
 var colors      = new Float32Array( NUM_TRIANGLES * 3 * 3 );
-// var uvs      = new Float32Array( NUM_TRIANGLES * 3 * 2 );
+var uvs         = new Float32Array( NUM_UVS );
+
 // uvs
-/*
-uvs[0] = 0;
-uvs[1] = 1;
-*/
+for(let c=0; c<NUM_UVS;)
+{
+  uvs[c++] = 0;
+  uvs[c++] = 0;
+  uvs[c++] = 1;
+  uvs[c++] = 0;
+  uvs[c++] = 1;
+  uvs[c++] = 1;
+}
 
 // Geometry
 var geomMask = new THREE.BufferGeometry();
 geomMask.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
 geomMask.setAttribute( 'normal', new THREE.BufferAttribute( normals, 3 ) );
 geomMask.setAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
-// geomMask.setAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
+geomMask.setAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
 
 // Materials
 const matGeomMask = new THREE.MeshBasicMaterial( { vertexColors: true, side: THREE.DoubleSide} );
 matGeomMask.transparent = true;
 matGeomMask.blending = THREE.MultiplyBlending;
+
+const textureLoader = new THREE.TextureLoader();
+// Grid
+const mapUVGrid = textureLoader.load( 'textures/uv_grid_opengl.png' );
+
+const matTexMask = new THREE.MeshBasicMaterial( { vertexColors: true, side: THREE.DoubleSide, map: mapUVGrid}  );
+matTexMask.transparent = true;
+// matTexMask.blending = THREE.NoBlending;
+// matTexMask.blending = THREE.AdditiveBlending;
+matTexMask.blending = THREE.NormalBlending;
 
 // Masks data
 const masksData = [
@@ -39,7 +56,7 @@ const masksData = [
  },
  // 1 - Eyes
  {
-    points: [101, 110,  23,
+  points: [101, 110,  23,
               330, 339, 253,
               333, 444, 443,
               104, 224, 223],
@@ -70,7 +87,7 @@ const masksData = [
               { r:1.0, g:1.0, b:1.0 },
               { r:1.0, g:1.0, b:1.0 }],
     geometry: geomMask,
-    material: matGeomMask
+    material: matTexMask
  }
 ];
 
