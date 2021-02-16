@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import { resolution, materials } from './materials';
 import { face, MAX_FACE_POINT, needsDraw } from './mediapipe';
-import { activeMat, activeMask, activeBlending, fontSize, threshold, drawMarks, matTransparency } from './App';
+import { activeMat, activeMask, fontSize, threshold, drawMarks, matTransparency } from './App';
 import { mask, masksData, marks } from './mask';
 
 //
@@ -73,6 +73,22 @@ class Scene extends React.Component
        loadLandmarks();
       });
 
+    // Init mask colors
+    for(let c=0; c<mask.geometry.attributes.color.array.length;)
+    {
+      mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[0].r;
+      mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[0].g;
+      mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[0].b;
+
+      mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[1].r;
+      mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[1].g;
+      mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[1].b;
+
+      mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].r;
+      mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].g;
+      mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].b;
+    }
+
     // Animate
     var animate = function ()
     {
@@ -81,17 +97,11 @@ class Scene extends React.Component
       if(materials[activeMat].uniforms['u_time'])
          materials[activeMat].uniforms['u_time'].value = performance.now() / 1000;
  
-      if(materials[activeMat].uniforms['u_debug'])
-         materials[activeMat].uniforms['u_debug'].value = drawMarks;
- 
-      
       if(materials[activeMat].uniforms['u_face'] && needsDraw)
       {
-        // TODO: Update only on change
-        mask.geometry.setDrawRange( 0, masksData[activeMask].range);
-        
-        // Update positions
+        // Update flags
         mask.geometry.attributes.position.needsUpdate = true;
+        mask.geometry.attributes.color.needsUpdate = true;        
         
         let positions = mask.geometry.attributes.position.array;
         let p = 0;
@@ -112,28 +122,6 @@ class Scene extends React.Component
                 positions[p++] = 0;
             });
         }
-        
-        // Update colors TODO: Update only on change
-        mask.geometry.attributes.color.needsUpdate = true;
-        for(let c=0; c<mask.geometry.attributes.color.array.length;)
-        {
-          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[0].r;
-          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[0].g;
-          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[0].b;
-
-          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[1].r;
-          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[1].g;
-          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[1].b;
-
-          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].r;
-          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].g;
-          mask.geometry.attributes.color.array[c++] = masksData[activeMask].colors[2].b;
-        }
-
-        // Update materials TODO: Update only on change
-        mask.material.blending = activeBlending;
-        // Future use with texture (?)
-        // mask.material.transparent = matTransparency;
 
         mask.geometry.computeVertexNormals();
         mask.visible = true;

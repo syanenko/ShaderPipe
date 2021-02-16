@@ -73,7 +73,7 @@ import { resolution, materials } from './materials';
 import { Scene } from './scene';
 import { videoMesh } from './scene';
 import { renderer } from './scene';
-import { masksData } from './mask';
+import { mask, masksData } from './mask';
 
 //
 // Globals
@@ -81,11 +81,9 @@ import { masksData } from './mask';
 const drawerWidth = '20%';
 var activeMat = 10;
 var activeMask = 2;
-var activeBlending = 4;
 var fontSize = 0.005;
 var threshold = 0.0001;
 var drawMarks = false;
-var matTransparency = false;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -353,15 +351,15 @@ export default function PersistentDrawerRight() {
   function handleActiveMaskChange(event, newValue) {
     setActiveMaskValue(newValue);
     activeMask = newValue;
+    mask.geometry.setDrawRange( 0, masksData[activeMask].range);
   }
 
-  // Active blending handle
+  // Blending handle
   const blendings = [ THREE.NoBlending,
                       THREE.NormalBlending,
                       THREE.AdditiveBlending,
                       THREE.SubtractiveBlending,
                       THREE.MultiplyBlending ];
-
   const blendingsMarks = [
     {
       value: 0,
@@ -388,14 +386,14 @@ export default function PersistentDrawerRight() {
   const [blendingValue, setBlendingValue] = React.useState(4);
   function handleBlendingChange(event, newValue) {
     setBlendingValue(newValue);
-    activeBlending = blendings[newValue];
+    mask.material.blending = blendings[newValue];
   }
 
   // Material transparency handle
   const [matTransparencyValue, setMatTransparencyValue] = React.useState(false);
   const handleMatTransparency = (event) => {
     setMatTransparencyValue(event.target.checked);
-    matTransparency = event.target.checked;
+    mask.material.transparent = event.target.checked;
   };
 
   // Draw marks handle
@@ -403,6 +401,9 @@ export default function PersistentDrawerRight() {
   const handleDrawMarks = (event) => {
     setDrawMarksChecked(event.target.checked);
     drawMarks = event.target.checked;
+
+    if(materials[activeMat].uniforms['u_debug'])
+      materials[activeMat].uniforms['u_debug'].value = drawMarks;
   };
   
   // Accordion handle
@@ -557,8 +558,7 @@ export default function PersistentDrawerRight() {
         open={open}
         classes={{
           paper: classes.drawerPaper,
-        }}
-      >
+        }}>
         <div className={classes.drawerHeader}>
           <ListItemIcon><BubbleChart/></ListItemIcon>
           <ListItemText primary="Effects" />
@@ -599,15 +599,13 @@ export default function PersistentDrawerRight() {
                 </Tooltip>
                 <Slider value={blendingValue}
                   onChange={handleBlendingChange}
-                  defaultValue={3}
+                  defaultValue={4}
                   valueLabelDisplay="auto"
                   marks={blendingsMarks}
                   step={1}
                   min={0}
                   max={4}/>
               </ListItem>
-
-{/* Future use with texture (?)
 
               <ListItem divider={true}>
               <Tooltip title="Transparency" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
@@ -618,7 +616,7 @@ export default function PersistentDrawerRight() {
                 defaultChecked={false}
                 onChange={handleMatTransparency}/>
               </ListItem>
-*/}
+
               <ListItem divider={true}>
                 <Tooltip title="Vertex 1" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                   <ListItemIcon><Filter1 /></ListItemIcon>
@@ -626,9 +624,14 @@ export default function PersistentDrawerRight() {
                 <ChromePicker
                 color={ '#000' }
                 onChangeComplete={color => {
-                  masksData[activeMask].colors[0].r  = parseFloat(color.rgb.r) / 255.0;
-                  masksData[activeMask].colors[0].g  = parseFloat(color.rgb.g) / 255.0;
-                  masksData[activeMask].colors[0].b  = parseFloat(color.rgb.b) / 255.0;
+                 for(let c=0; c<mask.geometry.attributes.color.array.length;)
+                 {
+                    mask.geometry.attributes.color.array[c++] = parseFloat(color.rgb.r) / 255.0;
+                    mask.geometry.attributes.color.array[c++] = parseFloat(color.rgb.g) / 255.0;
+                    mask.geometry.attributes.color.array[c++] = parseFloat(color.rgb.b) / 255.0;
+                    c+=6;
+                 }
+
                 }}/>
               </ListItem>
 
@@ -639,9 +642,14 @@ export default function PersistentDrawerRight() {
                 <ChromePicker
                   color={ '#000' }
                   onChangeComplete={color => {
-                    masksData[activeMask].colors[1].r  = parseFloat(color.rgb.r) / 255.0;
-                    masksData[activeMask].colors[1].g  = parseFloat(color.rgb.g) / 255.0;
-                    masksData[activeMask].colors[1].b  = parseFloat(color.rgb.b) / 255.0;
+                    for(let c=0; c<mask.geometry.attributes.color.array.length;)
+                    {
+                      c+=3;
+                      mask.geometry.attributes.color.array[c++] = parseFloat(color.rgb.r) / 255.0;
+                      mask.geometry.attributes.color.array[c++] = parseFloat(color.rgb.g) / 255.0;
+                      mask.geometry.attributes.color.array[c++] = parseFloat(color.rgb.b) / 255.0;
+                      c+=3;
+                    }
                   }}/>
               </ListItem>
 
@@ -652,9 +660,13 @@ export default function PersistentDrawerRight() {
                 <ChromePicker
                   color={ '#000' }
                   onChangeComplete={color => {
-                    masksData[activeMask].colors[2].r  = parseFloat(color.rgb.r) / 255.0;
-                    masksData[activeMask].colors[2].g  = parseFloat(color.rgb.g) / 255.0;
-                    masksData[activeMask].colors[2].b  = parseFloat(color.rgb.b) / 255.0;
+                    for(let c=0; c<mask.geometry.attributes.color.array.length;)
+                    {
+                      c+=6;
+                      mask.geometry.attributes.color.array[c++] = parseFloat(color.rgb.r) / 255.0;
+                      mask.geometry.attributes.color.array[c++] = parseFloat(color.rgb.g) / 255.0;
+                      mask.geometry.attributes.color.array[c++] = parseFloat(color.rgb.b) / 255.0;
+                    }
                   }}/>
               </ListItem>
             </List>
@@ -1143,4 +1155,4 @@ ReactDOM.render(
   document.getElementById('scene')
 );
 
-export {activeMat, fontSize, threshold, activeMask, activeBlending, drawMarks, matTransparency};
+export {activeMat, fontSize, threshold, activeMask, drawMarks};
