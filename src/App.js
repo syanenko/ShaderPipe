@@ -68,7 +68,8 @@ import { MovieFilter,
          ThumbDown,
          SignalCellularNull,
          Business,
-         BlurOn } from '@material-ui/icons';
+         BlurOn,
+         BorderAll } from '@material-ui/icons';
 
 import { resolution, materials } from './materials';
 import { Scene } from './scene';
@@ -617,7 +618,7 @@ export default function PersistentDrawerRight() {
 
               <ListItem divider={true}>
               <Tooltip title="Grid texture" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                <ListItemIcon><BlurOn /></ListItemIcon>
+                <ListItemIcon><BorderAll /></ListItemIcon>
               </Tooltip>
               <Checkbox 
                 color="primary"
