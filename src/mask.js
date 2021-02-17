@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+const DEFULT_MASK = 2;
+
 const MAX_POINTS = 18;
 const NUM_TRIANGLES = 6;
 const NUM_UVS = NUM_TRIANGLES * 3 * 2;
@@ -9,15 +11,26 @@ var colors      = new Float32Array( NUM_TRIANGLES * 3 * 3 );
 var uvs         = new Float32Array( NUM_UVS );
 
 // uvs
-for(let c=0; c<NUM_UVS;)
-{
+//for(let c=0; c<NUM_UVS;)
+let c=0;
+
   uvs[c++] = 0;
   uvs[c++] = 0;
-  uvs[c++] = 1;
+
   uvs[c++] = 0;
   uvs[c++] = 1;
+
   uvs[c++] = 1;
-}
+  uvs[c++] = 1;
+
+  uvs[c++] = 0;
+  uvs[c++] = 0;
+
+  uvs[c++] = 1;
+  uvs[c++] = 0;
+
+  uvs[c++] = 1;
+  uvs[c++] = 1;
 
 // Geometry
 var geomMask = new THREE.BufferGeometry();
@@ -26,23 +39,44 @@ geomMask.setAttribute( 'normal', new THREE.BufferAttribute( normals, 3 ) );
 geomMask.setAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 geomMask.setAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
 
-// Materials
-const matGeomMask = new THREE.MeshBasicMaterial( { vertexColors: true, side: THREE.DoubleSide} );
-matGeomMask.transparent = true;
-matGeomMask.blending = THREE.MultiplyBlending;
+// Textures
+var maskTextures = [];
 
 const textureLoader = new THREE.TextureLoader();
-// Grid
-const mapUVGrid = textureLoader.load( 'textures/uv_grid_opengl.png' );
+let texture = textureLoader.load( 'textures/uv_grid_opengl.png' );
+maskTextures.push(texture);
 
-const matTexMask = new THREE.MeshBasicMaterial( { vertexColors: true, side: THREE.DoubleSide, map: mapUVGrid}  );
-matTexMask.transparent = true;
-// matTexMask.blending = THREE.NoBlending;
+texture = textureLoader.load( 'textures/beard.png' );
+maskTextures.push(texture);
+
+const tex = Object.freeze( {"Grid":0, "Beard":1} );
+
+// Materials
+var maskMaterials = [];
+
+let material = new THREE.MeshBasicMaterial( { vertexColors: true, side: THREE.DoubleSide, map: maskTextures[tex.Grid]} );
+material.transparent = true;
 // matTexMask.blending = THREE.AdditiveBlending;
-matTexMask.blending = THREE.NormalBlending;
+material.blending = THREE.SubtractiveBlending;
+maskMaterials.push(material);
+
+material = new THREE.MeshBasicMaterial( { vertexColors: true, side: THREE.DoubleSide, map: maskTextures[tex.Beard]} );
+material.transparent = true;
+// matTexMask.blending = THREE.AdditiveBlending;
+material.blending = THREE.NormalBlending;
+maskMaterials.push(material);
+
+material = new THREE.MeshBasicMaterial( { vertexColors: true, side: THREE.DoubleSide} );
+material.transparent = true;
+// matTexMask.blending = THREE.AdditiveBlending;
+material.blending = THREE.NoBlending;
+maskMaterials.push(material);
+
+const mat = Object.freeze({"Grid":0, "Beard":1, "Flat":2 });
 
 // Masks data
 const masksData = [
+/*
 // 0 - Beard and mustache
   {
     points: [152, 313,  83,
@@ -51,9 +85,22 @@ const masksData = [
     colors: [ { r:0.0,   g:0.0,    b:1.0   },
               { r:0.110, g:0.6824, b:0.925 },
               { r:0.110, g:0.6824, b:0.925 }],
-    geometry: geomMask,
+    geometry: maskMaterials[mat.flat],
     material: matGeomMask
  },
+*/ 
+// 0 - Beard
+  {
+    points: [148, 83,  313,
+             148, 377, 313 ],
+    range: 7,
+    colors: [ { r:0.0,   g:0.0,    b:1.0   },
+              { r:0.110, g:0.6824, b:0.925 },
+              { r:0.110, g:0.6824, b:0.925 }],
+    geometry: geomMask,
+    material: maskMaterials[mat.Beard]
+  },
+
  // 1 - Eyes
  {
   points: [101, 110,  23,
@@ -65,7 +112,7 @@ const masksData = [
               { r:0.933, g:0.404, b:0.843 },
               { r:0.933, g:0.404, b:0.843 }],
     geometry: geomMask,
-    material: matGeomMask
+    material: maskMaterials[mat.Flat]
  },
  // 2 - Daemon
  {
@@ -87,12 +134,11 @@ const masksData = [
               { r:1.0, g:1.0, b:1.0 },
               { r:1.0, g:1.0, b:1.0 }],
     geometry: geomMask,
-    material: matTexMask
+    material: maskMaterials[mat.Flat]
  }
 ];
 
 // Mask
-const DEFULT_MASK = 2;
 var mask = new THREE.Mesh( masksData[DEFULT_MASK].geometry,
                            masksData[DEFULT_MASK].material );
 mask.position.z = -1;
@@ -101,4 +147,4 @@ mask.position.z = -1;
 const marksMat = new THREE.PointsMaterial( { color: 0x00FF00, size: 4.0 } );
 var marks = new THREE.Points( masksData[DEFULT_MASK].geomMask, marksMat );
 
-export {mask, marks, masksData};
+export {mask, marks, masksData, maskMaterials, mat};

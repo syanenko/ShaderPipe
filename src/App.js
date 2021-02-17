@@ -74,7 +74,7 @@ import { resolution, materials } from './materials';
 import { Scene } from './scene';
 import { videoMesh } from './scene';
 import { renderer } from './scene';
-import { mask, masksData } from './mask';
+import { mask, masksData, maskMaterials, mat } from './mask';
 
 //
 // Globals
@@ -354,8 +354,9 @@ export default function PersistentDrawerRight() {
     activeMask = newValue;
     mask.geometry = masksData[activeMask].geometry;
     mask.geometry.setDrawRange( 0, masksData[activeMask].range);
-
-    mask.material = masksData[activeMask].material;
+    
+    if(mask.material !== maskMaterials[mat.Grid])
+      mask.material = masksData[activeMask].material;
   }
 
   // Blending handle
@@ -394,10 +395,13 @@ export default function PersistentDrawerRight() {
   }
 
   // Material transparency handle
-  const [matTransparencyValue, setMatTransparencyValue] = React.useState(true);
-  const handleMatTransparency = (event) => {
-    setMatTransparencyValue(event.target.checked);
-    mask.material.transparent = event.target.checked;
+  const [matGridTexture, setGridTexture] = React.useState(false);
+  const handleGridTexture = (event) => {
+    setGridTexture(event.target.checked);
+    if(event.target.checked)
+      mask.material = maskMaterials[mat.Grid];
+    else
+      mask.material = masksData[activeMask].material;
   };
 
   // Draw marks handle
@@ -612,13 +616,13 @@ export default function PersistentDrawerRight() {
               </ListItem>
 
               <ListItem divider={true}>
-              <Tooltip title="Transparency" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+              <Tooltip title="Grid texture" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
                 <ListItemIcon><BlurOn /></ListItemIcon>
               </Tooltip>
               <Checkbox 
                 color="primary"
-                defaultChecked={true}
-                onChange={handleMatTransparency}/>
+                defaultChecked={false}
+                onChange={handleGridTexture}/>
               </ListItem>
 
               <ListItem divider={true}>
