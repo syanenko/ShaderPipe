@@ -75,7 +75,7 @@ import { resolution, materials } from './materials';
 import { Scene } from './scene';
 import { videoMesh } from './scene';
 import { renderer } from './scene';
-import { mask, masksData, maskMaterials, mat } from './mask';
+import { mask, masksData, maskMaterials } from './mask';
 
 //
 // Globals
@@ -356,7 +356,7 @@ export default function PersistentDrawerRight() {
     mask.geometry = masksData[activeMask].geometry;
     mask.geometry.setDrawRange( 0, masksData[activeMask].range);
     
-    if(mask.material !== maskMaterials[mat.Grid])
+    if(mask.material !== maskMaterials.Grid)
       mask.material = masksData[activeMask].material;
   }
 
@@ -400,7 +400,7 @@ export default function PersistentDrawerRight() {
   const handleGridTexture = (event) => {
     setGridTexture(event.target.checked);
     if(event.target.checked)
-      mask.material = maskMaterials[mat.Grid];
+      mask.material = maskMaterials.Grid;
     else
       mask.material = masksData[activeMask].material;
   };
