@@ -7,26 +7,10 @@ import { hands }     from './mediapipe';
 import { activeMat } from './App';
 
 //
-// Camera
-//
-const videoElement = document.getElementsByClassName('input_video')[0];
-const camera = new Camera(videoElement, {
-    onFrame: async () => {
-
-      if(materials[activeMat].uniforms['u_fingers_right'])
-        await handsProc.send({image: videoElement});
-
-      if(materials[activeMat].uniforms['u_face'])
-        await faceProc.send({image: videoElement});
-    }
-  });
-camera.start();
-
-//
 // Globals
 //
-var resolution = new THREE.Vector2(camera.b.width, camera.b.height);
-var texture    = new THREE.VideoTexture( videoElement );
+var resolution;
+var texture;
 
 //
 // Materials
@@ -155,5 +139,30 @@ var materials =
     fragmentShader: document.getElementById( 'fragmentMask' ).textContent,
   } ),
 ];
+
+//
+// Camera
+//
+const videoElement = document.getElementsByClassName('input_video')[0];
+const camera = new Camera(videoElement, {
+    onFrame: async () => {
+
+      if(materials[activeMat].uniforms['u_fingers_right'])
+        await handsProc.send({image: videoElement});
+
+      if(materials[activeMat].uniforms['u_face'])
+      await faceProc.send({image: videoElement});
+
+      await faceProc.send({image: videoElement});
+    }
+});
+
+//
+// Globals
+//
+var resolution = new THREE.Vector2(camera.g.width, camera.g.height);
+var texture    = new THREE.VideoTexture( videoElement );
+
+camera.start();
 
 export { resolution, materials };

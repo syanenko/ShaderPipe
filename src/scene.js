@@ -1,5 +1,6 @@
 import React from 'react';
 import * as THREE from 'three';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 import { resolution, materials } from './materials';
 import { face, MAX_FACE_POINT, needsDraw } from './mediapipe';
 import { activeMat, activeMask, fontSize, threshold, drawMarks, matTransparency } from './App';
@@ -67,7 +68,9 @@ class Scene extends React.Component
       }
     }
 
-    const loader = new THREE.FontLoader();
+//    const loader = new THREE.FontLoader();
+    const loader = new FontLoader();
+
     loader.load( 'fonts/helvetiker_regular.typeface.json', function ( _font ){
        font = _font;
        loadLandmarks();
