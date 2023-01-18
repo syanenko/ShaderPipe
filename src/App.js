@@ -540,7 +540,7 @@ export default function PersistentDrawerRight() {
             </Tooltip>
             <Slider value={fontSizeValue}
               onChange={handleFontSizeChange}
-              defaultValue={0.005}
+              defaultValue={0.008}
               valueLabelDisplay="auto"
               step={0.0001}
               min={0.001}
