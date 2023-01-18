@@ -83,9 +83,9 @@ import { mask, masksData, maskMaterials } from './mask';
 const drawerWidth = '20%';
 var activeMat = 10;
 var activeMask = 2;
-var fontSize = 0.005;
+var fontSize = 0.008;
 var threshold = 0.0001;
-var drawMarks = false;
+var drawMarks = true;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -272,7 +272,7 @@ export default function PersistentDrawerRight() {
   };
 
   // Gobelin dim handle
-  const [gobelinDim, setGobelinDim] = React.useState(600.0);
+  const [gobelinDim, setGobelinDim] = React.useState(768.0);
   const handleGobelinDim = (event, newValue) => {
     setGobelinDim(newValue);
     materials[activeMat].uniforms[ 'u_dim' ].value = newValue;
@@ -314,14 +314,14 @@ export default function PersistentDrawerRight() {
   };
 
   // Pixel x-size handle
-  const [pixelSizeXValue, setPixelSizeValueX] = React.useState(640.0);
+  const [pixelSizeXValue, setPixelSizeValueX] = React.useState(1024.0);
   const handlePixelSizeXChange = (event, newValue) => {
     setPixelSizeValueX(newValue);
     materials[activeMat].uniforms[ 'u_size_x' ].value = newValue;
   };
 
   // Pixel y-size handle
-  const [pixelSizeYValue, setPixelSizeValueY] = React.useState(480.0);
+  const [pixelSizeYValue, setPixelSizeValueY] = React.useState(768.0);
   const handlePixelSizeYChange = (event, newValue) => {
     setPixelSizeValueY(newValue);
     materials[activeMat].uniforms[ 'u_size_y' ].value = newValue;
@@ -412,7 +412,7 @@ export default function PersistentDrawerRight() {
     drawMarks = event.target.checked;
 
     if(materials[activeMat].uniforms['u_debug'])
-      materials[activeMat].uniforms['u_debug'].value = drawMarks;
+    materials[activeMat].uniforms['u_debug'].value = drawMarks;
   };
   
   // Accordion handle
@@ -553,7 +553,7 @@ export default function PersistentDrawerRight() {
             </Tooltip>
             <Checkbox 
               color="primary"
-              defaultChecked={false}
+              defaultChecked={true}
               onChange={handleDrawMarks}
               name="checkedA" />
           </ListItem>
@@ -932,7 +932,7 @@ export default function PersistentDrawerRight() {
                 </Tooltip>  
                   <Slider value={gobelinDim}
                     onChange={handleGobelinDim}
-                    defaultValue={600.0}
+                    defaultValue={768.0}
                     valueLabelDisplay="auto"
                     step={10.0}
                     min={200.0}
@@ -971,7 +971,7 @@ export default function PersistentDrawerRight() {
                 </Tooltip>  
                   <Slider value={pixelSizeXValue}
                     onChange={handlePixelSizeXChange}
-                    defaultValue={640.}
+                    defaultValue={1024.}
                     valueLabelDisplay="auto"
                     step={10.0}
                     min={50.0}
@@ -984,7 +984,7 @@ export default function PersistentDrawerRight() {
                 </Tooltip>
                 <Slider value={pixelSizeYValue}
                     onChange={handlePixelSizeYChange}
-                    defaultValue={480.}
+                    defaultValue={768.}
                     valueLabelDisplay="auto"
                     step={10.0}
                     min={50.0}

@@ -20,12 +20,14 @@ const camera = new Camera(videoElement, {
         await faceProc.send({image: videoElement});
     }
   });
+camera.h.width = 1024;
+camera.h.height = 768;
 camera.start();
 
 //
 // Globals
 //
-var resolution = new THREE.Vector2(camera.b.width, camera.b.height);
+var resolution = new THREE.Vector2(camera.h.width, camera.h.height);
 var texture    = new THREE.VideoTexture( videoElement );
 
 //
@@ -46,7 +48,7 @@ var materials =
                 u_darkness:         { value: 10.0       },
                 u_left_hand_color:  { value: [1,0,0,1]  },
                 u_right_hand_color: { value: [1,0,0,1]  },
-                u_debug:            { value: false      }},
+                u_debug:            { value: true      }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentFireball' ).textContent
@@ -149,7 +151,7 @@ var materials =
   {
     uniforms: { u_texture:       { value: texture    },
                 u_face:          { value: true       },
-                u_debug:         { value: false      }},
+                u_debug:         { value: true       }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
     fragmentShader: document.getElementById( 'fragmentMask' ).textContent,
