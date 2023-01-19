@@ -1,22 +1,14 @@
 import * as THREE from 'three';
-// import { Hands     } from '@mediapipe/hands/hands';
-import { Hands, HAND_CONNECTIONS, Results } from '@mediapipe/hands';
+import { Hands     } from '@mediapipe/hands/hands';
 import { FaceMesh  } from '@mediapipe/face_mesh/face_mesh';
 
 //
 // Hands
 //
-/*
 const handsProc = new Hands({locateFile: (file) => {
-  return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${file}`;
+  return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${file}`;
 }});
-*/
 
-const handsProc = new Hands({
-  locateFile: (file) => {
-    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
-  },
-});
 
 handsProc.setOptions({
   maxNumHands: 2,
@@ -82,7 +74,7 @@ handsProc.onResults(onHandsResults);
 // Face
 //
 const faceProc = new FaceMesh({locateFile: (file) => {
-  return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+  return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/${file}`;
 }});
 
 faceProc.setOptions({
