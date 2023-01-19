@@ -5,15 +5,20 @@ import { FaceMesh  } from '@mediapipe/face_mesh/face_mesh';
 //
 // Hands
 //
+/*
 const handsProc = new Hands({locateFile: (file) => {
   return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${file}`;
 }});
-
+*/
+const handsProc = new Hands({locateFile: (file) => {
+  return `assets/models/mediapipe/hands/${file}`;
+}});
 
 handsProc.setOptions({
   maxNumHands: 2,
   minDetectionConfidence: 0.5,
-  minTrackingConfidence: 0.5
+  minTrackingConfidence: 0.5,
+  modelComplexity: 1
 });
 
 const MAX_HAND_POINT = 21;
