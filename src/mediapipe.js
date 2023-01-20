@@ -81,6 +81,11 @@ handsProc.onResults(onHandsResults);
 const faceProc = new FaceMesh({locateFile: (file) => {
   return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/${file}`;
 }});
+/*
+const faceProc = new FaceMesh({locateFile: (file) => {
+  return `assets/models/mediapipe/face_mesh/${file}`;
+}});
+*/
 
 faceProc.setOptions({
   maxNumFaces: 1,
