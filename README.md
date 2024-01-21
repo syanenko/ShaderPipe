@@ -4,7 +4,7 @@
 Simple sandbox for experiments with [GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)) and Google's [MediaPipe](https://mediapipe.dev/), based on [React.js](https://reactjs.org/) with [Material-UI](https://material-ui.com/) and [Three.js](https://threejs.org/).
 
 <em>-- How</em><br>
-Live demo is [here](https://virtualkiln.ru/)<br>
+Live demo is [here](https://virtualkiln.ru/).<br>
 Allow browser to use a camera, select from menu face, hands pose or filtering effects, play with settings to adjust them.
 
 #
