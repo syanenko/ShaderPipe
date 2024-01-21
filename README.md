@@ -32,4 +32,4 @@ Allow browser to use a camera, select from menu face, hands pose or filtering ef
 </p>
 
 #
-Contact: [LinkedIn](https://www.linkedin.com/in/sergey-yanenko-57b21a96/).
+Contact: [LinkedIn](https://www.linkedin.com/in/sergey-yanenko-57b21a96/)
