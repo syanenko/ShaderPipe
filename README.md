@@ -1,4 +1,4 @@
-# Shader Pipe
+## <em>Shader Pipe</em>
 
 <em>-- What</em><br>
 Simple sandbox for experiments with [GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)) and Google's [MediaPipe](https://mediapipe.dev/), based on [React.js](https://reactjs.org/) with [Material-UI](https://material-ui.com/) and [Three.js](https://threejs.org/).
