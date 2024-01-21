@@ -5,13 +5,8 @@ import { FaceMesh  } from '@mediapipe/face_mesh/face_mesh';
 //
 // Hands
 //
-/*
 const handsProc = new Hands({locateFile: (file) => {
   return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/${file}`;
-}});
-*/
-const handsProc = new Hands({locateFile: (file) => {
-  return `assets/models/mediapipe/hands/${file}`;
 }});
 
 handsProc.setOptions({
