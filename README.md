@@ -5,7 +5,8 @@ Sandbox for experiments with <em>[GLSL](https://www.khronos.org/opengl/wiki/Core
 
 <em>-- How</em><br>
 Live demo is <em>[here](https://virtualkiln.ru/).</em><br>
-Allow browser to use a camera, select from menu face, hands pose or filtering effects, play with settings to adjust them.
+Allow browser to use a camera, select from menu face, hands pose or filtering effects, play with settings to adjust them.<br>
+Use full screen mode (F11) for better experience.
 
 #
 <p align="center" align="left">
