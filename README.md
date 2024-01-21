@@ -32,4 +32,12 @@ Allow browser to use a camera, select from menu face, hands pose or filtering ef
 </p>
 
 #
+<p align="center" align="left">
+  <img src="https://github.com/syanenko/ShaderPipe/assets/6688301/eaba6e2f-93bc-49d9-b7bb-2449c40d2d49" alt="Gobelin" width="600">
+  <p align="center">
+    <em>Toon</em>
+  </p> 
+</p>
+
+#
 Contact: [LinkedIn](https://www.linkedin.com/in/sergey-yanenko-57b21a96/)
