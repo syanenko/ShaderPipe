@@ -1,10 +1,10 @@
 ## <em>Shader Pipe</em>
 
 <em>-- What</em><br>
-Simple sandbox for experiments with [GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)) and Google's [MediaPipe](https://mediapipe.dev/), based on [React.js](https://reactjs.org/) with [Material-UI](https://material-ui.com/) and [Three.js](https://threejs.org/).
+Simple sandbox for experiments with <em>[GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL))</em> and Google's <em>[MediaPipe](https://mediapipe.dev/)</em>, based on <em>[React.js](https://reactjs.org/)</em>, <em>[Three.js](https://threejs.org/)</em> and <em>[Material-UI](https://material-ui.com/)</em>.
 
 <em>-- How</em><br>
-Live demo is [here](https://virtualkiln.ru/).<br>
+Live demo is <em>[here](https://virtualkiln.ru/).</em><br>
 Allow browser to use a camera, select from menu face, hands pose or filtering effects, play with settings to adjust them.
 
 #
