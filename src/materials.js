@@ -44,10 +44,10 @@ var materials =
                 u_fingers_right:    { value: fingers[0] },
                 u_fingers_left:     { value: fingers[1] },
                 u_hands:            { value: hands      },
-                u_size:             { value: 1.7        },
+                u_size:             { value: 2.0        },
                 u_darkness:         { value: 10.0       },
-                u_left_hand_color:  { value: [1,0,0,1]  },
-                u_right_hand_color: { value: [1,0,0,1]  },
+                u_left_hand_color:  { value: [0,1,0,1]  },
+                u_right_hand_color: { value: [0,1,0,1]  },
                 u_debug:            { value: true      }},
 
     vertexShader: document.getElementById( 'vertexDefault' ).textContent,
