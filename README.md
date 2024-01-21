@@ -1,7 +1,7 @@
 ## <em>Shader Pipe</em>
 
 <em>-- What</em><br>
-Simple sandbox for experiments with <em>[GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL))</em> and Google's <em>[MediaPipe](https://mediapipe.dev/)</em>, based on <em>[React.js](https://reactjs.org/)</em>, <em>[Three.js](https://threejs.org/)</em> and <em>[Material-UI](https://material-ui.com/)</em>.
+Simple sandbox for experiments with <em>[GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL))</em> and Google's <em>[MediaPipe](https://mediapipe.dev/)</em>, based on <em>[Three.js](https://threejs.org/)</em>, <em>[React.js](https://reactjs.org/)</em> and <em>[Material-UI](https://material-ui.com/)</em>.
 
 <em>-- How</em><br>
 Live demo is <em>[here](https://virtualkiln.ru/).</em><br>
