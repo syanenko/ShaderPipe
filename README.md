@@ -1,12 +1,14 @@
 ## <em>Shader Pipe</em>
 
-<em>-- What</em><br>
+<em>-- What:</em><br>
 Sandbox for experiments with <em>[GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL))</em> and Google's <em>[MediaPipe](https://mediapipe.dev/)</em>, based on <em>[Three.js](https://threejs.org/)</em> and <em>[React.js](https://reactjs.org/)</em> with <em>[Material-UI](https://material-ui.com/)</em>.
 
-<em>-- How</em><br>
+<em>-- How:</em><br>
 Live demo is <em>[here](https://virtualkiln.ru/).</em><br>
 Allow browser to use a camera, select from menu face, hands or filtering effect, play with settings.<br>
 Use full screen mode (F11) for better experience.
+
+-- <em>Contact: [LinkedIn](https://www.linkedin.com/in/sergey-yanenko-57b21a96/)<em>
 
 #
 <p align="center" align="left">
@@ -41,4 +43,4 @@ Use full screen mode (F11) for better experience.
 </p>
 
 #
-Contact: [LinkedIn](https://www.linkedin.com/in/sergey-yanenko-57b21a96/)
+
