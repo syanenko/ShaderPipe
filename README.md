@@ -1,7 +1,7 @@
 ## <em>Shader Pipe</em>
 
 <em>-- What:</em><br>
-Sandbox for experiments with <em>[GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL))</em> and Google's <em>[MediaPipe](https://mediapipe.dev/)</em>, based on <em>[Three.js](https://threejs.org/)</em> and <em>[React.js](https://reactjs.org/)</em> with <em>[Material-UI](https://material-ui.com/)</em>.
+Sandbox for experiments with <em>[GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL))</em> and Google's <em>[MediaPipe](https://mediapipe.dev/)</em>, based on <em>[Three.js](https://threejs.org/)</em> and <em>[React.js](https://reactjs.org/)</em> with <em>[Material-UI](https://material-ui.com/)</em>. Includes face detection and hand tracking.
 
 <em>-- How:</em><br>
 Live demo is <em>[here](https://virtualkiln.ru/).</em><br>
