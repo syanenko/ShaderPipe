@@ -1,7 +1,3 @@
-//
-// TODO:
-// 1. Frame heught back
-//
 import './App.css';
 
 import React from 'react';
@@ -118,6 +114,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: "#ff9127"
   },
   hide: {
     display: 'none',
@@ -462,7 +459,7 @@ export default function PersistentDrawerRight() {
         })}
       >
         <Toolbar position="sticky">
-          <Typography variant="h6" noWrap className={classes.title}>
+          <Typography variant="h6" noWrap className={classes.title} onClick={setOpenHelp}>
             Shader Pipe
           </Typography>
 
@@ -527,7 +524,7 @@ export default function PersistentDrawerRight() {
         <Divider />
         <List>
          <ListItem divider={true}>
-            <Tooltip title="Frame height" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
+            <Tooltip title="Zoom (frame height)" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
               <ListItemIcon style={{ color: '#c1c1c1' }}><ZoomOutMap/></ListItemIcon>
             </Tooltip>
             <Slider value={scaleValue}
@@ -1148,47 +1145,50 @@ export default function PersistentDrawerRight() {
         onClose={handleCloseHelp}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description">
-      
-        <DialogTitle id="alert-dialog-title">
+
+        <DialogTitle id="alert-dialog-title" style={{ color: '#ff9127', background: '#292929' }}>
         {"Shader Pipe"}
         </DialogTitle>
-        <DialogContent>
+        <DialogContent
+        // '#ff9127' '#1b1b18' classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }}
+         style={{ color: '#c1c1c1', background: '#292929' }}>
+
           <Typography gutterBottom>
             Simple sandbox for experiments with&nbsp;
-            <Link href="https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)">
+            <Link href="https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)" style={{ color: '#ff9127' }}>
                GLSL
             </Link>
              &nbsp;and Google's&nbsp;
-            <Link href="https://mediapipe.dev/">
+            <Link href="https://mediapipe.dev/" style={{ color: '#ff9127' }}>
                Mediapipe
             </Link>
             , based on&nbsp;
-            <Link href="https://reactjs.org/">
+            <Link href="https://reactjs.org/" style={{ color: '#ff9127' }}>
                React
             </Link>
             &nbsp;with&nbsp;
-            <Link href="https://material-ui.com/">
+            <Link href="https://material-ui.com/" style={{ color: '#ff9127' }}>
                Material-UI
             </Link>
             &nbsp;and&nbsp;
-            <Link href="https://threejs.org/">
+            <Link href="https://threejs.org/" style={{ color: '#ff9127' }}>
                Three.js
             </Link>.
             <br/>
           </Typography>
           <Typography gutterBottom>
-            Allow browser to use your camera, select image filtering <MovieFilter color="action"/>, face <Face color="action"/> or hands pose <PanTool color="action"/> effects from menu, play with controls to adjust them.
+            Allow browser to use camera, select image filtering <MovieFilter style={{ color: '#ff9127' }}/>, face <Face style={{ color: '#ff9127' }}/> or hands pose <PanTool style={{ color: '#ff9127' }}/> effects from menu, play with controls to adjust them.
           </Typography>
           <Typography gutterBottom>
             <br/>
             Sources at &nbsp;
-            <Link href="https://github.com/syanenko/shaderpipe">
+            <Link href="https://github.com/syanenko/shaderpipe" style={{ color: '#ff9127' }}>
                GitHub
             </Link>.
           </Typography>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseHelp} color="primary" autoFocus>
+        <DialogActions style={{ color: '#c1c1c1', background: '#292929' }}>
+          <Button onClick={handleCloseHelp} style={{ color: '#c1c1c1' }} autoFocus>
             Close
           </Button>
         </DialogActions>

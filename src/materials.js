@@ -20,9 +20,8 @@ const camera = new Camera(videoElement, {
         await faceProc.send({image: videoElement});
     }
   });
-camera.h.width =  1300;
-camera.h.height = 975;
-// DEBUG !
+camera.h.width =  1133;
+camera.h.height = 850;
 camera.start();
 
 //
