@@ -1,3 +1,7 @@
+//
+// TODO:
+// 1. Frame heught back
+//
 import './App.css';
 
 import React from 'react';
@@ -94,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
     alignContent: 'center',
     width: '100%',
     height: '100%',
-    background: 'linear-gradient(rgb(0, 0, 0), rgb(88, 88, 88))'
+    background: 'linear-gradient(rgb(88, 88, 88), rgb(0, 0, 0))'
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -102,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     background: '#292929',
-    color: '#FF9127'
+    color: '#c1c1c1'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -110,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginRight: drawerWidth,
+    marginRight: drawerWidth
   },
   title: {
     flexGrow: 1,
@@ -124,6 +128,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    background: '#292929',
   },
   drawerHeader: {
     display: 'flex',
@@ -132,6 +137,7 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-start',
+    color: '#c1c1c1'
   },
   content: {
     flexGrow: 1,
@@ -151,14 +157,24 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    background: '#292929'
   },
   customTooltip: {
-    backgroundColor: 'rgba(63, 81, 181, 1)',
+    backgroundColor: 'rgba(55, 55, 55, 0.6)',
+    color: 'rgba(193, 193, 193, 1)',
     fontSize: 14
   },
+  mark: {
+    color: "#c1c1c1"
+  },
   customArrow: {
-    color: 'rgba(63, 81, 181, 1)'
+    fontSize: 20,
+    color: 'rgba(63, 81, 181, 1)',
+    "&::before": {
+      backgroundColor: "rgba(0, 0, 0, 0)",
+      border: "2px solid #ff9127"
+    }
   }
 }));
 
@@ -451,27 +467,27 @@ export default function PersistentDrawerRight() {
           </Typography>
 
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             edge="end"
             onClick={handleEffectsOpen}
-            className={clsx(open && classes.hide)}>
+            className={clsx(open && classes.hide)}
+            style={{ color: '#ff9127' }}>
             <BubbleChart />
           </IconButton>
 
           <IconButton
-            color="inherit"
             edge="end"
             onClick={handleSettingsOpen}
-            className={clsx(open && classes.hide)}>
+            className={clsx(open && classes.hide)}
+            style={{ color: '#ff9127' }}>
             <Settings />
           </IconButton>
 
           <IconButton
-            color="inherit"
             edge="end"
             onClick={handleOpenHelp}
-            className={clsx(open && classes.hide)}>
+            className={clsx(open && classes.hide)}
+            style={{ color: '#ff9127' }}>
             <HelpOutline />
           </IconButton>
           
@@ -485,7 +501,7 @@ export default function PersistentDrawerRight() {
       >
         <div className={classes.drawerHeader} />
         <div className={classes.root}>
-          <Grid container spacing={2} alignItems="center" justify="center" direction="column">
+          <Grid container spacing={2} alignItems="center" justifyContent="center" direction="column">
             <Grid item id="scene"/>
           </Grid>
         </div>
@@ -501,9 +517,10 @@ export default function PersistentDrawerRight() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <ListItemIcon><Settings/></ListItemIcon>
-          <ListItemText primary="Settings" />
-          <IconButton onClick={handleSettingsClose}>
+          <ListItemIcon style={{ color: '#ff9127' }}><Settings/></ListItemIcon>
+          <ListItemText primary="Settings" style={{ color: '#c1c1c1' }}/>
+          <IconButton onClick={handleSettingsClose}
+            style={{ color: '#FF9127' }}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
@@ -511,7 +528,7 @@ export default function PersistentDrawerRight() {
         <List>
          <ListItem divider={true}>
             <Tooltip title="Frame height" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-              <ListItemIcon><ZoomOutMap/></ListItemIcon>
+              <ListItemIcon style={{ color: '#c1c1c1' }}><ZoomOutMap/></ListItemIcon>
             </Tooltip>
             <Slider value={scaleValue}
               onChange={handleScaleChange}
@@ -520,12 +537,13 @@ export default function PersistentDrawerRight() {
               step={1.0}
               min={480}
               max={5200}
-            />
+              classes={{ markLabel: classes.mark }}
+              style={{ color: '#FF9127' }}/>
           </ListItem>
 
           <ListItem divider={true}>
             <Tooltip title="Noise threshold" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-              <ListItemIcon><Equalizer/></ListItemIcon>
+              <ListItemIcon style={{ color: '#c1c1c1' }}><Equalizer/></ListItemIcon>
             </Tooltip>
             <Slider value={thresholdValue}
               onChange={handleThresholdChange}
@@ -534,12 +552,13 @@ export default function PersistentDrawerRight() {
               step={0.0001}
               min={0.0001}
               max={0.01}
-            />
+              classes={{ markLabel: classes.mark }}
+              style={{ color: '#FF9127' }}/>
           </ListItem>
 
           <ListItem divider={true}>
             <Tooltip title="Landmarks size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-              <ListItemIcon><FormatSize/></ListItemIcon>
+              <ListItemIcon style={{ color: '#c1c1c1' }}><FormatSize/></ListItemIcon>
             </Tooltip>
             <Slider value={fontSizeValue}
               onChange={handleFontSizeChange}
@@ -547,15 +566,17 @@ export default function PersistentDrawerRight() {
               valueLabelDisplay="auto"
               step={0.0001}
               min={0.001}
-              max={0.01}/>
+              max={0.01}
+              classes={{ markLabel: classes.mark }}
+              style={{ color: '#FF9127' }}/>
           </ListItem>
 
           <ListItem divider={true}>
             <Tooltip title="Landmarks" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-              <ListItemIcon><Grain /></ListItemIcon>
+              <ListItemIcon style={{ color: '#c1c1c1' }}><Grain /></ListItemIcon>
             </Tooltip>
             <Checkbox 
-              color="primary"
+              style = {{color: "#ff9127"}} 
               defaultChecked={true}
               onChange={handleDrawMarks}
               name="checkedA" />
@@ -572,28 +593,29 @@ export default function PersistentDrawerRight() {
           paper: classes.drawerPaper,
         }}>
         <div className={classes.drawerHeader}>
-          <ListItemIcon><BubbleChart/></ListItemIcon>
-          <ListItemText primary="Effects" />
-          <IconButton onClick={handleEffectsClose}>
+          <ListItemIcon style={{ color: '#ff9127' }}><BubbleChart/></ListItemIcon>
+          <ListItemText primary="Effects" style={{ color: '#c1c1c1' }}/>
+          <IconButton onClick={handleEffectsClose}
+            style={{ color: '#FF9127' }}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
         
-        <Accordion expanded={activeMat === 10} onChange={handleAccordChange(10, 2)}>
+        <Accordion expanded={activeMat === 10} onChange={handleAccordChange(10, 2)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 10 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header">
-            <ListItemIcon><Face /></ListItemIcon>
-            <ListItemText primary="Masks" />
+            <ListItemIcon style={{ color: '#ff9127' }}><Face /></ListItemIcon>
+            <ListItemText primary="Mask" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />
           <AccordionDetails>
             <List className={classes.list}>
               <ListItem divider={true}>
                 <Tooltip title="Geometry" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><SignalCellularNull /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><SignalCellularNull /></ListItemIcon>
                 </Tooltip>
                 <Slider value={activeMaskValue}
                   onChange={handleActiveMaskChange}
@@ -602,12 +624,14 @@ export default function PersistentDrawerRight() {
                   marks={masksMarks}
                   step={1}
                   min={0}
-                  max={2}/>
+                  max={2}
+                  classes={{ markLabel: classes.mark }}
+                  style={{ color: '#ff9127' }}/>
               </ListItem>
 
               <ListItem divider={true}>
                 <Tooltip title="Blending" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><Business /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><Business /></ListItemIcon>
                 </Tooltip>
                 <Slider value={blendingValue}
                   onChange={handleBlending}
@@ -616,22 +640,24 @@ export default function PersistentDrawerRight() {
                   marks={blendingsMarks}
                   step={1}
                   min={0}
-                  max={4}/>
+                  max={4}
+                  classes={{ markLabel: classes.mark }}
+                  style={{ color: '#ff9127' }}/>
               </ListItem>
 
               <ListItem divider={true}>
               <Tooltip title="Grid texture" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                <ListItemIcon><BorderAll /></ListItemIcon>
+                <ListItemIcon style={{ color: '#c1c1c1' }}><BorderAll /></ListItemIcon>
               </Tooltip>
-              <Checkbox 
-                color="primary"
+              <Checkbox
+                style = {{color: "#ff9127"}}
                 defaultChecked={false}
                 onChange={handleGridTexture}/>
               </ListItem>
 
               <ListItem divider={true}>
                 <Tooltip title="Vertex 1" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><Filter1 /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><Filter1 /></ListItemIcon>
                 </Tooltip>
                 <ChromePicker
                 color={ '#000' }
@@ -649,7 +675,7 @@ export default function PersistentDrawerRight() {
 
               <ListItem divider={true}>
                 <Tooltip title="Vertex 2" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><Filter2 /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><Filter2 /></ListItemIcon>
                 </Tooltip>
                 <ChromePicker
                   color={ '#000' }
@@ -667,7 +693,7 @@ export default function PersistentDrawerRight() {
 
               <ListItem divider={true}>
                 <Tooltip title="Vertex 3" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><Filter3 /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><Filter3 /></ListItemIcon>
                 </Tooltip>
                 <ChromePicker
                   color={ '#000' }
@@ -685,20 +711,20 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={activeMat === 0} onChange={handleAccordChange(0)}>
+        <Accordion expanded={activeMat === 0} onChange={handleAccordChange(0)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 0 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header">
-            <ListItemIcon><PanTool/></ListItemIcon>
-            <ListItemText primary="Fireball" />
+            <ListItemIcon style={{ color: '#ff9127' }}><PanTool/></ListItemIcon>
+            <ListItemText primary="Fireball" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />
           <AccordionDetails>
             <List className={classes.list}>
               <ListItem divider={true}>
                 <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><AllOut /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><AllOut /></ListItemIcon>
                 </Tooltip>   
                 <Slider value={sizeValue}
                   onChange={handleSizeChange}
@@ -707,11 +733,12 @@ export default function PersistentDrawerRight() {
                   step={0.01}
                   min={0.0}
                   max={3.0}
-                />
+                  classes={{ markLabel: classes.mark }}
+                  style={{ color: '#FF9127' }}/>
               </ListItem>
               <ListItem divider={true}>
                 <Tooltip title="Darkness" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><Brightness4 /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><Brightness4 /></ListItemIcon>
                 </Tooltip>
                 <Slider value={darknessValue}
                   onChange={handleDarknessChange}
@@ -719,11 +746,13 @@ export default function PersistentDrawerRight() {
                   valueLabelDisplay="auto"
                   step={0.1}
                   min={0.0}
-                  max={15.0}/>
+                  max={15.0}
+                  classes={{ markLabel: classes.mark }}
+                  style={{ color: '#FF9127' }}/>
               </ListItem>
               <ListItem divider={true}>
                 <Tooltip title="Color" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><ColorLens /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><ColorLens /></ListItemIcon>
                 </Tooltip>
                 <ChromePicker
                 color={ '#000' }
@@ -736,7 +765,7 @@ export default function PersistentDrawerRight() {
               </ListItem>
               <ListItem divider={true}>
                 <Tooltip title="Right hand color" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><ThumbDown /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><ThumbDown /></ListItemIcon>
                 </Tooltip>
                 <ChromePicker
                 color={ '#000' }
@@ -751,20 +780,20 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat === 1} onChange={handleAccordChange(1)}>
+        <Accordion expanded={activeMat === 1} onChange={handleAccordChange(1)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 1 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header">
-            <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Whirlpool" />
+            <ListItemIcon style={{ color: '#ff9127' }}><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Whirlpool" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
             <ListItem divider={true}>
               <Tooltip title="Scale A" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                <ListItemIcon><CallReceived /></ListItemIcon>
+                <ListItemIcon style={{ color: '#c1c1c1' }}><CallReceived /></ListItemIcon>
               </Tooltip>  
                 <Slider value={whirlpoolA}
                   onChange={handleWhirlpoolA}
@@ -773,11 +802,12 @@ export default function PersistentDrawerRight() {
                   step={10.0}
                   min={10.0}
                   max={1000.0}
-                />
+                  classes={{ markLabel: classes.mark }}
+                  style={{ color: '#FF9127' }}/>
             </ListItem>
             <ListItem divider={true}>
               <Tooltip title="Scale B" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                <ListItemIcon><CallMade /></ListItemIcon>
+                <ListItemIcon style={{ color: '#c1c1c1' }}><CallMade /></ListItemIcon>
               </Tooltip>
               <Slider value={whirlpoolB}
                   onChange={handleWhirlpoolB}
@@ -786,27 +816,28 @@ export default function PersistentDrawerRight() {
                   step={10.0}
                   min={10.0}
                   max={1000.0}
-                />
+                  classes={{ markLabel: classes.mark }}
+                  style={{ color: '#FF9127' }}/>
               </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={activeMat === 2} onChange={handleAccordChange(2)}>
+        <Accordion expanded={activeMat === 2} onChange={handleAccordChange(2)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 2 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Toon" />
+            <ListItemIcon style={{ color: '#ff9127' }}><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Toon" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
               <ListItem divider={true}>
                 <Tooltip title="Hue levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><ColorLens /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><ColorLens /></ListItemIcon>
                 </Tooltip>  
                   <Slider value={toonHue}
                     onChange={handleToonHue}
@@ -815,12 +846,13 @@ export default function PersistentDrawerRight() {
                     step={1.0}
                     min={1.0}
                     max={360.0}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
 
               <ListItem divider={true}>
                 <Tooltip title="Saturation levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><InvertColors /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><InvertColors /></ListItemIcon>
                 </Tooltip>  
                   <Slider value={toonSat}
                     onChange={handleToonSat}
@@ -829,12 +861,13 @@ export default function PersistentDrawerRight() {
                     step={0.01}
                     min={0.01}
                     max={1.0}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
 
               <ListItem divider={true}>
                 <Tooltip title="Value levels" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><Brightness4 /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><Brightness4 /></ListItemIcon>
                 </Tooltip>  
                   <Slider value={toonValue}
                     onChange={handleToonValue}
@@ -843,27 +876,28 @@ export default function PersistentDrawerRight() {
                     step={0.01}
                     min={0.01}
                     max={1.0}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat === 3} onChange={handleAccordChange(3)}>
+        <Accordion expanded={activeMat === 3} onChange={handleAccordChange(3)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 3 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Posterize" />
+            <ListItemIcon style={{ color: '#ff9127' }}><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Posterize" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
                 <ListItem divider={true}>
                   <Tooltip title="Gamma" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><InvertColors /></ListItemIcon>
+                    <ListItemIcon style={{ color: '#c1c1c1' }}><InvertColors /></ListItemIcon>
                   </Tooltip>  
                    <Slider value={posterGamma}
                       onChange={handlePosterGamma}
@@ -872,11 +906,12 @@ export default function PersistentDrawerRight() {
                       step={0.1}
                       min={0.1}
                       max={12.0}
-                    />
+                      classes={{ markLabel: classes.mark }}
+                      style={{ color: '#FF9127' }}/>
                 </ListItem>
                 <ListItem divider={true}>
                   <Tooltip title="Number of colors" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                    <ListItemIcon><ColorLens /></ListItemIcon>
+                    <ListItemIcon style={{ color: '#c1c1c1' }}><ColorLens /></ListItemIcon>
                   </Tooltip>
                   <Slider value={posterNumColors}
                       onChange={handlePosterNumColors}
@@ -885,31 +920,32 @@ export default function PersistentDrawerRight() {
                       step={1.0}
                       min={2.0}
                       max={32.0}
-                   />
+                      classes={{ markLabel: classes.mark }}
+                      style={{ color: '#FF9127' }}/>
                  </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={activeMat === 4} onChange={handleAccordChange(4)}>
+        <Accordion expanded={activeMat === 4} onChange={handleAccordChange(4)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 4 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Crosshatch" />
+            <ListItemIcon style={{ color: '#ff9127' }}><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Crosshatch" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
         </Accordion>
         
-        <Accordion expanded={activeMat === 5} onChange={handleAccordChange(5)}>
+        <Accordion expanded={activeMat === 5} onChange={handleAccordChange(5)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 5 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Gobelin" />
+            <ListItemIcon style={{ color: '#ff9127' }}><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Gobelin" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />
           
@@ -917,7 +953,7 @@ export default function PersistentDrawerRight() {
             <List className={classes.list}>
               <ListItem divider={true}>
                 <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><AllOut /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><AllOut /></ListItemIcon>
                 </Tooltip>  
                   <Slider value={gobelinSize}
                     onChange={handleGobelinSize}
@@ -926,12 +962,13 @@ export default function PersistentDrawerRight() {
                     step={1.0}
                     min={5.0}
                     max={25.0}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
               
               <ListItem divider={true}>
                 <Tooltip title="Dimension" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><ZoomOutMap /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><ZoomOutMap /></ListItemIcon>
                 </Tooltip>  
                   <Slider value={gobelinDim}
                     onChange={handleGobelinDim}
@@ -940,14 +977,15 @@ export default function PersistentDrawerRight() {
                     step={10.0}
                     min={200.0}
                     max={1000.0}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
               <ListItem divider={true}>
                 <Tooltip title="Invert" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><Iso /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><Iso /></ListItemIcon>
                 </Tooltip>  
-                  <Checkbox 
-                    color="primary"
+                  <Checkbox
+                    style = {{color: "#ff9127"}} 
                     defaultChecked={false}
                     onChange={handleGobelinInvert}
                     name="checkedGobelinInvert" />
@@ -956,21 +994,21 @@ export default function PersistentDrawerRight() {
           </AccordionDetails>
         </Accordion>
         
-        <Accordion expanded={activeMat === 6} onChange={handleAccordChange(6)}>
+        <Accordion expanded={activeMat === 6} onChange={handleAccordChange(6)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 6 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Pixelization" />
+            <ListItemIcon style={{ color: '#ff9127' }}><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Pixelization" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />
           <AccordionDetails>
             <List className={classes.list}>
               <ListItem divider={true}>
                 <Tooltip title="Size X" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><BorderBottom /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><BorderBottom /></ListItemIcon>
                 </Tooltip>  
                   <Slider value={pixelSizeXValue}
                     onChange={handlePixelSizeXChange}
@@ -979,11 +1017,12 @@ export default function PersistentDrawerRight() {
                     step={10.0}
                     min={50.0}
                     max={1000.0}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
               <ListItem divider={true}>
                 <Tooltip title="Size Y" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><BorderLeft /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><BorderLeft /></ListItemIcon>
                 </Tooltip>
                 <Slider value={pixelSizeYValue}
                     onChange={handlePixelSizeYChange}
@@ -992,27 +1031,28 @@ export default function PersistentDrawerRight() {
                     step={10.0}
                     min={50.0}
                     max={1000.0}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
                 </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat === 7} onChange={handleAccordChange(7)}>
+        <Accordion expanded={activeMat === 7} onChange={handleAccordChange(7)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 7 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Honeycombs" />
+            <ListItemIcon style={{ color: '#ff9127' }}><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Honeycombs" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
               <ListItem divider={true}>
                 <Tooltip title="Size" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><AllOut /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><AllOut /></ListItemIcon>
                 </Tooltip>  
                   <Slider value={sizeHoneyValue}
                     onChange={handleHoneySizeChange}
@@ -1021,27 +1061,28 @@ export default function PersistentDrawerRight() {
                     step={0.001}
                     min={0.005}
                     max={0.07}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat === 8} onChange={handleAccordChange(8)}>
+        <Accordion expanded={activeMat === 8} onChange={handleAccordChange(8)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 8 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Pen" />
+            <ListItemIcon style={{ color: '#ff9127' }}><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Pen" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
               <ListItem divider={true}>
                 <Tooltip title="Details" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><VerticalSplit /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><VerticalSplit /></ListItemIcon>
                 </Tooltip>  
                   <Slider value={lineLimit}
                     onChange={handleLineLimit}
@@ -1050,27 +1091,28 @@ export default function PersistentDrawerRight() {
                     step={0.01}
                     min={0.01}
                     max={1.5}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={activeMat === 9} onChange={handleAccordChange(9)}>
+        <Accordion expanded={activeMat === 9} onChange={handleAccordChange(9)} style={{ background: '#292929' }}>
           <AccordionSummary
             expandIcon={activeMat === 9 ? <Hidden xsUp><ExpandLess display="none" /></Hidden> : <ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <ListItemIcon><MovieFilter /></ListItemIcon>
-            <ListItemText primary="Sobel" />
+            <ListItemIcon style={{ color: '#ff9127' }}><MovieFilter /></ListItemIcon>
+            <ListItemText primary="Sobel" style={{ color: '#c1c1c1' }}/>
           </AccordionSummary>
           <Divider />          
           <AccordionDetails>
             <List className={classes.list}>
               <ListItem divider={true}>
                 <Tooltip title="dX" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><SwapHoriz /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><SwapHoriz /></ListItemIcon>
                 </Tooltip>  
                   <Slider value={sobelDxValue}
                     onChange={handleSobelDx}
@@ -1079,11 +1121,12 @@ export default function PersistentDrawerRight() {
                     step={0.0001}
                     min={0.000}
                     max={0.01}
-                  />
+                    classes={{ markLabel: classes.mark }}
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
               <ListItem divider={true}>
                 <Tooltip title="dY" placement="left" classes={{ tooltip: classes.customTooltip, arrow: classes.customArrow }} arrow>
-                  <ListItemIcon><SwapVert /></ListItemIcon>
+                  <ListItemIcon style={{ color: '#c1c1c1' }}><SwapVert /></ListItemIcon>
                 </Tooltip>
                 <Slider value={sobelDyValue}
                     onChange={handleSobelDy}
@@ -1092,7 +1135,7 @@ export default function PersistentDrawerRight() {
                     step={0.0001}
                     min={0.000}
                     max={0.01}
-                  />
+                    style={{ color: '#FF9127' }}/>
               </ListItem>
             </List>
           </AccordionDetails>
