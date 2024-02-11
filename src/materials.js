@@ -22,6 +22,7 @@ const camera = new Camera(videoElement, {
   });
 camera.h.width =  1300;
 camera.h.height = 975;
+// DEBUG !
 camera.start();
 
 //

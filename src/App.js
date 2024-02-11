@@ -93,13 +93,16 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     alignContent: 'center',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    background: 'linear-gradient(rgb(0, 0, 0), rgb(88, 88, 88))'
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    background: '#292929',
+    color: '#FF9127'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
