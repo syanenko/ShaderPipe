@@ -22,7 +22,7 @@ const camera = new Camera(videoElement, {
   });
 
 camera.h.height = window.innerHeight - 115;
-camera.h.width = camera.h.height * (16/9);
+camera.h.width = camera.h.height * (16/9); // (4/3) for Logitech C270
 camera.start();
 
 //
