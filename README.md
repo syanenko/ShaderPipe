@@ -4,7 +4,7 @@
 Sandbox for experiments with <em>[GLSL](https://www.khronos.org/opengl/wiki/Core_Language_(GLSL))</em> and Google's <em>[MediaPipe](https://mediapipe.dev/)</em>, based on <em>[Three.js](https://threejs.org/)</em> and <em>[React.js](https://reactjs.org/)</em> with <em>[Material-UI](https://material-ui.com/)</em>. Includes face detection and hand tracking.
 
 <em>-- How:</em><br>
-Live demo is <em>[here](https://shaderpipe.povlab.online).</em><br>
+Live demo is <em>[here](https://shaderpipe.yesbird.online).</em><br>
 Allow browser to use a camera, select from menu face, hands or filtering effect, play with settings.<br>
 Use full screen mode (F11) for better experience.
 
